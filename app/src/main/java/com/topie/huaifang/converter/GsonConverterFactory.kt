@@ -36,7 +36,7 @@ class GsonConverterFactory private constructor(private val gson: Gson) : Convert
 
     override fun responseBodyConverter(type: Type?, annotations: Array<Annotation>?,
                                        retrofit: Retrofit?): Converter<ResponseBody, *> {
-        val adapter = gson.getAdapter(TypeToken.get(type!!))
+        val adapter = gson.getAdapter(TypeToken.get(type))
         return GsonResponseBodyConverter(gson, adapter)
     }
 

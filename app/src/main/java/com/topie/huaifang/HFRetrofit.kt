@@ -1,5 +1,6 @@
 package com.topie.huaifang
 
+import com.topie.huaifang.converter.GsonConverterFactory
 import com.topie.huaifang.extensions.log
 import io.reactivex.ObservableTransformer
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -8,7 +9,6 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import retrofit2.converter.gson.GsonConverterFactory
 
 /**
  * Created by arman on 2017/7/14.
@@ -16,11 +16,11 @@ import retrofit2.converter.gson.GsonConverterFactory
 object HFRetrofit {
 
     private val client = OkHttpClient.Builder()
-            .addInterceptor(HttpLoggingInterceptor())
+            .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
             .build()!!
 
     val retrofit = Retrofit.Builder()
-            .baseUrl("http://vcis.ifeng.com/api/")
+            .baseUrl("http://huaifang.zt647.com/")
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)

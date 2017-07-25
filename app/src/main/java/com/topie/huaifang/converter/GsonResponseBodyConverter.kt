@@ -17,6 +17,8 @@ package com.topie.huaifang.converter
 
 import com.google.gson.Gson
 import com.google.gson.TypeAdapter
+import com.topie.huaifang.BaseRequestBody
+import com.topie.huaifang.extensions.log
 import okhttp3.ResponseBody
 import retrofit2.Converter
 import java.io.IOException
@@ -25,9 +27,13 @@ internal class GsonResponseBodyConverter<T>(val gson: Gson, val adapter: TypeAda
 
     @Throws(IOException::class)
     override fun convert(value: ResponseBody): T {
-        val jsonReader = gson.newJsonReader(value.charStream())
         value.use {
-            return adapter.read(jsonReader)
+            val json = value.string()
+            val obj = adapter.fromJson(json)
+            if (obj is BaseRequestBody) {
+                obj.json = json
+            }
+            return obj
         }
     }
 }

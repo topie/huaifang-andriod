@@ -15,11 +15,11 @@ class MainActivity : AppCompatActivity() {
         val service = HFRetrofit.retrofit.create(HFService::class.java)
         btn_submit.setOnClickListener({
             et_main.text.toString().trim()
-            service.getCall()
+            service.login(LoginRequestBody("bigniu", "12345"))
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
-                        tv_show.text = it.body()?.toString()
+                        tv_show.text = it.body()?.json
                     }, {
                         log("", it)
                     })
