@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">HuaiFang</string>
     <string name="hf_submit">submit</string>
+    <string name="index_bottom_tab_1">首页</string>
+    <string name="index_bottom_tab_2">消息</string>
+    <string name="index_bottom_tab_3">发现</string>
+    <string name="index_bottom_tab_4">我</string>
 </resources>

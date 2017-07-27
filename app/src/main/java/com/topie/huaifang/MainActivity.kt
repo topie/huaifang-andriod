@@ -1,28 +1,58 @@
 package com.topie.huaifang
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import android.text.TextUtils
+import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
 import com.topie.huaifang.extensions.log
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.activity_main.*
+import me.yokeyword.fragmentation.SupportActivity
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : SupportActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        val service = HFRetrofit.retrofit.create(HFService::class.java)
-        btn_submit.setOnClickListener({
-            et_main.text.toString().trim()
-            service.login(LoginRequestBody("bigniu", "12345"))
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({
-                        tv_show.text = it.body()?.json
-                    }, {
-                        log("", it)
-                    })
-        })
+        setContentView(R.layout.main_activity)
+        initBottomView(savedInstanceState)
+    }
+
+    private fun initBottomView(savedInstanceState: Bundle?) {
+
+        val listener: View.OnClickListener = View.OnClickListener {
+            val index = resources
+                    .getResourceEntryName(it.id)
+                    ?.split("_")
+                    ?.takeIf { !it.isEmpty() }
+                    ?.let { return@let it[it.size - 1] }
+                    ?.let { return@let it.toIntOrNull() }
+            index ?: return@OnClickListener
+            selectTab(index)
+        }
+        val tabIndex = savedInstanceState?.getInt("index_bottom_tab_index") ?: 1
+        for (i in 1..4) {
+            val layoutId = resources.getIdentifier("ll_index_bottom_tab_$i", "id", packageName)
+            val mipmapId = resources.getIdentifier("ic_index_bottom_tab_$i", "mipmap", packageName)
+            val stringId = resources.getIdentifier("index_bottom_tab_$i", "string", packageName)
+            val layout = findViewById(layoutId)
+            log("layoutId=$layoutId,mipmapId=$mipmapId,stringId=$stringId,")
+            if (layout != null) {
+                val imageView = layout.findViewById(R.id.iv_index_bottom_tab) as ImageView
+                val textView = layout.findViewById(R.id.tv_index_bottom_tab) as TextView
+                imageView.setImageResource(mipmapId)
+                textView.setText(stringId)
+                layout.setOnClickListener(listener)
+                if (i == tabIndex) {
+                    layout.isSelected = true
+                }
+            }
+        }
+    }
+
+    private fun selectTab(index: Int) {
+        log("selectTab index=$index")
+        for (i in 1..4) {
+            val layoutId = resources.getIdentifier("ll_index_bottom_tab_$i", "id", packageName)
+            findViewById(layoutId)?.isSelected = (i == index)
+        }
     }
 }

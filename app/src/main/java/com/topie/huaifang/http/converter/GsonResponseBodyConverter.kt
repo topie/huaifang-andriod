@@ -13,12 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.topie.huaifang.converter
+package com.topie.huaifang.http.converter
 
 import com.google.gson.Gson
 import com.google.gson.TypeAdapter
-import com.topie.huaifang.BaseRequestBody
-import com.topie.huaifang.extensions.log
+import com.topie.huaifang.http.BaseRequestBody
 import okhttp3.ResponseBody
 import retrofit2.Converter
 import java.io.IOException

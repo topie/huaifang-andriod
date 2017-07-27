@@ -1,6 +1,6 @@
-package com.topie.huaifang
+package com.topie.huaifang.http
 
-import com.topie.huaifang.converter.GsonConverterFactory
+import com.topie.huaifang.http.converter.GsonConverterFactory
 import com.topie.huaifang.extensions.log
 import io.reactivex.ObservableTransformer
 import io.reactivex.android.schedulers.AndroidSchedulers

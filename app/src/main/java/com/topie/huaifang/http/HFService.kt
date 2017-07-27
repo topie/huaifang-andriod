@@ -1,4 +1,4 @@
-package com.topie.huaifang
+package com.topie.huaifang.http
 
 import io.reactivex.Observable
 import retrofit2.Response
