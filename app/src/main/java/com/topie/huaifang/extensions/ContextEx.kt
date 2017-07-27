@@ -2,6 +2,7 @@ package com.topie.huaifang.extensions
 
 import android.content.Context
 import android.os.Environment
+import android.support.annotation.AnyRes
 import java.io.File
 
 /**
@@ -52,4 +53,23 @@ fun Context.kGetExternalPictureDir(): File? {
 
 fun Context.kGetExtrnalPictureFile(name: String): File? {
     return kGetExternalFilesDir(Environment.DIRECTORY_PICTURES)?.let { return@let File(it, name) }
+}
+
+/**
+ * 获取资源id
+ */
+fun Context.kGetIdentifier(name: String, defType: String): Int {
+    return resources.getIdentifier(name, defType, packageName)
+}
+
+/**
+ * 通过资源id获取对应的名称
+ */
+fun Context.kGetResourceEntryName(@AnyRes resId: Int): String? {
+    try {
+        return resources.getResourceEntryName(resId)
+    } catch(e: Exception) {
+        log("", e)
+        return null
+    }
 }

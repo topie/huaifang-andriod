@@ -1,10 +1,11 @@
 package com.topie.huaifang
 
 import android.os.Bundle
-import android.text.TextUtils
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import com.topie.huaifang.extensions.kGetIdentifier
+import com.topie.huaifang.extensions.kGetResourceEntryName
 import com.topie.huaifang.extensions.log
 import me.yokeyword.fragmentation.SupportActivity
 
@@ -19,20 +20,15 @@ class MainActivity : SupportActivity() {
     private fun initBottomView(savedInstanceState: Bundle?) {
 
         val listener: View.OnClickListener = View.OnClickListener {
-            val index = resources
-                    .getResourceEntryName(it.id)
-                    ?.split("_")
-                    ?.takeIf { !it.isEmpty() }
-                    ?.let { return@let it[it.size - 1] }
-                    ?.let { return@let it.toIntOrNull() }
+            val index = kGetResourceEntryName(it.id)?.split("_")?.lastOrNull()?.toIntOrNull()
             index ?: return@OnClickListener
             selectTab(index)
         }
         val tabIndex = savedInstanceState?.getInt("index_bottom_tab_index") ?: 1
         for (i in 1..4) {
-            val layoutId = resources.getIdentifier("ll_index_bottom_tab_$i", "id", packageName)
-            val mipmapId = resources.getIdentifier("ic_index_bottom_tab_$i", "mipmap", packageName)
-            val stringId = resources.getIdentifier("index_bottom_tab_$i", "string", packageName)
+            val layoutId = kGetIdentifier("ll_index_bottom_tab_$i", "id")
+            val mipmapId = kGetIdentifier("ic_index_bottom_tab_$i", "mipmap")
+            val stringId = kGetIdentifier("index_bottom_tab_$i", "string")
             val layout = findViewById(layoutId)
             log("layoutId=$layoutId,mipmapId=$mipmapId,stringId=$stringId,")
             if (layout != null) {
