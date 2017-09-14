@@ -9,6 +9,7 @@ import com.topie.huaifang.extensions.kGetResourceEntryName
 import com.topie.huaifang.extensions.log
 import com.topie.huaifang.http.*
 import com.topie.huaifang.http.bean.LoginRequestBody
+import com.topie.huaifang.imageloader.GlideApp
 import me.yokeyword.fragmentation.SupportActivity
 
 class MainActivity : SupportActivity() {
@@ -30,11 +31,11 @@ class MainActivity : SupportActivity() {
             val layoutId = kGetIdentifier("ll_index_bottom_tab_$i", "id")
             val mipmapId = kGetIdentifier("ic_index_bottom_tab_$i", "mipmap")
             val stringId = kGetIdentifier("index_bottom_tab_$i", "string")
-            val layout = findViewById(layoutId)
+            val layout = findViewById<View>(layoutId)
             log("layoutId=$layoutId,mipmapId=$mipmapId,stringId=$stringId,")
             if (layout != null) {
-                val imageView = layout.findViewById(R.id.iv_index_bottom_tab) as ImageView
-                val textView = layout.findViewById(R.id.tv_index_bottom_tab) as TextView
+                val imageView = layout.findViewById<ImageView>(R.id.iv_index_bottom_tab)
+                val textView = layout.findViewById<TextView>(R.id.tv_index_bottom_tab)
                 imageView.setImageResource(mipmapId)
                 textView.setText(stringId)
                 layout.setOnClickListener(listener)
@@ -49,9 +50,9 @@ class MainActivity : SupportActivity() {
         log("selectTab index=$index")
         for (i in 1..4) {
             val layoutId = resources.getIdentifier("ll_index_bottom_tab_$i", "id", packageName)
-            findViewById(layoutId)?.isSelected = (i == index)
+            findViewById<View>(layoutId)?.isSelected = (i == index)
         }
         val login = HFRetrofit.hfService.login(LoginRequestBody("admin", "admin"))
-        login.composeApi().subscribe({},{},{})
+        login.composeApi().subscribe({}, {}, {})
     }
 }
