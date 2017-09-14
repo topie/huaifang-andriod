@@ -1,5 +1,7 @@
 package com.topie.huaifang.http
 
+import com.topie.huaifang.http.bean.LoginRequestBody
+import com.topie.huaifang.http.bean.LoginResponseBody
 import io.reactivex.Observable
 import retrofit2.Response
 import retrofit2.http.Body

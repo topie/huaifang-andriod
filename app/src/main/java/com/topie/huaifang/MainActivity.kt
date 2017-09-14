@@ -7,6 +7,8 @@ import android.widget.TextView
 import com.topie.huaifang.extensions.kGetIdentifier
 import com.topie.huaifang.extensions.kGetResourceEntryName
 import com.topie.huaifang.extensions.log
+import com.topie.huaifang.http.*
+import com.topie.huaifang.http.bean.LoginRequestBody
 import me.yokeyword.fragmentation.SupportActivity
 
 class MainActivity : SupportActivity() {
@@ -18,7 +20,6 @@ class MainActivity : SupportActivity() {
     }
 
     private fun initBottomView(savedInstanceState: Bundle?) {
-
         val listener: View.OnClickListener = View.OnClickListener {
             val index = kGetResourceEntryName(it.id)?.split("_")?.lastOrNull()?.toIntOrNull()
             index ?: return@OnClickListener
@@ -50,5 +51,7 @@ class MainActivity : SupportActivity() {
             val layoutId = resources.getIdentifier("ll_index_bottom_tab_$i", "id", packageName)
             findViewById(layoutId)?.isSelected = (i == index)
         }
+        val login = HFRetrofit.hfService.login(LoginRequestBody("admin", "admin"))
+        login.composeApi().subscribe({},{},{})
     }
 }

@@ -15,14 +15,13 @@
  */
 package com.topie.huaifang.http.converter
 
-import com.google.gson.Gson
 import com.google.gson.TypeAdapter
-import com.topie.huaifang.http.BaseRequestBody
+import com.topie.huaifang.http.bean.BaseRequestBody
 import okhttp3.ResponseBody
 import retrofit2.Converter
 import java.io.IOException
 
-internal class GsonResponseBodyConverter<T>(val gson: Gson, val adapter: TypeAdapter<T>) : Converter<ResponseBody, T> {
+internal class GsonResponseBodyConverter<T>(val adapter: TypeAdapter<T>) : Converter<ResponseBody, T> {
 
     @Throws(IOException::class)
     override fun convert(value: ResponseBody): T {

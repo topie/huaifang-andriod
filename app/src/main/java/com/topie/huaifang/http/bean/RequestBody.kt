@@ -1,4 +1,4 @@
-package com.topie.huaifang.http
+package com.topie.huaifang.http.bean
 
 /**
  * Created by arman on 2017/7/25.
