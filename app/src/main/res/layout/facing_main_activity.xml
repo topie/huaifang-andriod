@@ -4,10 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.topie.huaifang.MainActivity">
+    tools:context="com.topie.huaifang.facing.HFMainActivity">
 
     <FrameLayout
-        android:id="@+id/fl_index_frag"
+        android:id="@+id/fl_facing_frag"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1" />
@@ -15,25 +15,25 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="65dp"
-        android:orientation="horizontal"
         android:background="#b3b3b3"
+        android:orientation="horizontal"
         android:weightSum="4">
 
         <include
-            android:id="@+id/ll_index_bottom_tab_1"
-            layout="@layout/index_main_tab_item" />
+            android:id="@+id/ll_facing_bottom_tab_0"
+            layout="@layout/facing_bottom_tab_item" />
 
         <include
-            android:id="@+id/ll_index_bottom_tab_2"
-            layout="@layout/index_main_tab_item" />
+            android:id="@+id/ll_facing_bottom_tab_1"
+            layout="@layout/facing_bottom_tab_item" />
 
         <include
-            android:id="@+id/ll_index_bottom_tab_3"
-            layout="@layout/index_main_tab_item" />
+            android:id="@+id/ll_facing_bottom_tab_2"
+            layout="@layout/facing_bottom_tab_item" />
 
         <include
-            android:id="@+id/ll_index_bottom_tab_4"
-            layout="@layout/index_main_tab_item" />
+            android:id="@+id/ll_facing_bottom_tab_3"
+            layout="@layout/facing_bottom_tab_item" />
     </LinearLayout>
 
 </LinearLayout>

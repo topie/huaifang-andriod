@@ -6,22 +6,22 @@
     android:layout_weight="1"
     android:orientation="vertical"
     android:gravity="center_vertical"
-    tools:showIn="@layout/main_activity">
+    tools:showIn="@layout/facing_main_activity">
 
     <ImageView
-        android:id="@+id/iv_index_bottom_tab"
+        android:id="@+id/iv_facing_bottom_tab"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_gravity="center"
-        android:src="@mipmap/ic_index_bottom_tab_1" />
+        android:src="@mipmap/ic_facing_bottom_tab_0" />
 
     <TextView
-        android:id="@+id/tv_index_bottom_tab"
+        android:id="@+id/tv_facing_bottom_tab"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:gravity="center"
-        android:text="@string/index_bottom_tab_1"
+        android:text="@string/facing_bottom_tab_1"
         android:textColor="@color/color_00_39b5e8_sel"
         android:textSize="12sp" />
 </LinearLayout>

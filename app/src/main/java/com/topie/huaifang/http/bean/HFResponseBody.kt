@@ -6,6 +6,11 @@ package com.topie.huaifang.http.bean
  */
 open class BaseRequestBody(val code: Int, var message: String?, var json: String?, var token: String?) {
     constructor() : this(0, null, null, null)
+
+    override fun toString(): String {
+        return "BaseRequestBody(code=$code, message=$message, json=$json, token=$token)"
+    }
+
 }
 
 /**

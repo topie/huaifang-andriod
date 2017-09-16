@@ -1,14 +1,8 @@
 package com.topie.huaifang.http
 
-import android.util.Log
-import com.topie.huaifang.BuildConfig
-import com.topie.huaifang.http.converter.GsonConverterFactory
-import com.topie.huaifang.extensions.log
+import com.topie.huaifang.http.converter.HFGsonConverterFactory
 import io.reactivex.Observable
-import io.reactivex.ObservableTransformer
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.functions.Action
-import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -27,7 +21,7 @@ object HFRetrofit {
     val retrofit = Retrofit.Builder()
             .baseUrl("http://huaifang.zt647.com/")
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(HFGsonConverterFactory.create())
             .client(client)
             .build()!!
 
@@ -35,23 +29,5 @@ object HFRetrofit {
 }
 
 fun <T> Observable<T>.composeApi(): Observable<T> {
-    subscribeOn(Schedulers.io())
-    observeOn(AndroidSchedulers.mainThread())
-    return this
-}
-
-private val consumer = Consumer<Throwable> {
-    if (BuildConfig.DEBUG) {
-        throw it
-    } else {
-        Log.e("consumer", "", it)
-    }
-}
-
-fun <T> Observable<T>.subscribeApi(onNext: Consumer<T>) {
-    subscribe(onNext, consumer)
-}
-
-fun <T> Observable<T>.subscribeApi(onNext: Consumer<T>, onError: Consumer<Throwable>) {
-    subscribe(onNext, onError)
+    return subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
 }

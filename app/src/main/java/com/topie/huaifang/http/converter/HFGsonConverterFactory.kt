@@ -32,18 +32,18 @@ import java.lang.reflect.Type
  * you must [add this instance][Retrofit.Builder.addConverterFactory]
  * last to allow the other converters a chance to see their types.
  */
-class GsonConverterFactory private constructor(private val gson: Gson) : Converter.Factory() {
+class HFGsonConverterFactory private constructor(private val gson: Gson) : Converter.Factory() {
 
     override fun responseBodyConverter(type: Type?, annotations: Array<Annotation>?,
                                        retrofit: Retrofit?): Converter<ResponseBody, *> {
         val adapter = gson.getAdapter(TypeToken.get(type))
-        return GsonResponseBodyConverter(adapter)
+        return HFGsonResponseBodyConverter(adapter)
     }
 
     override fun requestBodyConverter(type: Type?,
                                       parameterAnnotations: Array<Annotation>?, methodAnnotations: Array<Annotation>?, retrofit: Retrofit?): Converter<*, RequestBody> {
         val adapter = gson.getAdapter(TypeToken.get(type!!))
-        return GsonRequestBodyConverter(gson, adapter)
+        return HFGsonRequestBodyConverter(gson, adapter)
     }
 
     companion object {
@@ -51,7 +51,7 @@ class GsonConverterFactory private constructor(private val gson: Gson) : Convert
          * Create an instance using a default [Gson] instance for conversion. Encoding to JSON and
          * decoding from JSON (when no charset is specified by a header) will use UTF-8.
          */
-        fun create(): GsonConverterFactory {
+        fun create(): HFGsonConverterFactory {
             return create(Gson())
         }
 
@@ -60,9 +60,9 @@ class GsonConverterFactory private constructor(private val gson: Gson) : Convert
          * decoding from JSON (when no charset is specified by a header) will use UTF-8.
          */
         // Guarding public API nullability.
-        fun create(gson: Gson?): GsonConverterFactory {
+        fun create(gson: Gson?): HFGsonConverterFactory {
             if (gson == null) throw NullPointerException("gson == null")
-            return GsonConverterFactory(gson)
+            return HFGsonConverterFactory(gson)
         }
     }
 }

@@ -25,7 +25,7 @@ import java.io.IOException
 import java.io.OutputStreamWriter
 import java.nio.charset.Charset
 
-internal class GsonRequestBodyConverter<T>(val gson: Gson, val adapter: TypeAdapter<T>) : Converter<T, RequestBody> {
+internal class HFGsonRequestBodyConverter<T>(val gson: Gson, val adapter: TypeAdapter<T>) : Converter<T, RequestBody> {
 
     @Throws(IOException::class)
     override fun convert(value: T): RequestBody {

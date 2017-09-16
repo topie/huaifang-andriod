@@ -21,7 +21,7 @@ import okhttp3.ResponseBody
 import retrofit2.Converter
 import java.io.IOException
 
-internal class GsonResponseBodyConverter<T>(val adapter: TypeAdapter<T>) : Converter<ResponseBody, T> {
+internal class HFGsonResponseBodyConverter<T>(val adapter: TypeAdapter<T>) : Converter<ResponseBody, T> {
 
     @Throws(IOException::class)
     override fun convert(value: ResponseBody): T {
