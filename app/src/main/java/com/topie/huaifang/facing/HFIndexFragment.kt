@@ -1,31 +1,22 @@
 package com.topie.huaifang.facing
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.topie.huaifang.R
-import com.topie.huaifang.extensions.kReleaseSelfe
-import com.topie.huaifang.extensions.log
+import com.topie.huaifang.base.HFBaseFragment
 
 /**
  * Created by arman on 2017/9/16.
  */
-class HFIndexFragment : Fragment() {
-    var inflate: View? = null
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        log("view is ${view == null}")
-        inflate = inflate?.let {
-            it.kReleaseSelfe()
-            return@let it
-        } ?: let {
-            val view = inflater.inflate(R.layout.facing_index_fragment, container, false)
-            initFunctions(view, savedInstanceState)
-            return@let view
-        }
+class HFIndexFragment : HFBaseFragment() {
+
+    override fun onCreateViewSupport(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        val inflate = inflater.inflate(R.layout.facing_index_fragment, container, false)
+        initFunctions(inflate, savedInstanceState)
         return inflate
     }
 
