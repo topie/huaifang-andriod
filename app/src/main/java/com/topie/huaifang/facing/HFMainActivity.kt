@@ -1,21 +1,22 @@
 package com.topie.huaifang.facing
 
 import android.os.Bundle
+import android.support.v4.app.Fragment
+import android.support.v7.app.AppCompatActivity
+import android.text.TextUtils
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.topie.huaifang.R
 import com.topie.huaifang.extensions.kGetIdentifier
 import com.topie.huaifang.extensions.log
-import kotlinx.android.synthetic.main.facing_index_fragment.*
-import me.yokeyword.fragmentation.SupportActivity
-import me.yokeyword.fragmentation.SupportFragment
 
-class HFMainActivity : SupportActivity() {
+
+class HFMainActivity : AppCompatActivity() {
 
     private var currentTabPosition = -1
 
-    private val facingFragments: List<Class<out SupportFragment>> = arrayListOf(
+    private val facingFragments: List<Class<out Fragment>> = arrayListOf(
             HFIndexFragment::class.java,
             HFMsgFragment::class.java,
             HFDiscoveryFragment::class.java,
@@ -67,19 +68,62 @@ class HFMainActivity : SupportActivity() {
         onBottomItemSelected(index)
     }
 
+    private var curFragment: Fragment? = null
+
+    /**
+     * 推送一个fragment进入堆栈，如果需要推入的fragment已经存在，移除顶部的fragment
+     * 效果类似于activity的SingleTop
+     *
+     * @param pFragmentClass
+     */
+    private fun pushFragment(pFragmentClass: Class<out Fragment>) {
+        try {
+            val name = pFragmentClass.name
+            val manager = supportFragmentManager
+            var fragment = manager.findFragmentByTag(name)
+            if (fragment != null) {
+                while (manager.backStackEntryCount > 0) {
+                    val name1 = manager.getBackStackEntryAt(manager.backStackEntryCount - 1).name
+                    if (TextUtils.equals(name, name1)) {
+                        break
+                    }
+                    manager.popBackStackImmediate()
+                }
+            } else {
+                fragment = pFragmentClass.newInstance()
+                val lastFragment = curFragment
+                val ft = manager.beginTransaction()
+                if (fragment!!.isAdded) {
+                    ft.show(fragment)
+                } else {
+                    ft.add(R.id.fl_facing_frag, fragment, name)
+                }
+                if (lastFragment != null && lastFragment !== fragment) {
+                    ft.hide(lastFragment)
+                }
+                ft.addToBackStack(name)
+                ft.commitAllowingStateLoss()
+            }
+            curFragment = fragment
+        } catch (pE: Exception) {
+            log("", pE)
+        }
+
+    }
+
     private fun onBottomItemSelected(position: Int) {
         if (currentTabPosition != position) {
+            pushFragment(facingFragments[position])
             currentTabPosition = position
-            val indexFragment = findFragment(facingFragments[position]) ?: facingFragments[position].newInstance()
-            loadRootFragment(R.id.fl_facing_frag, indexFragment, false, true)
         }
     }
 
-    override fun onBackPressedSupport() {
-        if (currentTabPosition == 0) {
-            super.onBackPressedSupport()
-        } else {
+    override fun onBackPressed() {
+        val fm = supportFragmentManager
+        if (fm.backStackEntryCount > 1) {
             selectTab(0)
+        } else {
+            finish()
         }
     }
 }

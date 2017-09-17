@@ -1,6 +1,7 @@
 package com.topie.huaifang.facing
 
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,12 +10,11 @@ import android.widget.TextView
 import com.topie.huaifang.R
 import com.topie.huaifang.extensions.kReleaseSelfe
 import com.topie.huaifang.extensions.log
-import me.yokeyword.fragmentation.SupportFragment
 
 /**
  * Created by arman on 2017/9/16.
  */
-class HFIndexFragment : SupportFragment() {
+class HFIndexFragment : Fragment() {
     var inflate: View? = null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         log("view is ${view == null}")
