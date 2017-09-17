@@ -1,11 +1,174 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:fillViewport="true"
     android:orientation="vertical">
 
-    <com.topie.huaifang.imageloader.HFImageView
-        android:id="@+id/iv_facing_index_test"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-</LinearLayout>
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="@color/facing_index_background" />
+        <!--头图-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp">
+
+            <com.topie.huaifang.imageloader.HFImageView
+                android:id="@+id/iv_facing_index_top"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/img_facing_index_top"
+                app:aspectRatio="1.49868"
+                app:defImageRes="@mipmap/img_facing_index_top" />
+        </RelativeLayout>
+
+        <!--分割线-->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/facing_index_background" />
+
+        <!--调查问卷-->
+        <LinearLayout
+            android:id="@+id/ll_facing_index_questions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="@string/facing_index_questionnaire"
+                android:textColor="@color/colorDark"
+                android:textSize="14sp" />
+
+            <include
+                android:id="@+id/ll_facing_index_question_0"
+                layout="@layout/facing_index_questionnaire_item" />
+
+            <include
+                android:id="@+id/ll_facing_index_question_1"
+                layout="@layout/facing_index_questionnaire_item" />
+
+            <include
+                android:id="@+id/ll_facing_index_question_2"
+                layout="@layout/facing_index_questionnaire_item" />
+        </LinearLayout>
+
+        <!--常用功能-->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="@string/facing_index_functions"
+            android:textColor="@color/colorDark"
+            android:textSize="14sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/colorGray" />
+
+        <com.topie.huaifang.view.HFAspectLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="4"
+            app:aspectRatio="4">
+
+            <include
+                android:id="@+id/ll_facing_fun_0"
+                layout="@layout/facing_index_fun_item" />
+
+            <View
+                android:layout_width="0.5dp"
+                android:layout_height="match_parent"
+                android:background="@color/colorGray" />
+
+            <include
+                android:id="@+id/ll_facing_fun_1"
+                layout="@layout/facing_index_fun_item" />
+
+            <View
+                android:layout_width="0.5dp"
+                android:layout_height="match_parent"
+                android:background="@color/colorGray" />
+
+            <include
+                android:id="@+id/ll_facing_fun_2"
+                layout="@layout/facing_index_fun_item" />
+
+            <View
+                android:layout_width="0.5dp"
+                android:layout_height="match_parent"
+                android:background="@color/colorGray" />
+
+            <include
+                android:id="@+id/ll_facing_fun_3"
+                layout="@layout/facing_index_fun_item" />
+
+        </com.topie.huaifang.view.HFAspectLinearLayout>
+
+        <com.topie.huaifang.view.HFAspectLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="4"
+            app:aspectRatio="4">
+
+            <include
+                android:id="@+id/ll_facing_fun_4"
+                layout="@layout/facing_index_fun_item" />
+
+            <View
+                android:layout_width="0.5dp"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="1dp"
+                android:layout_marginRight="1dp"
+                android:background="@color/colorGray" />
+
+        </com.topie.huaifang.view.HFAspectLinearLayout>
+
+        <!--可能认识的人-->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="@string/facing_index_friend"
+            android:textColor="@color/colorDark"
+            android:textSize="14sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:orientation="horizontal"
+            android:weightSum="4">
+
+            <include layout="@layout/facing_index_friend_item" />
+
+            <include layout="@layout/facing_index_friend_item" />
+
+            <include layout="@layout/facing_index_friend_item" />
+
+            <include layout="@layout/facing_index_friend_item" />
+        </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>

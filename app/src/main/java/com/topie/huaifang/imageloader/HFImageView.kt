@@ -6,22 +6,23 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
-import android.support.v7.widget.AppCompatImageView
+import android.support.annotation.AttrRes
 import android.util.AttributeSet
+import android.widget.ImageView
 import com.bumptech.glide.request.target.BitmapImageViewTarget
 import com.topie.huaifang.R
+import com.topie.huaifang.view.HFAspectRatioMeasure
 
 /**
  * Created by arman on 2017/9/14.
  */
-class HFImageView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : AppCompatImageView(context, attrs, defStyleAttr) {
+class HFImageView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, @AttrRes defStyleAttr: Int = 0) : ImageView(context, attrs, defStyleAttr) {
 
     var mRoundedAsCircle: Boolean = false
     var mRoundedCornerRadius: Int = 0
     var mDefImageRes: Int = 0
 
-    constructor(context: Context) : this(context, null)
-    constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
+    private val measure = HFAspectRatioMeasure.create(this, attrs)
 
     /**
      * 默认构造函数
@@ -34,6 +35,15 @@ class HFImageView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : A
             mRoundedCornerRadius = a.getDimensionPixelSize(R.styleable.HFImageView_roundedCornersRadius, 0)
             a.recycle()
         }
+    }
+
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        val spec = measure.updateMeasureSpec(widthMeasureSpec, heightMeasureSpec)
+        super.onMeasure(spec.width, spec.height)
+    }
+
+    fun setAspectRatio(ratio: Float) {
+        measure.mAspectRatio = ratio
     }
 
     fun loadImageUri(uri: Uri?, activity: Activity) {

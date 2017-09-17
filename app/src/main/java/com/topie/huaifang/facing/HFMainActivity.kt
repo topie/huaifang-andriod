@@ -7,6 +7,7 @@ import android.widget.TextView
 import com.topie.huaifang.R
 import com.topie.huaifang.extensions.kGetIdentifier
 import com.topie.huaifang.extensions.log
+import kotlinx.android.synthetic.main.facing_index_fragment.*
 import me.yokeyword.fragmentation.SupportActivity
 import me.yokeyword.fragmentation.SupportFragment
 
@@ -14,7 +15,7 @@ class HFMainActivity : SupportActivity() {
 
     private var currentTabPosition = -1
 
-    val facingFragments: List<Class<out SupportFragment>> = arrayListOf(
+    private val facingFragments: List<Class<out SupportFragment>> = arrayListOf(
             HFIndexFragment::class.java,
             HFMsgFragment::class.java,
             HFDiscoveryFragment::class.java,
@@ -35,14 +36,14 @@ class HFMainActivity : SupportActivity() {
         val tabIndex = savedInstanceState?.getInt("index_bottom_tab_index") ?: 0
         for (i in 0..3) {
             val layoutId = kGetIdentifier("ll_facing_bottom_tab_$i", "id")
-            val mipmapId = kGetIdentifier("ic_facing_bottom_tab_$i", "mipmap")
+            val drawableId = kGetIdentifier("ic_facing_bottom_tab_$i", "drawable")
             val stringId = kGetIdentifier("facing_bottom_tab_$i", "string")
             val layout = findViewById<View>(layoutId)
-            log("layoutId=$layoutId,mipmapId=$mipmapId,stringId=$stringId,")
+            log("layoutId=$layoutId,mipmapId=$drawableId,stringId=$stringId,")
             if (layout != null) {
                 val imageView = layout.findViewById<ImageView>(R.id.iv_facing_bottom_tab)
                 val textView = layout.findViewById<TextView>(R.id.tv_facing_bottom_tab)
-                imageView.setImageResource(mipmapId)
+                imageView.setImageResource(drawableId)
                 textView.setText(stringId)
                 layout.setOnClickListener(listener)
                 layout.setTag(R.id.id_facing_bottom_index, i)
@@ -56,10 +57,10 @@ class HFMainActivity : SupportActivity() {
         for (i in 0..3) {
             val layoutId = resources.getIdentifier("ll_facing_bottom_tab_$i", "id", packageName)
             findViewById<View>(layoutId)?.let {
-                if (it.isSelected) {
-                    it.isSelected = false
-                } else if (i == index) {
+                if (i == index) {
                     it.isSelected = true
+                } else if (it.isSelected) {
+                    it.isSelected = false
                 }
             }
         }

@@ -1,8 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <attr name="aspectRatio" format="float" />
     <declare-styleable name="HFImageView">
+        <attr name="aspectRatio" />
         <attr name="roundedCornersRadius" format="dimension" />
         <attr name="roundedAsCircle" format="boolean" />
         <attr name="defImageRes" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="HFAspectRatio">
+        <attr name="aspectRatio" />
+    </declare-styleable>
+
+    <declare-styleable name="HFAspectLinearLayout">
+        <attr name="aspectRatio" />
+    </declare-styleable>
+
+    <declare-styleable name="HFAspectRelativeLayout">
+        <attr name="aspectRatio" />
     </declare-styleable>
 </resources>

@@ -13,7 +13,7 @@
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_gravity="center"
-        android:src="@mipmap/ic_facing_bottom_tab_0" />
+        android:src="@mipmap/ic_facing_bottom_tab_0_default" />
 
     <TextView
         android:id="@+id/tv_facing_bottom_tab"

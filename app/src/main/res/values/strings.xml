@@ -5,4 +5,13 @@
     <string name="facing_bottom_tab_1">消息</string>
     <string name="facing_bottom_tab_2">发现</string>
     <string name="facing_bottom_tab_3">我</string>
+    <string name="facing_index_questionnaire">调查问卷</string>
+    <string name="facing_index_functions">常用功能</string>
+    <string name="facing_index_fun_announcement">通知公告</string>
+    <string name="facing_index_fun_bazaar">社区集市</string>
+    <string name="facing_index_fun_guide">办事指南</string>
+    <string name="facing_index_fun_live">居务公开</string>
+    <string name="facing_index_fun_yellow_book">迷你黄页</string>
+    <string name="facing_index_friend">可能认识的人</string>
+    <string name="facing_index_friend_add">+加为好友</string>
 </resources>
