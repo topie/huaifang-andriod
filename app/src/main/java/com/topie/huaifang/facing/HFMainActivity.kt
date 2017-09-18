@@ -3,7 +3,6 @@ package com.topie.huaifang.facing
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
-import android.text.TextUtils
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -76,39 +75,24 @@ class HFMainActivity : AppCompatActivity() {
      *
      * @param pFragmentClass
      */
-    private fun pushFragment(pFragmentClass: Class<out Fragment>) {
-        try {
-            val name = pFragmentClass.name
-            val manager = supportFragmentManager
-            var fragment = manager.findFragmentByTag(name)
-            if (fragment != null) {
-                while (manager.backStackEntryCount > 0) {
-                    val name1 = manager.getBackStackEntryAt(manager.backStackEntryCount - 1).name
-                    if (TextUtils.equals(name, name1)) {
-                        break
-                    }
-                    manager.popBackStackImmediate()
-                }
-            } else {
-                fragment = pFragmentClass.newInstance()
-                val lastFragment = curFragment
-                val ft = manager.beginTransaction()
-                if (fragment!!.isAdded) {
-                    ft.show(fragment)
-                } else {
-                    ft.add(R.id.fl_facing_frag, fragment, name)
-                }
-                if (lastFragment != null && lastFragment !== fragment) {
-                    ft.hide(lastFragment)
-                }
-                ft.addToBackStack(name)
-                ft.commitAllowingStateLoss()
-            }
-            curFragment = fragment
-        } catch (pE: Exception) {
-            log("", pE)
+    private fun pushFragment(pFragmentClass: Class<out Fragment>) = try {
+        val name = pFragmentClass.name
+        val manager = supportFragmentManager
+        val fragment = manager.findFragmentByTag(name) ?: pFragmentClass.newInstance()
+        val ft = manager.beginTransaction()
+        when (curFragment) {
+            null -> log("curFragment is null")
+            fragment -> log("fragment[$name] is showing")
+            else -> ft.hide(curFragment)
         }
-
+        when {
+            fragment.isAdded -> ft.show(fragment)
+            else -> ft.add(R.id.fl_facing_frag, fragment, name)
+        }
+        ft.commitAllowingStateLoss()
+        curFragment = fragment
+    } catch (pE: Exception) {
+        log("", pE)
     }
 
     private fun onBottomItemSelected(position: Int) {

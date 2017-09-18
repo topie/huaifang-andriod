@@ -4,14 +4,14 @@
     android:layout_width="0dp"
     android:layout_height="match_parent"
     android:layout_weight="1"
-    android:orientation="vertical"
     android:gravity="center_vertical"
+    android:orientation="vertical"
     tools:showIn="@layout/facing_main_activity">
 
     <ImageView
         android:id="@+id/iv_facing_bottom_tab"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
         android:layout_gravity="center"
         android:src="@mipmap/ic_facing_bottom_tab_0_default" />
 
@@ -19,7 +19,6 @@
         android:id="@+id/tv_facing_bottom_tab"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
         android:gravity="center"
         android:text="@string/facing_bottom_tab_1"
         android:textColor="@color/color_00_39b5e8_sel"

@@ -15,7 +15,7 @@
     <!--首页底部四个按钮-->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="65dp"
+        android:layout_height="50dp"
         android:background="#b3b3b3"
         android:orientation="horizontal"
         android:weightSum="4">

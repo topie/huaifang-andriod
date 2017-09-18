@@ -22,9 +22,10 @@ class HFDiscoveryFragment : HFBaseFragment() {
         recyclerView.layoutManager = LinearLayoutManager(inflate.context)
         //create adapter
         val list: ArrayList<HFListAdapter.HFListItem> = arrayListOf()
-        list.add(HFListAdapter.HFListItem(R.mipmap.ic_facing_index_fun_live, null, context.getString(R.string.facing_index_fun_live)))
-        list.add(HFListAdapter.HFListItem(R.mipmap.ic_facing_index_fun_announcement, null, context.getString(R.string.facing_index_fun_announcement)))
-        list.add(HFListAdapter.HFListItem(R.mipmap.ic_facing_index_fun_yellow_book, null, context.getString(R.string.facing_index_fun_yellow_book)))
+        list.add(HFListAdapter.HFListItem(R.mipmap.ic_facing_discovery_neighborhood, null, context.getString(R.string.facing_discovery_neighborhood)))
+        list.add(HFListAdapter.HFListItem(R.mipmap.ic_facing_discovery_activity, null, context.getString(R.string.facing_discovery_activity)))
+        list.add(HFListAdapter.HFListItem(R.mipmap.ic_facing_discovery_forum, null, context.getString(R.string.facing_discovery_forum)))
+        list.add(HFListAdapter.HFListItem(R.mipmap.ic_facing_discovery_around, null, context.getString(R.string.facing_discovery_around)))
         adapter = HFListAdapter(inflater.context, list)
         recyclerView.adapter = adapter
         return inflate
