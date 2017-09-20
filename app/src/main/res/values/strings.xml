@@ -29,4 +29,14 @@
     <string name="default_tip">提示</string>
     <string name="default_cancel">取消</string>
     <string name="default_ok">确定</string>
+    <string name="default_next_step">下一步</string>
+    <string name="default_into_app">进入智慧槐房</string>
+    <string name="default_password">密码</string>
+    <string name="default_telephone">手机号码</string>
+    <string name="login_pwd_input_hint">请入6～20位密码</string>
+    <string name="login_phone_input_hint">请输入手机号码</string>
+    <string name="login_reg_phone_title">新用户注册</string>
+    <string name="login_reg_pwd_title">新用户注册</string>
+    <string name="login_register_button">立即注册</string>
+    <string name="default_login">登录</string>
 </resources>

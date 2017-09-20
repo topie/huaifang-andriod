@@ -1,8 +1,10 @@
 package com.topie.huaifang.extensions
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Environment
 import android.support.annotation.AnyRes
+import android.widget.Toast
 import java.io.File
 
 /**
@@ -68,8 +70,30 @@ fun Context.kGetIdentifier(name: String, defType: String): Int {
 fun Context.kGetResourceEntryName(@AnyRes resId: Int): String? {
     try {
         return resources.getResourceEntryName(resId)
-    } catch(e: Exception) {
+    } catch (e: Exception) {
         log("", e)
         return null
+    }
+}
+
+fun Context.kToastLong(msg: String) {
+    HFToast.showToast(this, msg, Toast.LENGTH_LONG)
+}
+
+fun Context.kToastShort(msg: String) {
+    HFToast.showToast(this, msg, Toast.LENGTH_SHORT)
+}
+
+private object HFToast {
+
+    private var toast: Toast? = null
+
+    @SuppressLint("ShowToast")
+    fun showToast(context: Context, msg: String, duration: Int): Toast {
+        toast = toast ?: Toast.makeText(context, msg, duration)
+        toast!!.setText(msg)
+        toast!!.duration = duration
+        toast!!.show()
+        return toast!!
     }
 }

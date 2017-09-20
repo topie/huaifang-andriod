@@ -1,5 +1,6 @@
 package com.topie.huaifang.facing
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.topie.huaifang.R
 import com.topie.huaifang.base.HFBaseFragment
+import com.topie.huaifang.login.HFLoginActivity
 
 /**
  * Created by arman on 2017/9/16.
@@ -36,5 +38,21 @@ class HFIndexFragment : HFBaseFragment() {
         val fun4 = view.findViewById<View>(R.id.ll_facing_fun_4)
         fun4.findViewById<ImageView>(R.id.iv_facing_index_fun).setImageResource(R.mipmap.ic_facing_index_fun_yellow_book)
         fun4.findViewById<TextView>(R.id.tv_facing_index_fun).setText(R.string.facing_index_fun_yellow_book)
+
+        fun0.setOnClickListener {
+            context?.let {
+                val intent = Intent(it, HFLoginActivity::class.java)
+                intent.putExtra(HFLoginActivity.EXTRA_IS_REGISTER, true)
+                startActivity(intent)
+            }
+        }
+
+        fun1.setOnClickListener {
+            context?.let {
+                val intent = Intent(it, HFLoginActivity::class.java)
+                intent.putExtra(HFLoginActivity.EXTRA_IS_REGISTER, false)
+                startActivity(intent)
+            }
+        }
     }
 }
