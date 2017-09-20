@@ -82,7 +82,10 @@ open internal class HFListAdapter(val context: Context, private val list: List<H
 
     }
 
-    class HFListItem(@DrawableRes val iconId: Int, val icon: Uri?, val name: String?, val viewType: Int = TYPE_NORMAL) {
+    class HFListItem(@DrawableRes val iconId: Int, val icon: Uri?, val name: String?, val viewType: Int) {
+        constructor(@DrawableRes iconId: Int, name: String?, viewType: Int = TYPE_NORMAL) : this(iconId, null, name, viewType)
+        constructor(icon: Uri?, name: String?, viewType: Int = TYPE_NORMAL) : this(0, icon, name, viewType)
+
         companion object {
             const val TYPE_NORMAL = 0
             const val TYPE_SEARCH = 1

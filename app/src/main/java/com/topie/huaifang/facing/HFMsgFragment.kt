@@ -22,9 +22,9 @@ class HFMsgFragment : HFBaseFragment() {
         recyclerView.layoutManager = LinearLayoutManager(inflate.context)
         //create adapter
         val list: ArrayList<HFListAdapter.HFListItem> = arrayListOf()
-        list.add(HFListAdapter.HFListItem(R.mipmap.ic_facing_index_fun_live, null, context.getString(R.string.facing_index_fun_live)))
-        list.add(HFListAdapter.HFListItem(R.mipmap.ic_facing_index_fun_announcement, null, context.getString(R.string.facing_index_fun_announcement)))
-        list.add(HFListAdapter.HFListItem(R.mipmap.ic_facing_index_fun_yellow_book, null, context.getString(R.string.facing_index_fun_yellow_book)))
+        list.add(HFListAdapter.HFListItem(R.mipmap.ic_facing_index_fun_live, context.getString(R.string.facing_index_fun_live)))
+        list.add(HFListAdapter.HFListItem(R.mipmap.ic_facing_index_fun_announcement, context.getString(R.string.facing_index_fun_announcement)))
+        list.add(HFListAdapter.HFListItem(R.mipmap.ic_facing_index_fun_yellow_book, context.getString(R.string.facing_index_fun_yellow_book)))
         adapter = HFListAdapter(inflater.context, list)
         recyclerView.adapter = adapter
         return inflate

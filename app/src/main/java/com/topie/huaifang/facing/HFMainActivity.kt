@@ -9,6 +9,7 @@ import android.widget.TextView
 import com.topie.huaifang.R
 import com.topie.huaifang.extensions.kGetIdentifier
 import com.topie.huaifang.extensions.log
+import com.topie.huaifang.view.HFTipDialog
 
 
 class HFMainActivity : AppCompatActivity() {
@@ -26,6 +27,9 @@ class HFMainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.facing_main_activity)
         initBottomView(savedInstanceState)
+        HFTipDialog.Builder(this)
+                .setContent("您的认证信息提交成功，\n请耐性等待管理员审核！")
+                .show()
     }
 
     private fun initBottomView(savedInstanceState: Bundle?) {

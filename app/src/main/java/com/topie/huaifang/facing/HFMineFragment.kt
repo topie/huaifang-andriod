@@ -21,13 +21,13 @@ class HFMineFragment : HFBaseFragment() {
         recyclerView.layoutManager = LinearLayoutManager(inflate.context)
         //create adapter
         val list: ArrayList<HFListAdapter.HFListItem> = arrayListOf()
-        list.add(HFListAdapter.HFListItem(R.mipmap.ic_facing_mine_friend, null, context.getString(R.string.facing_mine_friend)))
-        list.add(HFListAdapter.HFListItem(R.mipmap.ic_facing_mine_room, null, context.getString(R.string.facing_mine_room)))
-        list.add(HFListAdapter.HFListItem(R.mipmap.ic_facing_mine_company, null, context.getString(R.string.facing_mine_company)))
-        list.add(HFListAdapter.HFListItem(R.mipmap.ic_facing_mine_party_member, null, context.getString(R.string.facing_mine_party_member)))
-        list.add(HFListAdapter.HFListItem(R.mipmap.ic_facing_mine_label, null, context.getString(R.string.facing_mine_label)))
-        list.add(HFListAdapter.HFListItem(R.mipmap.ic_facing_mine_suggestion, null, context.getString(R.string.facing_mine_suggestion)))
-        list.add(HFListAdapter.HFListItem(R.mipmap.ic_facing_mine_setting, null, context.getString(R.string.facing_mine_setting)))
+        list.add(HFListAdapter.HFListItem(R.mipmap.ic_facing_mine_friend, context.getString(R.string.facing_mine_friend)))
+        list.add(HFListAdapter.HFListItem(R.mipmap.ic_facing_mine_room, context.getString(R.string.facing_mine_room)))
+        list.add(HFListAdapter.HFListItem(R.mipmap.ic_facing_mine_company, context.getString(R.string.facing_mine_company)))
+        list.add(HFListAdapter.HFListItem(R.mipmap.ic_facing_mine_party_member, context.getString(R.string.facing_mine_party_member)))
+        list.add(HFListAdapter.HFListItem(R.mipmap.ic_facing_mine_label, context.getString(R.string.facing_mine_label)))
+        list.add(HFListAdapter.HFListItem(R.mipmap.ic_facing_mine_suggestion, context.getString(R.string.facing_mine_suggestion)))
+        list.add(HFListAdapter.HFListItem(R.mipmap.ic_facing_mine_setting, context.getString(R.string.facing_mine_setting)))
         adapter = HFListAdapter(inflater.context, list)
         recyclerView.adapter = adapter
         return inflate
