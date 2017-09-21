@@ -22,6 +22,8 @@
         </activity>
         <activity android:name=".login.HFLoginActivity" />
         <activity android:name=".function.guide.HFFunGuideActivity" />
+        <activity android:name=".function.live.HFFunLiveActivity" />
+        <activity android:name=".function.notice.HFFunPublicActivity" />
     </application>
 
 </manifest>

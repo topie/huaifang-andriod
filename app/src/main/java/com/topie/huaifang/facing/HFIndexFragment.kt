@@ -11,6 +11,8 @@ import com.topie.huaifang.R
 import com.topie.huaifang.account.HFAccountManager
 import com.topie.huaifang.base.HFBaseFragment
 import com.topie.huaifang.function.guide.HFFunGuideActivity
+import com.topie.huaifang.function.live.HFFunLiveActivity
+import com.topie.huaifang.function.notice.HFFunPublicActivity
 import com.topie.huaifang.login.HFLoginActivity
 
 /**
@@ -43,9 +45,13 @@ class HFIndexFragment : HFBaseFragment() {
 
         fun0.setOnClickListener {
             context?.let {
-                val intent = Intent(it, HFLoginActivity::class.java)
-                intent.putExtra(HFLoginActivity.EXTRA_IS_REGISTER, true)
-                startActivity(intent)
+                if (HFAccountManager.isLogin) {
+                    startActivity(Intent(it, HFFunPublicActivity::class.java))
+                } else {
+                    val intent = Intent(it, HFLoginActivity::class.java)
+                    intent.putExtra(HFLoginActivity.EXTRA_IS_REGISTER, true)
+                    startActivity(intent)
+                }
             }
         }
 
@@ -61,5 +67,12 @@ class HFIndexFragment : HFBaseFragment() {
                 }
             }
         }
+
+        fun3.setOnClickListener {
+            context?.let {
+                startActivity(Intent(context, HFFunLiveActivity::class.java))
+            }
+        }
+
     }
 }

@@ -3,11 +3,10 @@ package com.topie.huaifang.account
 import android.content.Context
 import com.google.gson.Gson
 import com.topie.huaifang.extensions.HFContext
-import com.topie.huaifang.extensions.kIsEmpty
 import com.topie.huaifang.extensions.kIsNotEmpty
+import com.topie.huaifang.http.HFHttpLoggingInterceptor
 import com.topie.huaifang.http.HFRetrofit
 import com.topie.huaifang.util.HFLogger
-import okhttp3.logging.HttpLoggingInterceptor
 
 /**
  * Created by arman on 2017/9/21.
@@ -19,11 +18,8 @@ object HFAccountManager {
     private var accountModel: HFAccountModel = getData()
 
     init {
-        val logInterceptor = HttpLoggingInterceptor({
-            logger.log(it)
-        }).setLevel(HttpLoggingInterceptor.Level.BODY)
         HFRetrofit.addIntercept(HFAccountHttpInterceptor())
-        HFRetrofit.addIntercept(logInterceptor)
+        HFRetrofit.addIntercept(HFHttpLoggingInterceptor(logger).setLevel(HFHttpLoggingInterceptor.Level.BODY))
     }
 
     val isLogin: Boolean
