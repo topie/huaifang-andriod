@@ -1,6 +1,5 @@
 package com.topie.huaifang.facing
 
-import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
@@ -10,7 +9,6 @@ import android.widget.TextView
 import com.topie.huaifang.R
 import com.topie.huaifang.extensions.kGetIdentifier
 import com.topie.huaifang.extensions.log
-import com.topie.huaifang.login.HFLoginActivity
 
 
 class HFMainActivity : AppCompatActivity() {
@@ -109,8 +107,7 @@ class HFMainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        val fm = supportFragmentManager
-        if (fm.backStackEntryCount > 1) {
+        if (currentTabPosition != 0) {
             selectTab(0)
         } else {
             finish()
