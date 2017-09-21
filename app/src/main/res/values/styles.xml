@@ -10,4 +10,7 @@
 
     <style name="item_selected_material" />
 
+    <style name="function_guide_tab_title">
+        <item name="android:textSize">12sp</item>
+    </style>
 </resources>

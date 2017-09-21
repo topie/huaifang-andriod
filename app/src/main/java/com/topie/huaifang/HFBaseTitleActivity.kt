@@ -48,12 +48,15 @@ abstract class HFBaseTitleActivity : AppCompatActivity() {
 
     private fun checkRootView() {
         if (mRootView == null) {
-            mRootView = mRootView ?: LayoutInflater.from(this)
+            mRootView = LayoutInflater.from(this)
                     .inflate(
                             R.layout.base_title_layout,
                             findViewById(android.R.id.content),
                             false
                     ) as ViewGroup?
+            mRootView!!.findViewById<View>(R.id.iv_base_title_back).setOnClickListener {
+                onBackPressed()
+            }
         }
         mRootView!!.kReleaseSelf()
         mRootView!!.kRemoveChildsWithout(R.id.fl_base_title_container)
