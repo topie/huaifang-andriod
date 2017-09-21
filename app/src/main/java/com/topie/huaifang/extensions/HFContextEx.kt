@@ -6,6 +6,7 @@ import android.os.Environment
 import android.support.annotation.AnyRes
 import android.widget.Toast
 import java.io.File
+import java.lang.ref.WeakReference
 
 /**
  * Created by arman on 2017/7/11.
@@ -84,6 +85,10 @@ fun Context.kToastShort(msg: String) {
     HFToast.showToast(this, msg, Toast.LENGTH_SHORT)
 }
 
+fun Context.kInitApplication() {
+    HFContext.init(applicationContext)
+}
+
 private object HFToast {
 
     private var toast: Toast? = null
@@ -95,5 +100,19 @@ private object HFToast {
         toast!!.duration = duration
         toast!!.show()
         return toast!!
+    }
+}
+
+object HFContext {
+
+    private var context: WeakReference<Context>? = null
+
+    val appContext: Context?
+        get() {
+            return context?.get()
+        }
+
+    fun init(context: Context) {
+        this.context = WeakReference(context)
     }
 }

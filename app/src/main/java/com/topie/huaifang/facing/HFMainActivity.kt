@@ -91,6 +91,10 @@ class HFMainActivity : AppCompatActivity() {
             fragment.isAdded -> ft.show(fragment)
             else -> ft.add(R.id.fl_facing_frag, fragment, name)
         }
+        val any = (0 until manager.backStackEntryCount).any { manager.getBackStackEntryAt(it).name == name }
+        if (!any) {
+            ft.addToBackStack(name)
+        }
         ft.commitAllowingStateLoss()
         curFragment = fragment
     } catch (pE: Exception) {

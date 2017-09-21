@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.topie.huaifang.R
+import com.topie.huaifang.account.HFAccountManager
 import com.topie.huaifang.base.HFBaseFragment
+import com.topie.huaifang.function.guide.HFFunGuideActivity
 import com.topie.huaifang.login.HFLoginActivity
 
 /**
@@ -49,9 +51,14 @@ class HFIndexFragment : HFBaseFragment() {
 
         fun1.setOnClickListener {
             context?.let {
-                val intent = Intent(it, HFLoginActivity::class.java)
-                intent.putExtra(HFLoginActivity.EXTRA_IS_REGISTER, false)
-                startActivity(intent)
+                if (HFAccountManager.isLogin) {
+                    val intent = Intent(it, HFFunGuideActivity::class.java)
+                    startActivity(intent)
+                } else {
+                    val intent = Intent(it, HFLoginActivity::class.java)
+                    intent.putExtra(HFLoginActivity.EXTRA_IS_REGISTER, false)
+                    startActivity(intent)
+                }
             }
         }
     }

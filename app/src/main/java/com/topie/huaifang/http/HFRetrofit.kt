@@ -4,6 +4,7 @@ import com.topie.huaifang.http.converter.HFGsonConverterFactory
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -14,18 +15,39 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
  */
 object HFRetrofit {
 
-    private val client = OkHttpClient.Builder()
-            .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
-            .build()!!
+    private const val baseUrl = "http://huaifang.zt647.com/"
 
-    val retrofit = Retrofit.Builder()
-            .baseUrl("http://huaifang.zt647.com/")
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-            .addConverterFactory(HFGsonConverterFactory.create())
-            .client(client)
-            .build()!!
+    private var client: OkHttpClient
+        private set
 
-    val hfService: HFService = retrofit.create(HFService::class.java)
+    private var retrofit: Retrofit
+
+    var hfService: HFService
+        private set
+
+    init {
+        client = OkHttpClient.Builder().build()!!
+        retrofit = buildRetrofit()
+        hfService = retrofit.create(HFService::class.java)
+    }
+
+    private fun buildRetrofit(): Retrofit {
+        return Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addConverterFactory(HFGsonConverterFactory.create())
+                .client(client)
+                .build()!!
+    }
+
+    /**
+     * 添加注射器
+     */
+    fun addIntercept(interceptor: Interceptor) {
+        client = client.newBuilder().addInterceptor(interceptor).build()
+        retrofit = buildRetrofit()
+        hfService = retrofit.create(HFService::class.java)
+    }
 }
 
 fun <T> Observable<T>.composeApi(): Observable<T> {

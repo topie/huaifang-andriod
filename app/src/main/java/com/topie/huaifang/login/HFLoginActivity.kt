@@ -4,15 +4,16 @@ import android.os.Bundle
 import android.view.View
 import com.topie.huaifang.HFBaseTitleActivity
 import com.topie.huaifang.R
+import com.topie.huaifang.account.HFAccountManager
 import com.topie.huaifang.extensions.kToastLong
 import com.topie.huaifang.extensions.log
 import com.topie.huaifang.http.HFRetrofit
 import com.topie.huaifang.http.composeApi
-import kotlinx.android.synthetic.main.base_title_layout.*
 import kotlinx.android.synthetic.main.login_activity.*
 
 /**
  * Created by arman on 2017/9/20.
+ * 登录／注册
  */
 class HFLoginActivity : HFBaseTitleActivity() {
     companion object {
@@ -48,31 +49,31 @@ class HFLoginActivity : HFBaseTitleActivity() {
                     if (!checkPwd()) return@setOnClickListener
                     val pwd = et_login_pwd_input.text.toString()
                     HFRetrofit.hfService.register(phone ?: "", pwd).composeApi().subscribe({
-                        if (!it.body()!!.isResultOk()) {
-                            log(it.body()!!.convertMessage())
+                        if (!it.resultOk) {
+                            log(it.convertMessage())
                         } else {
                             kToastLong("注册成功")
                             finish()
                         }
                     }, {
-                        log("", it)
+                        kToastLong(it.message ?: "error")
                     })
                 } else {
                     if (!checkPhone()) return@setOnClickListener
                     val phone = et_login_phone_input.text.toString()
                     HFRetrofit.hfService.checkPhone(phone).composeApi().subscribe({
-                        if (it.body()!!.isResultOk() && it.body()!!.data) {
+                        if (it.resultOk && it.data) {
                             this@HFLoginActivity.phone = phone
                             this@HFLoginActivity.inputPwd = true
                             fl_login_phone_area.visibility = View.GONE
                             fl_login_pwd_area.visibility = View.VISIBLE
-                        } else if (!it.body()!!.data) {
+                        } else if (!it.data) {
                             kToastLong("手机号码已注册")
                         } else {
-                            kToastLong(it.body()!!.convertMessage())
+                            kToastLong(it.convertMessage())
                         }
                     }, {
-                        log("", it)
+                        kToastLong(it.message ?: "error")
                     })
 
                 }
@@ -81,14 +82,15 @@ class HFLoginActivity : HFBaseTitleActivity() {
                     val phone = et_login_phone_input.text.toString()
                     val pwd = et_login_pwd_input.text.toString()
                     HFRetrofit.hfService.login(phone, pwd).composeApi().subscribe({
-                        if (it.body()!!.isResultOk()) {
+                        if (it.resultOk) {
+                            HFAccountManager.setToken(it.token)
                             kToastLong("登录成功")
                             finish()
                         } else {
-                            kToastLong(it.body()!!.convertMessage())
+                            kToastLong(it.convertMessage())
                         }
                     }, {
-                        log("", it)
+                        kToastLong(it.message ?: "error")
                     })
                 }
             }
@@ -96,12 +98,12 @@ class HFLoginActivity : HFBaseTitleActivity() {
     }
 
     private fun checkPhone(): Boolean {
-        return et_login_phone_input.text.length == 11
+        return et_login_phone_input?.text?.length?.equals(11) ?: false
     }
 
     private fun checkPwd(): Boolean {
-        return et_login_pwd_input.text.length.let {
+        return et_login_pwd_input?.text?.length?.let {
             return it in 6..16
-        }
+        } ?: false
     }
 }

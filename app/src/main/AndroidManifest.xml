@@ -21,6 +21,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".login.HFLoginActivity" />
+        <activity android:name=".function.guide.HFFunGuideActivity" />
     </application>
 
 </manifest>

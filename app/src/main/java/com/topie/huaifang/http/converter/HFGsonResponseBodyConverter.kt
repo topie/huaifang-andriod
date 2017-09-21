@@ -16,7 +16,7 @@
 package com.topie.huaifang.http.converter
 
 import com.google.gson.TypeAdapter
-import com.topie.huaifang.http.bean.BaseRequestBody
+import com.topie.huaifang.http.bean.HFBaseResponseBody
 import okhttp3.ResponseBody
 import retrofit2.Converter
 import java.io.IOException
@@ -28,7 +28,7 @@ internal class HFGsonResponseBodyConverter<T>(val adapter: TypeAdapter<T>) : Con
         value.use {
             val json = value.string()
             val obj = adapter.fromJson(json)
-            if (obj is BaseRequestBody) {
+            if (obj is HFBaseResponseBody) {
                 obj.json = json
             }
             return obj
