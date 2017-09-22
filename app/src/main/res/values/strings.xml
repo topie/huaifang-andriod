@@ -39,4 +39,6 @@
     <string name="login_reg_pwd_title">新用户注册</string>
     <string name="login_register_button">立即注册</string>
     <string name="default_login">登录</string>
+    <string name="fun_guide_communicate">立即沟通</string>
+    <string name="fun_guide_tel">拨打电话</string>
 </resources>

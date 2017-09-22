@@ -1,15 +1,14 @@
 package com.topie.huaifang.function.guide
 
 import android.os.Bundle
-import android.support.v4.view.PagerAdapter
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.TextView
+import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentManager
+import android.support.v4.app.FragmentPagerAdapter
 import com.topie.huaifang.HFBaseTitleActivity
 import com.topie.huaifang.R
+import com.topie.huaifang.extensions.log
 import com.topie.huaifang.http.HFRetrofit
-import com.topie.huaifang.http.bean.function.HFFunGuideListResponseBody
+import com.topie.huaifang.http.bean.function.HFFunGuideMenuResponseBody
 import com.topie.huaifang.http.composeApi
 import kotlinx.android.synthetic.main.function_guide_activity.*
 
@@ -28,11 +27,11 @@ class HFFunGuideActivity : HFBaseTitleActivity() {
                 tl_fun_guide.addTab(tl_fun_guide.newTab().setText("title{$i}"))
             }
 
-            val list: MutableList<HFFunGuideListResponseBody.ListData> = arrayListOf()
+            val list: MutableList<HFFunGuideMenuResponseBody.Menu> = arrayListOf()
             for (i in intRange) {
-                list.add(HFFunGuideListResponseBody.ListData())
+                list.add(HFFunGuideMenuResponseBody.Menu())
             }
-            val vpAdapter = VPAdapter()
+            val vpAdapter = VPAdapter(supportFragmentManager)
             vpAdapter.list = list
             vp_fun_guide.adapter = vpAdapter
             tl_fun_guide.setupWithViewPager(vp_fun_guide)
@@ -43,24 +42,15 @@ class HFFunGuideActivity : HFBaseTitleActivity() {
     }
 
 
-    class VPAdapter : PagerAdapter() {
+    class VPAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
 
-        var list: List<HFFunGuideListResponseBody.ListData>? = null
+        var list: List<HFFunGuideMenuResponseBody.Menu>? = null
 
-        override fun isViewFromObject(view: View, any: Any): Boolean {
-            return view == any
-        }
-
-        override fun instantiateItem(container: ViewGroup, position: Int): Any {
-            val inflate = LayoutInflater.from(container.context).inflate(R.layout.function_guide_list, container, false)
-            val textView = inflate.findViewById<TextView>(R.id.tv_fun_guide_list_item)
-            textView.text = "item{$position}"
-            container.addView(inflate)
-            return inflate
-        }
-
-        override fun destroyItem(container: ViewGroup, position: Int, any: Any) {
-            container.removeView(any as View)
+        override fun getItem(position: Int): Fragment {
+            log("getItem[$position]")
+            val hfFunGuideFragment = HFFunGuideFragment()
+            hfFunGuideFragment.menu = list?.get(position)
+            return hfFunGuideFragment
         }
 
         override fun getCount(): Int {
