@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="PtlFrameLayout">
+        <!-- Optional. If you put header and content in xml, you can you these to specify them. -->
+        <attr name="ptl_footer" format="reference"/>
+        <attr name="ptl_content" format="reference"/>
+        <attr name="ptl_duration_to_close" format="integer"/>
+        <attr name="ptl_duration_to_close_footer" format="integer"/>
+        <!-- pull to refresh, otherwise release to load more, default is release to load more -->
+        <attr name="ptl_pull_to_load_more" format="boolean"/>
+        <!-- keep footer when loading-->
+        <attr name="ptl_keep_footer_when_load_more" format="boolean"/>
+    </declare-styleable>
+</resources>

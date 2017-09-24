@@ -12,3 +12,11 @@ fun String?.kIsEmpty(): Boolean {
 fun String?.kIsNotEmpty(): Boolean {
     return !TextUtils.isEmpty(this)
 }
+
+fun String?.kToastLong() {
+    HFContext.appContext?.kToastLong(this@kToastLong ?: "error")
+}
+
+fun String?.kToastShort() {
+    HFContext.appContext?.kToastShort(this@kToastShort ?: "error")
+}

@@ -10,6 +10,9 @@ class HFFunGuideMenuResponseBody : HFBaseResponseBody() {
     val data: List<Menu>? = null
 
     class Menu {
+
+        @Transient
+        var _pageNum = 0
         /**
          *  ...
          */

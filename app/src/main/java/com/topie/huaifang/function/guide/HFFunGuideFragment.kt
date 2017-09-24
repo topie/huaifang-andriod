@@ -1,5 +1,6 @@
 package com.topie.huaifang.function.guide
 
+import `in`.srain.cube.views.ptr.PtrFrameLayout
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -7,11 +8,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import com.davdian.ptr.DefaultPt2Handler
+import com.davdian.ptr.Pt2FrameLayout
+import com.davdian.ptr.ptl.PtlFrameLayout
 import com.topie.huaifang.R
 import com.topie.huaifang.base.HFBaseFragment
 import com.topie.huaifang.base.HFBaseRecyclerAdapter
 import com.topie.huaifang.base.HFBaseRecyclerViewHolder
 import com.topie.huaifang.base.HFViewHolderFactory
+import com.topie.huaifang.extensions.kToastLong
 import com.topie.huaifang.http.HFRetrofit
 import com.topie.huaifang.http.bean.function.HFFunGuideListResponseBody
 import com.topie.huaifang.http.bean.function.HFFunGuideMenuResponseBody
@@ -25,31 +30,56 @@ import io.reactivex.disposables.Disposable
 class HFFunGuideFragment : HFBaseFragment() {
 
     var menu: HFFunGuideMenuResponseBody.Menu? = null
-    var disposable: Disposable? = null
+    private var disposable: Disposable? = null
+    private var pt2FrameLayout: Pt2FrameLayout? = null
 
     override fun onCreateViewSupport(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        val recyclerView = RecyclerView(inflater.context)
+        pt2FrameLayout = inflater.inflate(R.layout.base_pt2_recycler_layout, container, false) as Pt2FrameLayout
+        pt2FrameLayout!!.setPt2Handler(object : DefaultPt2Handler() {
+            override fun checkCanDoLoad(frame: PtlFrameLayout?, content: View?, footer: View?): Boolean {
+                return super.checkCanDoLoad(frame, content, footer) && adapter.list.size > 1
+            }
+
+            override fun onLoadMoreBegin(frame: PtlFrameLayout?) {
+                getFunGuideList(menu?._pageNum ?: 0)
+            }
+
+            override fun onRefreshBegin(frame: PtrFrameLayout?) {
+                getFunGuideList()
+            }
+        })
+        val recyclerView = pt2FrameLayout!!.findViewById<RecyclerView>(R.id.rv_base_pt2)
         recyclerView.layoutManager = LinearLayoutManager(inflater.context)
         recyclerView.adapter = adapter
         recyclerView.layoutParams = RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
         adapter.list.add(menu ?: HFFunGuideMenuResponseBody.Menu())
-        return recyclerView
+        return pt2FrameLayout!!
     }
 
     override fun onResume() {
         super.onResume()
         if (adapter.list.size == 1) {
-            disposable = HFRetrofit.hfService.getFunGuideList(menu?.id ?: "").composeApi().subscribe({
-                adapter.list.removeAll {
-                    it !is HFFunGuideMenuResponseBody.Menu
-                }
-                it?.data?.data?.let {
-                    adapter.list.addAll(it)
-                }
-            }, {
-
-            })
+            getFunGuideList()
         }
+    }
+
+    private fun getFunGuideList(pageNum: Int = 0) {
+        disposable?.takeIf { !it.isDisposed }?.dispose()
+        disposable = HFRetrofit.hfService.getFunGuideList(menu?.id ?: "").composeApi().subscribe({
+            takeIf {
+                pageNum == 0
+            }?.adapter?.list?.removeAll {
+                it !is HFFunGuideMenuResponseBody.Menu
+            }
+            it.data?.data?.let {
+                adapter.list.addAll(it)
+                menu?._pageNum = pageNum + 1
+            }
+        }, {
+            it.message.kToastLong()
+        }, {
+            pt2FrameLayout?.complete2()
+        })
     }
 
     override fun onPause() {

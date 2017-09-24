@@ -1,8 +1,11 @@
 package com.topie.huaifang.http
 
+import com.topie.huaifang.extensions.HFContext
+import com.topie.huaifang.extensions.kToastLong
 import com.topie.huaifang.http.converter.HFGsonConverterFactory
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -51,4 +54,10 @@ object HFRetrofit {
 
 fun <T> Observable<T>.composeApi(): Observable<T> {
     return subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+}
+
+fun <T> Observable<T>.subscribeApi(onNext: ((t: T) -> Unit)): Disposable {
+    return subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(onNext, {
+        HFContext.appContext?.kToastLong(it.message ?: "error")
+    })
 }
