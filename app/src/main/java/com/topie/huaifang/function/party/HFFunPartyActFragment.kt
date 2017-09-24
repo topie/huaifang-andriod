@@ -16,6 +16,7 @@ import com.topie.huaifang.base.HFBaseFragment
 import com.topie.huaifang.base.HFBaseRecyclerAdapter
 import com.topie.huaifang.base.HFBaseRecyclerViewHolder
 import com.topie.huaifang.base.HFViewHolderFactory
+import com.topie.huaifang.extensions.kFormatTime
 import com.topie.huaifang.extensions.kParseUrl
 import com.topie.huaifang.http.HFRetrofit
 import com.topie.huaifang.http.bean.function.HFFunPartyResponseBody
@@ -96,9 +97,16 @@ class HFFunPartyActFragment : HFBaseFragment() {
         override fun onBindData(d: HFFunPartyResponseBody.ListData) {
             imageView.loadImageUri(d.image.kParseUrl())
             tvTitle.text = d.topic
-            tvTime.text = d.beginTime
-            tvStatus.text = d.status
-            tvPublisher.text = d.publishUser
+            tvTime.text = d.beginTime.kFormatTime("时间 yyyy-MM-dd")
+            tvStatus.text = d.status?.let {
+                when (it) {
+                    HFFunPartyResponseBody.ListData.STATUS_WAIT -> "未开始"
+                    HFFunPartyResponseBody.ListData.STATUS_GOING -> "进行中"
+                    HFFunPartyResponseBody.ListData.STATUS_FINISH -> "已结束"
+                    else -> "未开始"
+                }
+            }
+            tvPublisher.text = d.publishUser?.let { "发布者：$it" }
         }
 
         companion object CREATOR : HFViewHolderFactory<ViewHolder> {

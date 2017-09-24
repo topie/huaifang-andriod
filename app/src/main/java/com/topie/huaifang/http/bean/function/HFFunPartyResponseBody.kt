@@ -15,6 +15,12 @@ class HFFunPartyResponseBody : HFBaseResponseBody() {
     }
 
     class ListData {
+        companion object {
+            const val STATUS_WAIT = "0"
+            const val STATUS_GOING = "1"
+            const val STATUS_FINISH = "2"
+        }
+
         var image: String? = null
         var publishTime: String? = null
         var address: String? = null //活动地址
