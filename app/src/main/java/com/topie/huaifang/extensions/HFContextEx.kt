@@ -1,7 +1,11 @@
 package com.topie.huaifang.extensions
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
+import android.content.ContextWrapper
+import android.content.Intent
+import android.os.Bundle
 import android.os.Environment
 import android.support.annotation.AnyRes
 import android.widget.Toast
@@ -87,6 +91,38 @@ fun Context.kToastShort(msg: String) {
 
 fun Context.kInitApplication() {
     HFContext.init(applicationContext)
+}
+
+fun Context?.kMakeNull2Application(): Context? {
+    return this ?: HFContext.appContext
+}
+
+fun Context?.kStartActivity(clazz: Class<out Activity>, bundle: Bundle? = null): Boolean {
+    return kMakeNull2Application()?.let {
+        val intent = Intent(it, clazz)
+        bundle?.let { intent.putExtras(bundle) }
+        it.kStartActivity(intent)
+    } ?: false
+}
+
+fun Context?.kStartActivity(intent: Intent): Boolean {
+    val context = kMakeNull2Application() ?: return false
+    val kFindActivity = kFindActivity()
+    kFindActivity?.startActivity(intent) ?: context.startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+    return true
+}
+
+fun Context?.kFindActivity(): Activity? {
+    if (this == null) {
+        return null
+    }
+    if (this is Activity) {
+        return this
+    }
+    if (this is ContextWrapper) {
+        return baseContext.kFindActivity()
+    }
+    return null
 }
 
 private object HFToast {

@@ -1,5 +1,6 @@
 package com.topie.huaifang.extensions
 
+import android.net.Uri
 import android.text.TextUtils
 
 /**
@@ -19,4 +20,11 @@ fun String?.kToastLong() {
 
 fun String?.kToastShort() {
     HFContext.appContext?.kToastShort(this@kToastShort ?: "error")
+}
+
+fun String?.kParseUrl(): Uri? {
+    if (kIsEmpty()) {
+        return null
+    }
+    return Uri.parse(this)
 }

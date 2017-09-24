@@ -12,5 +12,6 @@ class HFLiveMenuResponseBody : HFBaseResponseBody() {
         var title: String? = null
         var id: String? = null
         var updateTime: String? = null
+        var content: String? = null
     }
 }

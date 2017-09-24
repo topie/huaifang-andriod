@@ -138,8 +138,15 @@
             <View
                 android:layout_width="0.5dp"
                 android:layout_height="match_parent"
-                android:layout_marginEnd="1dp"
-                android:layout_marginRight="1dp"
+                android:background="@color/colorGray" />
+
+            <include
+                android:id="@+id/ll_facing_fun_5"
+                layout="@layout/facing_index_fun_item" />
+
+            <View
+                android:layout_width="0.5dp"
+                android:layout_height="match_parent"
                 android:background="@color/colorGray" />
 
         </com.topie.huaifang.view.HFAspectLinearLayout>
@@ -169,6 +176,11 @@
 
             <include layout="@layout/facing_index_friend_item" />
         </LinearLayout>
+
+        <!--底部距离底边分割线-->
+        <View
+            android:layout_width="1dp"
+            android:layout_height="20dp" />
     </LinearLayout>
 
 </ScrollView>

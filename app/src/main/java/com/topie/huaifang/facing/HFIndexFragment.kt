@@ -10,13 +10,16 @@ import android.widget.TextView
 import com.topie.huaifang.R
 import com.topie.huaifang.account.HFAccountManager
 import com.topie.huaifang.base.HFBaseFragment
+import com.topie.huaifang.extensions.kStartActivity
 import com.topie.huaifang.function.guide.HFFunGuideActivity
 import com.topie.huaifang.function.live.HFFunLiveActivity
 import com.topie.huaifang.function.notice.HFFunPublicActivity
+import com.topie.huaifang.function.party.HFFunPartyActivity
 import com.topie.huaifang.login.HFLoginActivity
 
 /**
  * Created by arman on 2017/9/16.
+ * app 首页
  */
 class HFIndexFragment : HFBaseFragment() {
 
@@ -40,8 +43,11 @@ class HFIndexFragment : HFBaseFragment() {
         fun3.findViewById<ImageView>(R.id.iv_facing_index_fun).setImageResource(R.mipmap.ic_facing_index_fun_live)
         fun3.findViewById<TextView>(R.id.tv_facing_index_fun).setText(R.string.facing_index_fun_live)
         val fun4 = view.findViewById<View>(R.id.ll_facing_fun_4)
-        fun4.findViewById<ImageView>(R.id.iv_facing_index_fun).setImageResource(R.mipmap.ic_facing_index_fun_yellow_book)
-        fun4.findViewById<TextView>(R.id.tv_facing_index_fun).setText(R.string.facing_index_fun_yellow_book)
+        fun4.findViewById<ImageView>(R.id.iv_facing_index_fun).setImageResource(R.mipmap.ic_facing_index_fun_party)
+        fun4.findViewById<TextView>(R.id.tv_facing_index_fun).setText(R.string.facing_index_fun_party)
+        val fun5 = view.findViewById<View>(R.id.ll_facing_fun_5)
+        fun5.findViewById<ImageView>(R.id.iv_facing_index_fun).setImageResource(R.mipmap.ic_facing_index_fun_yellow_book)
+        fun5.findViewById<TextView>(R.id.tv_facing_index_fun).setText(R.string.facing_index_fun_yellow_book)
 
         fun0.setOnClickListener {
             context?.let {
@@ -69,9 +75,15 @@ class HFIndexFragment : HFBaseFragment() {
         }
 
         fun3.setOnClickListener {
-            context?.let {
-                startActivity(Intent(context, HFFunLiveActivity::class.java))
-            }
+            context.kStartActivity(HFFunLiveActivity::class.java)
+        }
+
+        fun4.setOnClickListener {
+            context.kStartActivity(HFFunPartyActivity::class.java)
+        }
+
+        fun5.setOnClickListener {
+
         }
 
     }

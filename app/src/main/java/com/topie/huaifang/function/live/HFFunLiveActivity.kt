@@ -10,23 +10,20 @@ import com.topie.huaifang.HFBaseTitleActivity
 import com.topie.huaifang.R
 import com.topie.huaifang.http.HFRetrofit
 import com.topie.huaifang.http.bean.function.HFLiveListResponseBody
-import com.topie.huaifang.http.composeApi
+import com.topie.huaifang.http.subscribeApi
 import kotlinx.android.synthetic.main.function_guide_activity.*
 
 /**
  * Created by arman on 2017/9/21.
- * 办事指南
+ * 居务公开
  */
 class HFFunLiveActivity : HFBaseTitleActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.function_guide_activity)
         setBaseTitle(R.string.facing_index_fun_live)
-        HFRetrofit.hfService.getFunLiveMenu().composeApi().subscribe({
+        HFRetrofit.hfService.getFunLiveList().subscribeApi {
             val intRange = 0..10
-            for (i in intRange) {
-                tl_fun_guide.addTab(tl_fun_guide.newTab().setText("title{$i}"))
-            }
             val list: MutableList<HFLiveListResponseBody.BodyData> = arrayListOf()
             for (i in intRange) {
                 list.add(HFLiveListResponseBody.BodyData())
@@ -36,9 +33,7 @@ class HFFunLiveActivity : HFBaseTitleActivity() {
             vp_fun_guide.adapter = vpAdapter
             tl_fun_guide.setupWithViewPager(vp_fun_guide)
             vpAdapter.notifyDataSetChanged()
-        }, {
-
-        })
+        }
     }
 
 
@@ -51,11 +46,15 @@ class HFFunLiveActivity : HFBaseTitleActivity() {
         }
 
         override fun instantiateItem(container: ViewGroup, position: Int): Any {
-            val inflate = LayoutInflater.from(container.context).inflate(R.layout.function_guide_list, container, false)
-            val textView = inflate.findViewById<TextView>(R.id.tv_fun_guide_list_item)
-            textView.text = "item{$position}"
+            val inflate = LayoutInflater.from(container.context).inflate(R.layout.function_live_list, container, false)
+            val textView = inflate.findViewById<TextView>(R.id.tv_fun_live_list_item)
+            textView.text = getBodyData(position)?.content
             container.addView(inflate)
             return inflate
+        }
+
+        fun getBodyData(position: Int): HFLiveListResponseBody.BodyData? {
+            return list?.takeIf { it.size > position }?.get(position)
         }
 
         override fun destroyItem(container: ViewGroup, position: Int, any: Any) {
@@ -67,7 +66,7 @@ class HFFunLiveActivity : HFBaseTitleActivity() {
         }
 
         override fun getPageTitle(position: Int): CharSequence {
-            return "title{$position}"
+            return getBodyData(position)?.title ?: position.toString()
         }
 
     }

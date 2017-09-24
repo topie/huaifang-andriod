@@ -4,6 +4,7 @@ import com.topie.huaifang.http.bean.HFBaseResponseBody
 
 /**
  * Created by arman on 2017/9/21.
+ * 办事指南
  */
 class HFFunGuideMenuResponseBody : HFBaseResponseBody() {
 

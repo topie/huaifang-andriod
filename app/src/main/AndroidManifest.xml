@@ -24,6 +24,8 @@
         <activity android:name=".function.guide.HFFunGuideActivity" />
         <activity android:name=".function.live.HFFunLiveActivity" />
         <activity android:name=".function.notice.HFFunPublicActivity" />
+        <activity android:name=".communication.HFCommFriendsActivity" />
+        <activity android:name=".function.party.HFFunPartyActivity" />
     </application>
 
 </manifest>

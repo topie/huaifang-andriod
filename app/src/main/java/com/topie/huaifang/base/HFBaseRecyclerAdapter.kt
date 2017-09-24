@@ -7,7 +7,7 @@ import android.view.ViewGroup
 /**
  * Created by arman on 2017/9/22.
  */
-class HFBaseRecyclerAdapter<D, VH : HFBaseRecyclerViewHolder<D>>(private val factory: HFViewHolderFactory<VH>, val list: MutableList<D> = arrayListOf()) : RecyclerView.Adapter<VH>() {
+open class HFBaseRecyclerAdapter<D, VH : HFBaseRecyclerViewHolder<D>>(private val factory: HFViewHolderFactory<VH>, val list: MutableList<D> = arrayListOf()) : RecyclerView.Adapter<VH>() {
 
     override fun onBindViewHolder(holder: VH, position: Int) {
         holder.bindData(list[position])
@@ -26,8 +26,29 @@ class HFBaseRecyclerAdapter<D, VH : HFBaseRecyclerViewHolder<D>>(private val fac
     }
 }
 
-abstract class HFBaseRecyclerViewHolder<in D>(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    abstract fun bindData(d: D)
+abstract class HFBaseRecyclerViewHolder<D>(itemView: View, initItemClick: Boolean = false) : RecyclerView.ViewHolder(itemView) {
+
+    var data: D? = null
+        private set
+
+    init {
+        if (initItemClick) {
+            itemView.setOnClickListener {
+                onItemClicked(data)
+            }
+        }
+    }
+
+    fun bindData(d: D) {
+        data = d
+        onBindData(d)
+    }
+
+    abstract fun onBindData(d: D)
+
+    open fun onItemClicked(d: D?) {
+
+    }
 }
 
 interface HFViewHolderFactory<out T : RecyclerView.ViewHolder> {

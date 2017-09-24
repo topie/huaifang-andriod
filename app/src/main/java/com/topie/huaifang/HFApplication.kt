@@ -1,6 +1,7 @@
 package com.topie.huaifang
 
 import android.app.Application
+import com.topie.huaifang.account.HFAccountManager
 import com.topie.huaifang.extensions.kInitApplication
 
 /**
@@ -10,5 +11,6 @@ class HFApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         kInitApplication()
+        HFAccountManager.getToken()
     }
 }

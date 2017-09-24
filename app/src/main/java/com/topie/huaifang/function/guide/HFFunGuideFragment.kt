@@ -115,7 +115,7 @@ class HFFunGuideFragment : HFBaseFragment() {
     private class TopViewHolder(itemView: View) : HFBaseRecyclerViewHolder<Any>(itemView) {
         val tvName = itemView.findViewById<TextView>(R.id.tv_fun_guide_name)!!
         val tvAddress = itemView.findViewById<TextView>(R.id.tv_fun_guide_address)!!
-        override fun bindData(d: Any) {
+        override fun onBindData(d: Any) {
             if (d is HFFunGuideMenuResponseBody.Menu) {
                 tvName.text = d.name
                 tvAddress.text = d.address
@@ -131,7 +131,7 @@ class HFFunGuideFragment : HFBaseFragment() {
         val tvName = itemView.findViewById<TextView>(R.id.tv_fun_guide_list_item_title)!!
         val tvTime = itemView.findViewById<TextView>(R.id.tv_fun_guide_list_item_time)!!
         val tvRead = itemView.findViewById<TextView>(R.id.tv_fun_guide_list_item_read)!!
-        override fun bindData(d: Any) {
+        override fun onBindData(d: Any) {
             if (d is HFFunGuideListResponseBody.ListData) {
                 tvName.text = d.title
                 tvTime.text = d.publishTime

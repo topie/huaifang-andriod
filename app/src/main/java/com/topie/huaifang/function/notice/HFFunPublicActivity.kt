@@ -45,7 +45,7 @@ class HFFunPublicActivity : HFBaseTitleActivity() {
 
         override fun instantiateItem(container: ViewGroup, position: Int): Any {
             val viewHolder = list[position] ?: let {
-                val inflate = LayoutInflater.from(container.context).inflate(R.layout.function_guide_list, container, false)
+                val inflate = LayoutInflater.from(container.context).inflate(R.layout.function_public_list_item, container, false)
                 val viewHolder = ViewHolder(inflate, position)
                 list.put(position, viewHolder)
                 return@let viewHolder
@@ -71,7 +71,7 @@ class HFFunPublicActivity : HFBaseTitleActivity() {
 
     class ViewHolder(val itemView: View, val position: Int) {
 
-        private val textView = itemView.findViewById<TextView>(R.id.tv_fun_guide_list_item)
+        private val textView = itemView.findViewById<TextView>(R.id.tv_fun_public_list_item)
 
         init {
             textView.text = "item{$position}"
