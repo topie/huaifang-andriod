@@ -66,7 +66,7 @@ class HFFunPartyActFragment : HFBaseFragment() {
 
     private fun getFunPartyActList(pageSize: Int) {
         disposable?.takeIf { it.isDisposed.not() }?.dispose()
-        disposable = HFRetrofit.hfService.getFunPartyActList().subscribeApi {
+        disposable = HFRetrofit.hfService.getFunPartyActList(pageSize).subscribeApi {
             it.data?.data?.takeIf { it.isNotEmpty() }?.let {
                 if (pageSize == 0) {
                     adapter.list.clear()

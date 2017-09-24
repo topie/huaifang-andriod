@@ -35,7 +35,7 @@ class HFFunPartyActivity : HFBaseTitleActivity() {
         override fun getItem(position: Int): Fragment {
             return when (position) {
                 0 -> HFFunPartyActFragment()
-                1 -> HFFunPartyActFragment()
+                1 -> HFFunPartyPublicFragment()
                 2 -> HFFunPartyActFragment()
                 else -> HFFunPartyActFragment()
             }
