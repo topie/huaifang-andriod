@@ -8,9 +8,14 @@ import com.topie.huaifang.http.bean.HFBaseResponseBody
  */
 class HFFunPartyPublicResponseBody : HFBaseResponseBody() {
 
-    var data: List<BodyData>? = null
+    var data: BodyData? = null
 
     class BodyData {
+        var total: Int? = null
+        var data: List<ListData>? = null
+    }
+
+    class ListData {
         var id: Int = 0
         var publishTime: String? = null
         var file: String? = null

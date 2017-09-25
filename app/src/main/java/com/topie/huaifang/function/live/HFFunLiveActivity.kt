@@ -24,9 +24,9 @@ class HFFunLiveActivity : HFBaseTitleActivity() {
         setBaseTitle(R.string.facing_index_fun_live)
         HFRetrofit.hfService.getFunLiveList().subscribeApi {
             val intRange = 0..10
-            val list: MutableList<HFLiveListResponseBody.BodyData> = arrayListOf()
+            val list: MutableList<HFLiveListResponseBody.ListData> = arrayListOf()
             for (i in intRange) {
-                list.add(HFLiveListResponseBody.BodyData())
+                list.add(HFLiveListResponseBody.ListData())
             }
             val vpAdapter = VPAdapter()
             vpAdapter.list = list
@@ -39,7 +39,7 @@ class HFFunLiveActivity : HFBaseTitleActivity() {
 
     class VPAdapter : PagerAdapter() {
 
-        var list: List<HFLiveListResponseBody.BodyData>? = null
+        var list: List<HFLiveListResponseBody.ListData>? = null
 
         override fun isViewFromObject(view: View, any: Any): Boolean {
             return view == any
@@ -48,12 +48,12 @@ class HFFunLiveActivity : HFBaseTitleActivity() {
         override fun instantiateItem(container: ViewGroup, position: Int): Any {
             val inflate = LayoutInflater.from(container.context).inflate(R.layout.function_live_list, container, false)
             val textView = inflate.findViewById<TextView>(R.id.tv_fun_live_list_item)
-            textView.text = getBodyData(position)?.content
+            textView.text = getListData(position)?.content
             container.addView(inflate)
             return inflate
         }
 
-        fun getBodyData(position: Int): HFLiveListResponseBody.BodyData? {
+        private fun getListData(position: Int): HFLiveListResponseBody.ListData? {
             return list?.takeIf { it.size > position }?.get(position)
         }
 
@@ -66,7 +66,7 @@ class HFFunLiveActivity : HFBaseTitleActivity() {
         }
 
         override fun getPageTitle(position: Int): CharSequence {
-            return getBodyData(position)?.title ?: position.toString()
+            return getListData(position)?.title ?: position.toString()
         }
 
     }

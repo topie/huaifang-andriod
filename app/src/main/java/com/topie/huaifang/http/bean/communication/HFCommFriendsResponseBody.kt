@@ -7,9 +7,13 @@ import com.topie.huaifang.http.bean.HFBaseResponseBody
  */
 class HFCommFriendsResponseBody : HFBaseResponseBody() {
 
-    var data: List<BodyData>? = null
+    var data: BodyData? = null
 
     class BodyData {
+        var data: List<ListData>? = null
+    }
+
+    class ListData {
         companion object {
             /**
              * 激活

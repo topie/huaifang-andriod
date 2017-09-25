@@ -29,7 +29,7 @@ import io.reactivex.disposables.Disposable
  */
 class HFFunGuideFragment : HFBaseFragment() {
 
-    var menu: HFFunGuideMenuResponseBody.Menu? = null
+    var listData: HFFunGuideMenuResponseBody.ListData? = null
     private var disposable: Disposable? = null
     private var pt2FrameLayout: Pt2FrameLayout? = null
 
@@ -41,7 +41,7 @@ class HFFunGuideFragment : HFBaseFragment() {
             }
 
             override fun onLoadMoreBegin(frame: PtlFrameLayout?) {
-                getFunGuideList(menu?._pageNum ?: 0)
+                getFunGuideList(listData?._pageNum ?: 0)
             }
 
             override fun onRefreshBegin(frame: PtrFrameLayout?) {
@@ -52,7 +52,7 @@ class HFFunGuideFragment : HFBaseFragment() {
         recyclerView.layoutManager = LinearLayoutManager(inflater.context)
         recyclerView.adapter = adapter
         recyclerView.layoutParams = RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
-        adapter.list.add(menu ?: HFFunGuideMenuResponseBody.Menu())
+        adapter.list.add(listData ?: HFFunGuideMenuResponseBody.ListData())
         return pt2FrameLayout!!
     }
 
@@ -65,15 +65,15 @@ class HFFunGuideFragment : HFBaseFragment() {
 
     private fun getFunGuideList(pageNum: Int = 0) {
         disposable?.takeIf { !it.isDisposed }?.dispose()
-        disposable = HFRetrofit.hfService.getFunGuideList(menu?.id ?: "").composeApi().subscribe({
+        disposable = HFRetrofit.hfService.getFunGuideList(listData?.id ?: "").composeApi().subscribe({
             takeIf {
                 pageNum == 0
             }?.adapter?.list?.removeAll {
-                it !is HFFunGuideMenuResponseBody.Menu
+                it !is HFFunGuideMenuResponseBody.ListData
             }
             it.data?.data?.let {
                 adapter.list.addAll(it)
-                menu?._pageNum = pageNum + 1
+                listData?._pageNum = pageNum + 1
             }
         }, {
             it.message.kToastLong()
@@ -116,7 +116,7 @@ class HFFunGuideFragment : HFBaseFragment() {
         val tvName = itemView.findViewById<TextView>(R.id.tv_fun_guide_name)!!
         val tvAddress = itemView.findViewById<TextView>(R.id.tv_fun_guide_address)!!
         override fun onBindData(d: Any) {
-            if (d is HFFunGuideMenuResponseBody.Menu) {
+            if (d is HFFunGuideMenuResponseBody.ListData) {
                 tvName.text = d.name
                 tvAddress.text = d.address
             } else {

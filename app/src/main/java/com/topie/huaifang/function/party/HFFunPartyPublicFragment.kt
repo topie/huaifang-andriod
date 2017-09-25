@@ -64,7 +64,7 @@ class HFFunPartyPublicFragment : HFBaseFragment() {
     private fun getFunPartyActList() {
         disposable?.takeIf { it.isDisposed.not() }?.dispose()
         disposable = HFRetrofit.hfService.getFunPartyPublicList().subscribeApi {
-            it.data?.takeIf { it.isNotEmpty() }?.let {
+            it.data?.data?.takeIf { it.isNotEmpty() }?.let {
                 adapter.list.clear()
                 adapter.list.addAll(it)
                 adapter.notifyDataSetChanged()
@@ -77,12 +77,12 @@ class HFFunPartyPublicFragment : HFBaseFragment() {
         disposable?.takeIf { it.isDisposed.not() }?.dispose()
     }
 
-    private class ViewHolder(itemView: View) : HFBaseRecyclerViewHolder<HFFunPartyPublicResponseBody.BodyData>(itemView, true) {
+    private class ViewHolder(itemView: View) : HFBaseRecyclerViewHolder<HFFunPartyPublicResponseBody.ListData>(itemView, true) {
         val tvTitle: TextView = itemView.findViewById(R.id.tv_fun_party_public_list_item_title)
         val tvTime: TextView = itemView.findViewById(R.id.tv_fun_party_public_list_item_time)
         val tvPublisher: TextView = itemView.findViewById(R.id.tv_fun_party_public_list_item_publisher)
 
-        override fun onBindData(d: HFFunPartyPublicResponseBody.BodyData) {
+        override fun onBindData(d: HFFunPartyPublicResponseBody.ListData) {
             tvTitle.text = d.title
             tvTime.text = d.publishTime.kFormatTime("时间 yyyy-MM-dd")
             tvPublisher.text = d.publishUser?.let { "发布者：$it" }

@@ -8,9 +8,14 @@ import com.topie.huaifang.http.bean.HFBaseResponseBody
  */
 class HFFunGuideMenuResponseBody : HFBaseResponseBody() {
 
-    val data: List<Menu>? = null
+    var data: BodyData? = null
 
-    class Menu {
+    class BodyData {
+        var total: Int? = null
+        var data: List<ListData>? = null
+    }
+
+    class ListData {
 
         @Transient
         var _pageNum = 0

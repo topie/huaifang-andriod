@@ -27,9 +27,9 @@ class HFFunGuideActivity : HFBaseTitleActivity() {
                 tl_fun_guide.addTab(tl_fun_guide.newTab().setText("title{$i}"))
             }
 
-            val list: MutableList<HFFunGuideMenuResponseBody.Menu> = arrayListOf()
+            val list: MutableList<HFFunGuideMenuResponseBody.ListData> = arrayListOf()
             for (i in intRange) {
-                list.add(HFFunGuideMenuResponseBody.Menu())
+                list.add(HFFunGuideMenuResponseBody.ListData())
             }
             val vpAdapter = VPAdapter(supportFragmentManager)
             vpAdapter.list = list
@@ -44,12 +44,12 @@ class HFFunGuideActivity : HFBaseTitleActivity() {
 
     class VPAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
 
-        var list: List<HFFunGuideMenuResponseBody.Menu>? = null
+        var list: List<HFFunGuideMenuResponseBody.ListData>? = null
 
         override fun getItem(position: Int): Fragment {
             log("getItem[$position]")
             val hfFunGuideFragment = HFFunGuideFragment()
-            hfFunGuideFragment.menu = list?.get(position)
+            hfFunGuideFragment.listData = list?.get(position)
             return hfFunGuideFragment
         }
 

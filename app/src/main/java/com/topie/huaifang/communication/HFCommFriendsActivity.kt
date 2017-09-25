@@ -35,13 +35,13 @@ class HFCommFriendsActivity : HFBaseTitleActivity() {
         recyclerView.layoutManager = LinearLayoutManager(applicationContext)
         recyclerView.adapter = hfBaseRecyclerAdapter
         HFRetrofit.hfService.getCommFriends().subscribeApi {
-            it.data?.takeIf { it.isNotEmpty() }?.let { hfBaseRecyclerAdapter.list.addAll(it) }
+            it.data?.data?.takeIf { it.isNotEmpty() }?.let { hfBaseRecyclerAdapter.list.addAll(it) }
         }
     }
 
-    class ViewHolder(itemView: View) : HFBaseRecyclerViewHolder<HFCommFriendsResponseBody.BodyData>(itemView) {
-        val hfImageView = itemView.findViewById<HFImageView>(R.id.iv_facing_list_icon)
-        val textView = itemView.findViewById<TextView>(R.id.tv_facing_list_name)
+    class ViewHolder(itemView: View) : HFBaseRecyclerViewHolder<HFCommFriendsResponseBody.ListData>(itemView) {
+        private val hfImageView = itemView.findViewById<HFImageView>(R.id.iv_facing_list_icon)
+        private val textView = itemView.findViewById<TextView>(R.id.tv_facing_list_name)
 
         companion object CREATOR : HFViewHolderFactory<ViewHolder> {
             override fun create(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -50,7 +50,7 @@ class HFCommFriendsActivity : HFBaseTitleActivity() {
             }
         }
 
-        override fun onBindData(d: HFCommFriendsResponseBody.BodyData) {
+        override fun onBindData(d: HFCommFriendsResponseBody.ListData) {
             hfImageView.loadImageUri(d.headImage?.let { Uri.parse(it) })
             textView.text = d.nickname?.takeIf { it.kIsNotEmpty() } ?: d.mobilePhone
         }
