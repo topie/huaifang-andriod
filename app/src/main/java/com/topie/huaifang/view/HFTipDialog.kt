@@ -17,7 +17,7 @@ class HFTipDialog private constructor(context: Context, private val builder: HFT
         super.onCreate(savedInstanceState)
         setContentView(R.layout.view_tip_dialog)
         setWindowScreenWidth()
-        val textView = findViewById<TextView>(R.id.tv_tip_dialog_content)
+        val textView: TextView = findViewById(R.id.tv_tip_dialog_content) as TextView
         textView.text = builder.content
     }
 

@@ -38,11 +38,11 @@ class HFMainActivity : AppCompatActivity() {
             val layoutId = kGetIdentifier("ll_facing_bottom_tab_$i", "id")
             val drawableId = kGetIdentifier("ic_facing_bottom_tab_$i", "drawable")
             val stringId = kGetIdentifier("facing_bottom_tab_$i", "string")
-            val layout = findViewById<View>(layoutId)
+            val layout = findViewById(layoutId)
             log("layoutId=$layoutId,mipmapId=$drawableId,stringId=$stringId,")
             if (layout != null) {
-                val imageView = layout.findViewById<ImageView>(R.id.iv_facing_bottom_tab)
-                val textView = layout.findViewById<TextView>(R.id.tv_facing_bottom_tab)
+                val imageView: ImageView = layout.findViewById(R.id.iv_facing_bottom_tab) as ImageView
+                val textView: TextView = layout.findViewById(R.id.tv_facing_bottom_tab) as TextView
                 imageView.setImageResource(drawableId)
                 textView.setText(stringId)
                 layout.setOnClickListener(listener)
@@ -56,7 +56,7 @@ class HFMainActivity : AppCompatActivity() {
         log("selectTab index=$index")
         for (i in 0..3) {
             val layoutId = resources.getIdentifier("ll_facing_bottom_tab_$i", "id", packageName)
-            findViewById<View>(layoutId)?.let {
+            findViewById(layoutId)?.let {
                 if (i == index) {
                     it.isSelected = true
                 } else if (it.isSelected) {

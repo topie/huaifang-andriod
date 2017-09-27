@@ -27,7 +27,7 @@ class HFMineFragment : HFBaseFragment() {
 
     override fun onCreateViewSupport(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val inflate = inflater.inflate(R.layout.facing_list, container, false)
-        val recyclerView = inflate.findViewById<RecyclerView>(R.id.rv_facing_list)
+        val recyclerView: RecyclerView = inflate.findViewById(R.id.rv_facing_list) as RecyclerView
         recyclerView.layoutManager = LinearLayoutManager(inflate.context)
         val list: ArrayList<HFListItem> = arrayListOf()
         list.add(HFListItem(R.mipmap.ic_facing_mine_friend, context.getString(R.string.facing_mine_friend), 0))
@@ -43,8 +43,8 @@ class HFMineFragment : HFBaseFragment() {
 
     class ViewHolder(itemView: View) : HFBaseRecyclerViewHolder<HFListItem>(itemView, true) {
 
-        private val ivIcon: HFImageView = itemView.findViewById(R.id.iv_facing_list_icon)
-        private val tvName: TextView = itemView.findViewById(R.id.tv_facing_list_name)
+        private val ivIcon: HFImageView = itemView.findViewById(R.id.iv_facing_list_icon) as HFImageView
+        private val tvName: TextView = itemView.findViewById(R.id.tv_facing_list_name) as TextView
 
         companion object CREATOR : HFViewHolderFactory<ViewHolder> {
             override fun create(parent: ViewGroup, viewType: Int): ViewHolder {

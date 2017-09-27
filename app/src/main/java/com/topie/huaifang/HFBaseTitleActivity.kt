@@ -18,15 +18,16 @@ abstract class HFBaseTitleActivity : AppCompatActivity() {
 
     override fun setContentView(layoutResID: Int) {
         checkRootView()
+        val viewGroup = mRootView!!.findViewById(R.id.fl_base_title_root) as ViewGroup
         val inflate = LayoutInflater.from(this)
-                .inflate(layoutResID, mRootView!!.findViewById(R.id.fl_base_title_root), false)
+                .inflate(layoutResID, viewGroup, false)
         setContentView(inflate)
     }
 
     override fun setContentView(view: View?) {
         checkRootView()
         view?.let {
-            val container = mRootView!!.findViewById<View>(R.id.fl_base_title_container)
+            val container = mRootView!!.findViewById(R.id.fl_base_title_container)
             val height = container.layoutParams.height.let { Math.max(0, it) }
             val lp = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
             lp.topMargin = height
@@ -51,10 +52,10 @@ abstract class HFBaseTitleActivity : AppCompatActivity() {
             mRootView = LayoutInflater.from(this)
                     .inflate(
                             R.layout.base_title_layout,
-                            findViewById(android.R.id.content),
+                            findViewById(android.R.id.content) as ViewGroup,
                             false
                     ) as ViewGroup?
-            mRootView!!.findViewById<View>(R.id.iv_base_title_back).setOnClickListener {
+            mRootView!!.findViewById(R.id.iv_base_title_back).setOnClickListener {
                 onBackPressed()
             }
         }
@@ -64,12 +65,12 @@ abstract class HFBaseTitleActivity : AppCompatActivity() {
     }
 
     fun setBaseTitle(id: Int) {
-        val textView = mRootView!!.findViewById<TextView>(R.id.tv_base_title)
+        val textView = mRootView!!.findViewById(R.id.tv_base_title) as TextView
         textView.setText(id)
     }
 
     fun setBaseTitle(title: String) {
-        val textView = mRootView!!.findViewById<TextView>(R.id.tv_base_title)
+        val textView = mRootView!!.findViewById(R.id.tv_base_title) as TextView
         textView.text = title
     }
 }

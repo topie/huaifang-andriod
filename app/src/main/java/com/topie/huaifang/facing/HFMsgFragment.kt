@@ -18,7 +18,7 @@ class HFMsgFragment : HFBaseFragment() {
 
     override fun onCreateViewSupport(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val inflate = inflater.inflate(R.layout.facing_list, container, false)
-        val recyclerView = inflate.findViewById<RecyclerView>(R.id.rv_facing_list)
+        val recyclerView: RecyclerView = inflate.findViewById(R.id.rv_facing_list) as RecyclerView
         recyclerView.layoutManager = LinearLayoutManager(inflate.context)
         //create adapter
         val list: ArrayList<HFListAdapter.HFListItem> = arrayListOf()

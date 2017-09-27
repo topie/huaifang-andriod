@@ -47,7 +47,7 @@ class HFFunLiveActivity : HFBaseTitleActivity() {
 
         override fun instantiateItem(container: ViewGroup, position: Int): Any {
             val inflate = LayoutInflater.from(container.context).inflate(R.layout.function_live_list, container, false)
-            val textView = inflate.findViewById<TextView>(R.id.tv_fun_live_list_item)
+            val textView: TextView = inflate.findViewById(R.id.tv_fun_live_list_item) as TextView
             textView.text = getListData(position)?.content
             container.addView(inflate)
             return inflate

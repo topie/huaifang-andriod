@@ -40,8 +40,8 @@ class HFCommFriendsActivity : HFBaseTitleActivity() {
     }
 
     class ViewHolder(itemView: View) : HFBaseRecyclerViewHolder<HFCommFriendsResponseBody.ListData>(itemView) {
-        private val hfImageView = itemView.findViewById<HFImageView>(R.id.iv_facing_list_icon)
-        private val textView = itemView.findViewById<TextView>(R.id.tv_facing_list_name)
+        private val hfImageView = itemView.findViewById(R.id.iv_facing_list_icon) as HFImageView
+        private val textView = itemView.findViewById(R.id.tv_facing_list_name) as TextView
 
         companion object CREATOR : HFViewHolderFactory<ViewHolder> {
             override fun create(parent: ViewGroup, viewType: Int): ViewHolder {

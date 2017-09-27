@@ -84,4 +84,10 @@ interface HFService {
      */
     @GET("/api/m/party/activity/list")
     fun getFunPartyPublicList(): Observable<HFFunPartyPublicResponseBody>
+
+    /**
+     * 党员信息公开
+     */
+    @GET("/api/m/party/member/list")
+    fun getFunPartyMemberList(): Observable<HFFunPartyMemberResponseBody>
 }

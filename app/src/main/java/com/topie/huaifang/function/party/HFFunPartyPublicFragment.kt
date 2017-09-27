@@ -46,9 +46,9 @@ class HFFunPartyPublicFragment : HFBaseFragment() {
     }
 
     override fun onCreateViewSupport(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        val inflate = layoutInflater.inflate(R.layout.base_pt2_recycler_layout, container, false) as Pt2FrameLayout
+        val inflate = inflater.inflate(R.layout.base_pt2_recycler_layout, container, false) as Pt2FrameLayout
         inflate.setPt2Handler(handler)
-        val recyclerView = inflate.findViewById<RecyclerView>(R.id.rv_base_pt2)
+        val recyclerView: RecyclerView = inflate.findViewById(R.id.rv_base_pt2) as RecyclerView
         recyclerView.layoutManager = LinearLayoutManager(inflater.context)
         recyclerView.adapter = adapter
         return inflate
@@ -78,9 +78,9 @@ class HFFunPartyPublicFragment : HFBaseFragment() {
     }
 
     private class ViewHolder(itemView: View) : HFBaseRecyclerViewHolder<HFFunPartyPublicResponseBody.ListData>(itemView, true) {
-        val tvTitle: TextView = itemView.findViewById(R.id.tv_fun_party_public_list_item_title)
-        val tvTime: TextView = itemView.findViewById(R.id.tv_fun_party_public_list_item_time)
-        val tvPublisher: TextView = itemView.findViewById(R.id.tv_fun_party_public_list_item_publisher)
+        val tvTitle: TextView = itemView.findViewById(R.id.tv_fun_party_public_list_item_title) as TextView
+        val tvTime: TextView = itemView.findViewById(R.id.tv_fun_party_public_list_item_time) as TextView
+        val tvPublisher: TextView = itemView.findViewById(R.id.tv_fun_party_public_list_item_publisher) as TextView
 
         override fun onBindData(d: HFFunPartyPublicResponseBody.ListData) {
             tvTitle.text = d.title

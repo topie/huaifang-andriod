@@ -48,7 +48,7 @@ class HFFunGuideFragment : HFBaseFragment() {
                 getFunGuideList()
             }
         })
-        val recyclerView = pt2FrameLayout!!.findViewById<RecyclerView>(R.id.rv_base_pt2)
+        val recyclerView: RecyclerView = pt2FrameLayout!!.findViewById(R.id.rv_base_pt2) as RecyclerView
         recyclerView.layoutManager = LinearLayoutManager(inflater.context)
         recyclerView.adapter = adapter
         recyclerView.layoutParams = RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
@@ -113,8 +113,8 @@ class HFFunGuideFragment : HFBaseFragment() {
     }
 
     private class TopViewHolder(itemView: View) : HFBaseRecyclerViewHolder<Any>(itemView) {
-        val tvName = itemView.findViewById<TextView>(R.id.tv_fun_guide_name)!!
-        val tvAddress = itemView.findViewById<TextView>(R.id.tv_fun_guide_address)!!
+        val tvName: TextView = (itemView.findViewById(R.id.tv_fun_guide_name) as TextView?)!!
+        val tvAddress: TextView = (itemView.findViewById(R.id.tv_fun_guide_address) as TextView?)!!
         override fun onBindData(d: Any) {
             if (d is HFFunGuideMenuResponseBody.ListData) {
                 tvName.text = d.name
@@ -128,9 +128,9 @@ class HFFunGuideFragment : HFBaseFragment() {
     }
 
     private class ItemViewHolder(itemView: View) : HFBaseRecyclerViewHolder<Any>(itemView) {
-        val tvName = itemView.findViewById<TextView>(R.id.tv_fun_guide_list_item_title)!!
-        val tvTime = itemView.findViewById<TextView>(R.id.tv_fun_guide_list_item_time)!!
-        val tvRead = itemView.findViewById<TextView>(R.id.tv_fun_guide_list_item_read)!!
+        val tvName: TextView = (itemView.findViewById(R.id.tv_fun_guide_list_item_title) as TextView?)!!
+        val tvTime: TextView = (itemView.findViewById(R.id.tv_fun_guide_list_item_time) as TextView?)!!
+        val tvRead: TextView = (itemView.findViewById(R.id.tv_fun_guide_list_item_read) as TextView?)!!
         override fun onBindData(d: Any) {
             if (d is HFFunGuideListResponseBody.ListData) {
                 tvName.text = d.title

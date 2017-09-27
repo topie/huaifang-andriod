@@ -59,8 +59,8 @@ open internal class HFListAdapter(val context: Context, private val list: List<H
     }
 
     class HFListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val ivIcon: HFImageView = itemView.findViewById(R.id.iv_facing_list_icon)
-        private val tvName: TextView = itemView.findViewById(R.id.tv_facing_list_name)
+        private val ivIcon: HFImageView = itemView.findViewById(R.id.iv_facing_list_icon) as HFImageView
+        private val tvName: TextView = itemView.findViewById(R.id.tv_facing_list_name) as TextView
 
         fun bindData(HFListItem: HFListItem) {
             tvName.text = HFListItem.name

@@ -36,7 +36,7 @@ class HFFunPartyActivity : HFBaseTitleActivity() {
             return when (position) {
                 0 -> HFFunPartyActFragment()
                 1 -> HFFunPartyPublicFragment()
-                2 -> HFFunPartyActFragment()
+                2 -> HFFunPartyMembersFragment()
                 else -> HFFunPartyActFragment()
             }
         }

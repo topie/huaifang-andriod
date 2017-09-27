@@ -5,12 +5,14 @@ import android.app.Activity
 import android.content.Context
 import android.content.ContextWrapper
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.support.annotation.AnyRes
 import android.widget.Toast
 import java.io.File
 import java.lang.ref.WeakReference
+
 
 /**
  * Created by arman on 2017/7/11.
@@ -123,6 +125,15 @@ fun Context?.kFindActivity(): Activity? {
         return baseContext.kFindActivity()
     }
     return null
+}
+
+/**
+ * 打电话界面
+ */
+fun Context.kTel(phoneNumber: String): Boolean {
+    val intent = Intent(Intent.ACTION_DIAL)
+    intent.data = Uri.parse("tel:" + phoneNumber)
+    return intent.resolveActivity(packageManager)?.let { kStartActivity(intent) } ?: false
 }
 
 private object HFToast {

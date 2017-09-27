@@ -11,6 +11,10 @@ fun Any?.kIsNull(): Boolean {
     return this == null
 }
 
+fun Any?.kIsNotNull(): Boolean {
+    return this != null
+}
+
 fun Any?.log(msg: String) {
     if (BuildConfig.DEBUG.not()) {
         return

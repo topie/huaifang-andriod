@@ -71,7 +71,7 @@ class HFFunPublicActivity : HFBaseTitleActivity() {
 
     class ViewHolder(val itemView: View, val position: Int) {
 
-        private val textView = itemView.findViewById<TextView>(R.id.tv_fun_public_list_item)
+        private val textView:TextView = itemView.findViewById(R.id.tv_fun_public_list_item) as TextView
 
         init {
             textView.text = "item{$position}"

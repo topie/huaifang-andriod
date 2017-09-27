@@ -41,9 +41,9 @@ public class PtrDefaultFooter extends FrameLayout {
 
     private void initViews(Context pContext) {
         LayoutInflater.from(pContext).inflate(R.layout.ptr_default_footer, this, true);
-        mIvLoadMore = findViewById(R.id.iv_lm_ptr_load_more);
+        mIvLoadMore = (ImageView) findViewById(R.id.iv_lm_ptr_load_more);
         mAnimationDrawable = (AnimationDrawable) mIvLoadMore.getDrawable();
-        mTvLoadMoreStatus = findViewById(R.id.tv_lm_ptr_load_more);
+        mTvLoadMoreStatus = (TextView) findViewById(R.id.tv_lm_ptr_load_more);
         changeStatus(STATUS_REST);
     }
 

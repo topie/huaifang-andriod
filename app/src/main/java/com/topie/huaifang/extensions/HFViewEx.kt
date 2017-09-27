@@ -23,3 +23,8 @@ fun View.kRemoveChildsWithout(@IdRes idRes: Int) {
         }
     }
 }
+
+@Suppress("UNCHECKED_CAST")
+fun <T : View> View.kFindViewById(@IdRes id: Int): T? {
+    return findViewById(id) as T
+}
