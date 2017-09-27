@@ -2,6 +2,8 @@ package com.topie.huaifang.http
 
 import com.topie.huaifang.extensions.HFContext
 import com.topie.huaifang.extensions.kToastLong
+import com.topie.huaifang.extensions.kToastShort
+import com.topie.huaifang.http.bean.HFBaseResponseBody
 import com.topie.huaifang.http.converter.HFGsonConverterFactory
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -56,8 +58,19 @@ fun <T> Observable<T>.composeApi(): Observable<T> {
     return subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
 }
 
-fun <T> Observable<T>.subscribeApi(onNext: ((t: T) -> Unit)): Disposable {
+fun <T : HFBaseResponseBody> Observable<T>.subscribeApi(onNext: ((t: T) -> Unit)): Disposable {
     return subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(onNext, {
-        HFContext.appContext?.kToastLong(it.message ?: "error")
+        "error".kToastShort()
     })
+}
+
+fun <T : HFBaseResponseBody> Observable<T>.subscribeApi(onNext: ((t: T) -> Unit), onComplete: () -> Unit): Disposable {
+    return subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
+        when {
+            it.resultOk -> onNext(it)
+            else -> it.convertMessage().kToastShort()
+        }
+    }, {
+        "error".kToastShort()
+    }, onComplete)
 }

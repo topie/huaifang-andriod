@@ -30,6 +30,7 @@ import io.reactivex.disposables.Disposable
  */
 class HFFunPartyActFragment : HFBaseFragment() {
 
+    private lateinit var pt2FrameLayout: Pt2FrameLayout
     private val adapter = Adapter()
     private var disposable: Disposable? = null
 
@@ -49,12 +50,12 @@ class HFFunPartyActFragment : HFBaseFragment() {
     }
 
     override fun onCreateViewSupport(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        val inflate = inflater.inflate(R.layout.base_pt2_recycler_layout, container, false) as Pt2FrameLayout
-        inflate.setPt2Handler(handler)
-        val recyclerView: RecyclerView = inflate.findViewById(R.id.rv_base_pt2) as RecyclerView
+        pt2FrameLayout = inflater.inflate(R.layout.base_pt2_recycler_layout, container, false) as Pt2FrameLayout
+        pt2FrameLayout.setPt2Handler(handler)
+        val recyclerView: RecyclerView = pt2FrameLayout.findViewById(R.id.rv_base_pt2) as RecyclerView
         recyclerView.layoutManager = LinearLayoutManager(inflater.context)
         recyclerView.adapter = adapter
-        return inflate
+        return pt2FrameLayout
     }
 
     override fun onResume() {
@@ -66,7 +67,7 @@ class HFFunPartyActFragment : HFBaseFragment() {
 
     private fun getFunPartyActList(pageSize: Int) {
         disposable?.takeIf { it.isDisposed.not() }?.dispose()
-        disposable = HFRetrofit.hfService.getFunPartyActList(pageSize).subscribeApi {
+        disposable = HFRetrofit.hfService.getFunPartyActList(pageSize).subscribeApi({
             it.data?.data?.takeIf { it.isNotEmpty() }?.let {
                 if (pageSize == 0) {
                     adapter.list.clear()
@@ -75,7 +76,9 @@ class HFFunPartyActFragment : HFBaseFragment() {
                 adapter.pageSize = pageSize + 1
                 adapter.notifyDataSetChanged()
             }
-        }
+        }, {
+            pt2FrameLayout.complete2()
+        })
     }
 
     override fun onPause() {

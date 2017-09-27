@@ -30,6 +30,7 @@ class HFFunPartyMembersFragment : HFBaseFragment() {
     private var disposable: Disposable? = null
 
     private lateinit var adapter: Adapter
+    private lateinit var pt2FrameLayout: Pt2FrameLayout
 
     private val handler: DefaultPt2Handler = object : DefaultPt2Handler() {
 
@@ -48,11 +49,11 @@ class HFFunPartyMembersFragment : HFBaseFragment() {
 
     override fun onCreateViewSupport(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         adapter = Adapter(inflater.context)
-        val inflate = inflater.inflate(R.layout.base_pt2_list_layout, container, false) as Pt2FrameLayout
-        inflate.setPt2Handler(handler)
-        val listView: ExpandableListView = inflate.findViewById(R.id.elv_base_pt2) as ExpandableListView
+        pt2FrameLayout = inflater.inflate(R.layout.base_pt2_list_layout, container, false) as Pt2FrameLayout
+        pt2FrameLayout.setPt2Handler(handler)
+        val listView: ExpandableListView = pt2FrameLayout.findViewById(R.id.elv_base_pt2) as ExpandableListView
         listView.setAdapter(adapter)
-        return inflate
+        return pt2FrameLayout
     }
 
     override fun onResume() {
@@ -64,7 +65,7 @@ class HFFunPartyMembersFragment : HFBaseFragment() {
 
     private fun getFunPartyMembersList() {
         disposable?.takeIf { it.isDisposed.not() }?.dispose()
-        disposable = HFRetrofit.hfService.getFunPartyMemberList().subscribeApi {
+        disposable = HFRetrofit.hfService.getFunPartyMemberList().subscribeApi({
             it.data?.data?.takeIf { it.isNotEmpty() }?.let {
                 Group.convertToGroupList(it)
             }?.let {
@@ -72,7 +73,9 @@ class HFFunPartyMembersFragment : HFBaseFragment() {
                 adapter.list.addAll(it)
                 adapter.notifyDataSetChanged()
             }
-        }
+        }, {
+            pt2FrameLayout.complete2()
+        })
     }
 
     override fun onPause() {
