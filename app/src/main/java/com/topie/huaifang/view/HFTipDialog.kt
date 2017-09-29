@@ -3,9 +3,9 @@ package com.topie.huaifang.view
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
-import android.widget.TextView
 import com.topie.huaifang.R
 import com.topie.huaifang.util.HFDimensUtils
+import kotlinx.android.synthetic.main.view_tip_dialog.*
 
 
 /**
@@ -17,8 +17,9 @@ class HFTipDialog private constructor(context: Context, private val builder: HFT
         super.onCreate(savedInstanceState)
         setContentView(R.layout.view_tip_dialog)
         setWindowScreenWidth()
-        val textView: TextView = findViewById(R.id.tv_tip_dialog_content) as TextView
-        textView.text = builder.content
+        tv_tip_dialog_content.text = builder.content
+        tv_tip_dialog_cancel.setOnClickListener { builder.onCancelClicked?.invoke() }
+        tv_tip_dialog_ok.setOnClickListener { builder.onOkClicked?.invoke() }
     }
 
     private fun setWindowScreenWidth() {
@@ -28,20 +29,17 @@ class HFTipDialog private constructor(context: Context, private val builder: HFT
         window.attributes = p
     }
 
-    class Builder(val context: Context) {
+    class Builder() {
         var content: String? = null
+        var onOkClicked: (() -> Unit)? = null
+        var onCancelClicked: (() -> Unit)? = null
 
-        fun setContent(content: String): Builder {
-            this.content = content
-            return this
-        }
-
-        fun create(): HFTipDialog {
+        fun create(context: Context): HFTipDialog {
             return HFTipDialog(context, this)
         }
 
-        fun show(): HFTipDialog {
-            val create = create()
+        fun show(context: Context): HFTipDialog {
+            val create = create(context)
             create.show()
             return create
         }

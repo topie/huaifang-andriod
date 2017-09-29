@@ -3,6 +3,7 @@ package com.topie.huaifang.http
 import com.topie.huaifang.extensions.kToastShort
 import com.topie.huaifang.http.bean.HFBaseResponseBody
 import com.topie.huaifang.http.converter.HFGsonConverterFactory
+import com.topie.huaifang.util.HFLogger
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -60,7 +61,8 @@ fun <T> Observable<T>.composeApi(): Observable<T> {
 
 fun <T : HFBaseResponseBody> Observable<T>.subscribeApi(onNext: ((t: T) -> Unit)): Disposable {
     return subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(onNext, {
-        "error".kToastShort()
+        HFLogger.log("error", it)
+        it.message?.kToastShort()
     })
 }
 
@@ -71,6 +73,7 @@ fun <T : HFBaseResponseBody> Observable<T>.subscribeApi(onNext: ((t: T) -> Unit)
             else -> it.convertMessage().kToastShort()
         }
     }, {
-        "error".kToastShort()
+        HFLogger.log("error", it)
+        it.message?.kToastShort()
     }, onComplete)
 }

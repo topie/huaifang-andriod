@@ -18,6 +18,8 @@ import com.topie.huaifang.extensions.kTel
 import com.topie.huaifang.http.HFServiceDerived
 import com.topie.huaifang.http.bean.function.HFFunYellowPageResponseBody
 import com.topie.huaifang.http.subscribeApi
+import com.topie.huaifang.util.HFLogger
+import com.topie.huaifang.view.HFTipDialog
 import io.reactivex.disposables.Disposable
 
 /**
@@ -41,7 +43,11 @@ class HFFunYellowPageActivity : HFBaseTitleActivity() {
         val listView: ExpandableListView = pt2FrameLayout.findViewById(R.id.elv_base_pt2) as ExpandableListView
         listView.setAdapter(adapter)
         listView.setOnChildClickListener { _, _, _, _, id ->
-            kTel(id.toString())
+            val builder = HFTipDialog.Builder()
+            builder.content = "确定拨打：$id?"
+            builder.onOkClicked = { this@HFFunYellowPageActivity.kTel(id.toString()) }
+            builder.show(this@HFFunYellowPageActivity)
+            return@setOnChildClickListener true
         }
     }
 
@@ -55,7 +61,7 @@ class HFFunYellowPageActivity : HFBaseTitleActivity() {
     private fun getFunPartyMembersList() {
         disposable?.takeIf { it.isDisposed.not() }?.dispose()
         disposable = HFServiceDerived.getFunYellowPage().subscribeApi({
-            it.data?.data?.takeIf { it.isNotEmpty() }?.let {
+            it.data?.data?.let {
                 Group.convertToGroupList(it)
             }?.let {
                 adapter.list.clear()
@@ -63,6 +69,7 @@ class HFFunYellowPageActivity : HFBaseTitleActivity() {
                 adapter.notifyDataSetChanged()
             }
         }, {
+            HFLogger.log("complete")
             pt2FrameLayout.complete2()
         })
     }
