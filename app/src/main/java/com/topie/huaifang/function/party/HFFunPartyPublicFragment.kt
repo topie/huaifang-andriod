@@ -8,7 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.davdian.ptr.DefaultPt2Handler
+import com.davdian.ptr.AbsPt2Handler
 import com.davdian.ptr.Pt2FrameLayout
 import com.davdian.ptr.ptl.PtlFrameLayout
 import com.topie.huaifang.R
@@ -32,7 +32,7 @@ class HFFunPartyPublicFragment : HFBaseFragment() {
     private val adapter = HFBaseRecyclerAdapter(ViewHolder.CREATOR)
     private var disposable: Disposable? = null
 
-    private val handler: DefaultPt2Handler = object : DefaultPt2Handler() {
+    private val handler: AbsPt2Handler = object : AbsPt2Handler() {
 
         override fun checkCanDoLoad(frame: PtlFrameLayout?, content: View?, footer: View?): Boolean {
             return false

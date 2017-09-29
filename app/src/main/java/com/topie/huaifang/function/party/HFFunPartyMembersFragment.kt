@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import android.widget.BaseExpandableListAdapter
 import android.widget.ExpandableListView
 import android.widget.TextView
-import com.davdian.ptr.DefaultPt2Handler
+import com.davdian.ptr.AbsPt2Handler
 import com.davdian.ptr.Pt2FrameLayout
 import com.davdian.ptr.ptl.PtlFrameLayout
 import com.topie.huaifang.R
@@ -32,7 +32,7 @@ class HFFunPartyMembersFragment : HFBaseFragment() {
     private lateinit var adapter: Adapter
     private lateinit var pt2FrameLayout: Pt2FrameLayout
 
-    private val handler: DefaultPt2Handler = object : DefaultPt2Handler() {
+    private val handler: AbsPt2Handler = object : AbsPt2Handler() {
 
         override fun checkCanDoLoad(frame: PtlFrameLayout?, content: View?, footer: View?): Boolean {
             return false

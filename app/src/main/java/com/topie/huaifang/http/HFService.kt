@@ -2,6 +2,7 @@ package com.topie.huaifang.http
 
 import com.topie.huaifang.http.bean.HFBaseResponseBody
 import com.topie.huaifang.http.bean.communication.HFCommFriendsResponseBody
+import com.topie.huaifang.http.bean.communication.HFCommMsgListResponseBody
 import com.topie.huaifang.http.bean.function.*
 import com.topie.huaifang.http.bean.login.HFCheckPhoneResponseBody
 import com.topie.huaifang.http.bean.login.HFLoginResponseBody
@@ -90,4 +91,22 @@ interface HFService {
      */
     @GET("/api/m/party/member/list")
     fun getFunPartyMemberList(): Observable<HFFunPartyMemberResponseBody>
+
+    /**
+     * 我的消息列表
+     */
+    @GET("/api/m/appMessage/list")
+    fun getCommMsgList(): Observable<HFCommMsgListResponseBody>
+
+    /**
+     * 聊天室消息列表
+     */
+    @GET("/api/m/appUserMessage/list")
+    fun getCommMsgDetail(): Observable<HFCommMsgListResponseBody>
+
+    /**
+     * 系统消息
+     */
+    @GET("/api/m/appMessage/detail")
+    fun getCommMsgSystem(): Observable<HFCommMsgListResponseBody>
 }

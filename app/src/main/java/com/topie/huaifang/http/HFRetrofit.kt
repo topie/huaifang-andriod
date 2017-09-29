@@ -1,7 +1,5 @@
 package com.topie.huaifang.http
 
-import com.topie.huaifang.extensions.HFContext
-import com.topie.huaifang.extensions.kToastLong
 import com.topie.huaifang.extensions.kToastShort
 import com.topie.huaifang.http.bean.HFBaseResponseBody
 import com.topie.huaifang.http.converter.HFGsonConverterFactory
@@ -53,6 +51,8 @@ object HFRetrofit {
         hfService = retrofit.create(HFService::class.java)
     }
 }
+
+object HFServiceDerived : HFService by HFRetrofit.hfService
 
 fun <T> Observable<T>.composeApi(): Observable<T> {
     return subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())

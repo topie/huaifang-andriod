@@ -9,6 +9,8 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.support.annotation.AnyRes
+import android.support.annotation.ColorRes
+import android.support.annotation.StringRes
 import android.widget.Toast
 import java.io.File
 import java.lang.ref.WeakReference
@@ -134,6 +136,14 @@ fun Context.kTel(phoneNumber: String): Boolean {
     val intent = Intent(Intent.ACTION_DIAL)
     intent.data = Uri.parse("tel:" + phoneNumber)
     return intent.resolveActivity(packageManager)?.let { kStartActivity(intent) } ?: false
+}
+
+fun Context.kGetColor(@ColorRes id: Int): Int {
+    return resources.getColor(id)
+}
+
+fun Context.kGetString(@StringRes id: Int): String {
+    return resources.getString(id)
 }
 
 private object HFToast {

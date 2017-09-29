@@ -24,6 +24,17 @@ fun View.kRemoveChildsWithout(@IdRes idRes: Int) {
     }
 }
 
+/**
+ * 隐藏子View
+ */
+fun View.kHiddenChildren() {
+    if (this is ViewGroup) {
+        for (i in 0 until childCount) {
+            getChildAt(i).visibility = View.GONE
+        }
+    }
+}
+
 @Suppress("UNCHECKED_CAST")
 fun <T : View> View.kFindViewById(@IdRes id: Int): T? {
     return findViewById(id) as T

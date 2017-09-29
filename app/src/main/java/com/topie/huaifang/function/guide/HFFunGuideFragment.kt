@@ -8,7 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.davdian.ptr.DefaultPt2Handler
+import com.davdian.ptr.AbsPt2Handler
 import com.davdian.ptr.Pt2FrameLayout
 import com.davdian.ptr.ptl.PtlFrameLayout
 import com.topie.huaifang.R
@@ -35,7 +35,7 @@ class HFFunGuideFragment : HFBaseFragment() {
 
     override fun onCreateViewSupport(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         pt2FrameLayout = inflater.inflate(R.layout.base_pt2_recycler_layout, container, false) as Pt2FrameLayout
-        pt2FrameLayout!!.setPt2Handler(object : DefaultPt2Handler() {
+        pt2FrameLayout!!.setPt2Handler(object : AbsPt2Handler() {
             override fun checkCanDoLoad(frame: PtlFrameLayout?, content: View?, footer: View?): Boolean {
                 return super.checkCanDoLoad(frame, content, footer) && adapter.list.size > 1
             }
@@ -87,7 +87,17 @@ class HFFunGuideFragment : HFBaseFragment() {
         disposable?.takeIf { !it.isDisposed }?.dispose()
     }
 
-    val adapter = HFBaseRecyclerAdapter(Factory())
+    val adapter = Adapter()
+
+    class Adapter : HFBaseRecyclerAdapter<Any, HFBaseRecyclerViewHolder<Any>>(Factory()) {
+
+        override fun getItemViewType(position: Int): Int {
+            return when (position) {
+                0 -> 0
+                else -> 1
+            }
+        }
+    }
 
     class Factory : HFViewHolderFactory<HFBaseRecyclerViewHolder<Any>> {
 
@@ -102,14 +112,6 @@ class HFFunGuideFragment : HFBaseFragment() {
                 }
             }
         }
-
-        override fun getViewType(position: Int): Int {
-            return when (position) {
-                0 -> 0
-                else -> 1
-            }
-        }
-
     }
 
     private class TopViewHolder(itemView: View) : HFBaseRecyclerViewHolder<Any>(itemView) {

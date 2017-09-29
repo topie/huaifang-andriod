@@ -51,6 +51,13 @@ abstract class HFBaseRecyclerViewHolder<D>(itemView: View, initItemClick: Boolea
     }
 }
 
+class HFEmptyRecyclerViewHolder<T>(itemView: View) : HFBaseRecyclerViewHolder<T>(itemView, false) {
+
+    override fun onBindData(d: T) {
+
+    }
+}
+
 interface HFViewHolderFactory<out T : RecyclerView.ViewHolder> {
 
     fun create(parent: ViewGroup, viewType: Int): T
