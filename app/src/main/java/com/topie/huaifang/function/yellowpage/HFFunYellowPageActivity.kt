@@ -14,6 +14,7 @@ import com.topie.huaifang.R
 import com.topie.huaifang.extensions.HFDefaultPt2Handler
 import com.topie.huaifang.extensions.kGet
 import com.topie.huaifang.extensions.kGetOne
+import com.topie.huaifang.extensions.kTel
 import com.topie.huaifang.http.HFServiceDerived
 import com.topie.huaifang.http.bean.function.HFFunYellowPageResponseBody
 import com.topie.huaifang.http.subscribeApi
@@ -39,6 +40,9 @@ class HFFunYellowPageActivity : HFBaseTitleActivity() {
         pt2FrameLayout.setPt2Handler(HFDefaultPt2Handler { getFunPartyMembersList() })
         val listView: ExpandableListView = pt2FrameLayout.findViewById(R.id.elv_base_pt2) as ExpandableListView
         listView.setAdapter(adapter)
+        listView.setOnChildClickListener { _, _, _, _, id ->
+            kTel(id.toString())
+        }
     }
 
     override fun onResume() {
@@ -114,7 +118,7 @@ class HFFunYellowPageActivity : HFBaseTitleActivity() {
         }
 
         override fun getChildId(groupPosition: Int, childPosition: Int): Long {
-            return getChild(groupPosition, childPosition)?.id?.toLong() ?: childPosition.toLong()
+            return getChild(groupPosition, childPosition)?.mobilePhone?.toLongOrNull() ?: 0.toLong()
         }
 
         override fun getGroupCount(): Int {
