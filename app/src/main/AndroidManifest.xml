@@ -27,6 +27,7 @@
         <activity android:name=".function.notice.HFFunPublicActivity" />
         <activity android:name=".communication.HFCommFriendsActivity" />
         <activity android:name=".function.party.HFFunPartyActivity" />
+        <activity android:name=".function.yellowpage.HFFunYellowPageActivity" />
     </application>
 
 </manifest>

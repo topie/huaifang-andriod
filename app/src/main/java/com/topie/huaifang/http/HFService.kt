@@ -109,4 +109,10 @@ interface HFService {
      */
     @GET("/api/m/appMessage/detail")
     fun getCommMsgSystem(): Observable<HFCommMsgListResponseBody>
+
+    /**
+     * 迷你黄页
+     */
+    @GET("/api/m/yellowPage/list")
+    fun getFunYellowPage(): Observable<HFFunYellowPageResponseBody>
 }

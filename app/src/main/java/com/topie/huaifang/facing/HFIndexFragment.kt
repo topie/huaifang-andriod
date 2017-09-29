@@ -15,6 +15,7 @@ import com.topie.huaifang.function.guide.HFFunGuideActivity
 import com.topie.huaifang.function.live.HFFunLiveActivity
 import com.topie.huaifang.function.notice.HFFunPublicActivity
 import com.topie.huaifang.function.party.HFFunPartyActivity
+import com.topie.huaifang.function.yellowpage.HFFunYellowPageActivity
 import com.topie.huaifang.login.HFLoginActivity
 
 /**
@@ -83,8 +84,9 @@ class HFIndexFragment : HFBaseFragment() {
         }
 
         fun5.setOnClickListener {
-
+            context.kStartActivity(HFFunYellowPageActivity::class.java)
         }
+
 
     }
 }
