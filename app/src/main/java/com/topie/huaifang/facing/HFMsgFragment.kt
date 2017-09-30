@@ -13,9 +13,7 @@ import com.topie.huaifang.R
 import com.topie.huaifang.base.HFBaseFragment
 import com.topie.huaifang.base.HFBaseRecyclerViewHolder
 import com.topie.huaifang.base.HFEmptyRecyclerViewHolder
-import com.topie.huaifang.extensions.HFDefaultPt2Handler
-import com.topie.huaifang.extensions.kGet
-import com.topie.huaifang.extensions.kParseUrl
+import com.topie.huaifang.extensions.*
 import com.topie.huaifang.http.HFRetrofit
 import com.topie.huaifang.http.bean.communication.HFCommMsgDetail
 import com.topie.huaifang.http.subscribeApi
@@ -79,13 +77,16 @@ class HFMsgFragment : HFBaseFragment() {
 
         private val list: MutableList<HFCommMsgDetail> = arrayListOf()
 
+        init {
+            val detail = HFCommMsgDetail()
+            this.list.add(0, detail)
+        }
+
         fun setListData(list: List<HFCommMsgDetail>) {
             this.list.clear()
-            if (!list.isEmpty()) {
-                val detail = HFCommMsgDetail()
-                this.list.add(0, detail)
-                this.list.addAll(list)
-            }
+            val detail = HFCommMsgDetail()
+            this.list.add(0, detail)
+            this.list.addAll(list)
         }
 
         override fun onBindViewHolder(holder: HFBaseRecyclerViewHolder<HFCommMsgDetail>, position: Int) {
@@ -97,11 +98,13 @@ class HFMsgFragment : HFBaseFragment() {
                 -1 -> {
                     val holder = HFEmptyRecyclerViewHolder<HFCommMsgDetail>(View(parent.context))
                     holder.itemView.layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, HFDimensUtils.dp2px(10.toFloat()))
+                    holder.itemView.setBackgroundColor(kGetColor(R.color.colorGray))
+                    holder.itemView.kHiddenChildren()
                     holder
                 }
                 else -> {
                     val from = LayoutInflater.from(parent.context)
-                    val itemView = from.inflate(R.layout.facing_list_search, parent, false)
+                    val itemView = from.inflate(R.layout.facing_list_item, parent, false)
                     ViewHolder(itemView)
                 }
             }

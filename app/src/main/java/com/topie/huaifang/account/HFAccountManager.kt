@@ -2,7 +2,7 @@ package com.topie.huaifang.account
 
 import android.content.Context
 import com.google.gson.Gson
-import com.topie.huaifang.extensions.HFContext
+import com.topie.huaifang.extensions.appContext
 import com.topie.huaifang.extensions.kIsNotEmpty
 import com.topie.huaifang.http.HFHttpLoggingInterceptor
 import com.topie.huaifang.http.HFRetrofit
@@ -37,7 +37,7 @@ object HFAccountManager {
     }
 
     private fun saveData() {
-        HFContext.appContext?.let {
+        appContext?.let {
             try {
                 val toJson = Gson().toJson(accountModel)
                 val sp = it.getSharedPreferences(SP_NAME, Context.MODE_PRIVATE)
@@ -50,7 +50,7 @@ object HFAccountManager {
     }
 
     private fun getData(): HFAccountModel {
-        return HFContext.appContext?.let {
+        return appContext?.let {
             val sp = it.getSharedPreferences(SP_NAME, Context.MODE_PRIVATE)
             val json = sp.getString(KEY_MODEL, null)
             return try {

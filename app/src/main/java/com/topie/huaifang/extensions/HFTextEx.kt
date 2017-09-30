@@ -17,11 +17,11 @@ fun String?.kIsNotEmpty(): Boolean {
 }
 
 fun String?.kToastLong() {
-    HFContext.appContext?.kToastLong(this@kToastLong ?: "error")
+    kToastLong(this@kToastLong ?: "error")
 }
 
 fun String?.kToastShort() {
-    HFContext.appContext?.kToastShort(this@kToastShort ?: "error")
+    kToastShort(this@kToastShort ?: "error")
 }
 
 fun String?.kParseUrl(): Uri? {

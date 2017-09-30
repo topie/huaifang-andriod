@@ -7,100 +7,84 @@ import android.content.ContextWrapper
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
 import android.support.annotation.AnyRes
 import android.support.annotation.ColorRes
 import android.support.annotation.StringRes
 import android.widget.Toast
-import java.io.File
 import java.lang.ref.WeakReference
 
 
 /**
  * Created by arman on 2017/7/11.
+ * Context的扩展
  */
-
-
-//--------------------------------------------//
-//file
-//--------------------------------------------//
-
-fun Context.kIsExternalAvailable(): Boolean {
-    return Environment.MEDIA_MOUNTED == Environment.getExternalStorageState()
-}
-
 
 /**
- *
- * @param type The type of files directory to return. May be {@code null}
- *            for the root of the files directory or one of the following
- *            constants for a subdirectory:
- *            {@link android.os.Environment#DIRECTORY_MUSIC},
- *            {@link android.os.Environment#DIRECTORY_PODCASTS},
- *            {@link android.os.Environment#DIRECTORY_RINGTONES},
- *            {@link android.os.Environment#DIRECTORY_ALARMS},
- *            {@link android.os.Environment#DIRECTORY_NOTIFICATIONS},
- *            {@link android.os.Environment#DIRECTORY_PICTURES}, or
- *            {@link android.os.Environment#DIRECTORY_MOVIES}.
+ * 单例applicationContext
  */
-fun Context.kGetExternalFilesDir(type: String): File? {
-    if (!kIsExternalAvailable()) {
-        return null
+private var context: WeakReference<Context>? = null
+
+/**
+ * Context的委托属性
+ */
+var appContext: Context?
+    get() {
+        return context?.get()
     }
-    return getExternalFilesDir(type)?.takeIf {
-        if (it.exists() && !it.isDirectory) {
-            it.delete() && it.mkdirs()
-        } else if (!it.exists()) {
-            it.mkdirs()
-        } else {
-            true
+    set(value) {
+        if (value != null) {
+            context = WeakReference(value)
         }
     }
-}
 
-fun Context.kGetExternalPictureDir(): File? {
-    return kGetExternalFilesDir(Environment.DIRECTORY_PICTURES)
-}
-
-fun Context.kGetExtrnalPictureFile(name: String): File? {
-    return kGetExternalFilesDir(Environment.DIRECTORY_PICTURES)?.let { return@let File(it, name) }
+/**
+ * 初始化applicationContext单例类
+ */
+fun Context.kInitApplication() {
+    appContext = applicationContext
 }
 
 /**
  * 获取资源id
  */
-fun Context.kGetIdentifier(name: String, defType: String): Int {
-    return resources.getIdentifier(name, defType, packageName)
+fun kGetIdentifier(name: String, defType: String): Int {
+    return appContext?.let { it.resources?.getIdentifier(name, defType, it.packageName) } ?: 0
 }
 
 /**
  * 通过资源id获取对应的名称
  */
-fun Context.kGetResourceEntryName(@AnyRes resId: Int): String? {
-    try {
-        return resources.getResourceEntryName(resId)
+fun kGetResourceEntryName(@AnyRes resId: Int): String? {
+    return try {
+        appContext?.resources?.getResourceEntryName(resId)
     } catch (e: Exception) {
         log("", e)
-        return null
+        null
     }
 }
 
-fun Context.kToastLong(msg: String) {
-    HFToast.showToast(this, msg, Toast.LENGTH_LONG)
+fun kToastLong(msg: String) {
+    appContext?.let {
+        HFToast.showToast(it, msg, Toast.LENGTH_LONG)
+    }
 }
 
-fun Context.kToastShort(msg: String) {
-    HFToast.showToast(this, msg, Toast.LENGTH_SHORT)
+fun kToastShort(msg: String) {
+    appContext?.let {
+        HFToast.showToast(it, msg, Toast.LENGTH_SHORT)
+    }
 }
 
-fun Context.kInitApplication() {
-    HFContext.init(applicationContext)
-}
-
+/**
+ * 如果Context为null，返回单例applicationContext
+ */
 fun Context?.kMakeNull2Application(): Context? {
-    return this ?: HFContext.appContext
+    return this ?: appContext
 }
 
+/**
+ * 打开一个activity，自动判断Context是否是activity
+ */
 fun Context?.kStartActivity(clazz: Class<out Activity>, bundle: Bundle? = null): Boolean {
     return kMakeNull2Application()?.let {
         val intent = Intent(it, clazz)
@@ -109,6 +93,9 @@ fun Context?.kStartActivity(clazz: Class<out Activity>, bundle: Bundle? = null):
     } ?: false
 }
 
+/**
+ * 打开一个activity，自动判断Context是否是activity
+ */
 fun Context?.kStartActivity(intent: Intent): Boolean {
     val context = kMakeNull2Application() ?: return false
     val kFindActivity = kFindActivity()
@@ -116,6 +103,9 @@ fun Context?.kStartActivity(intent: Intent): Boolean {
     return true
 }
 
+/**
+ * 在Context中寻找activity
+ */
 fun Context?.kFindActivity(): Activity? {
     if (this == null) {
         return null
@@ -138,14 +128,23 @@ fun Context.kTel(phoneNumber: String): Boolean {
     return intent.resolveActivity(packageManager)?.let { kStartActivity(intent) } ?: false
 }
 
-fun Context.kGetColor(@ColorRes id: Int): Int {
-    return resources.getColor(id)
+/**
+ * 获取资源文件定义的颜色
+ */
+fun kGetColor(@ColorRes id: Int): Int {
+    return appContext?.resources?.getColor(id) ?: 0xFFFFFFFF.toInt()
 }
 
-fun Context.kGetString(@StringRes id: Int): String {
-    return resources.getString(id)
+/**
+ * 获取资源文件定义的字符串
+ */
+fun kGetString(@StringRes id: Int): String {
+    return appContext?.resources?.getString(id) ?: ""
 }
 
+/**
+ * 单例toast
+ */
 private object HFToast {
 
     private var toast: Toast? = null
@@ -157,19 +156,5 @@ private object HFToast {
         toast!!.duration = duration
         toast!!.show()
         return toast!!
-    }
-}
-
-object HFContext {
-
-    private var context: WeakReference<Context>? = null
-
-    val appContext: Context?
-        get() {
-            return context?.get()
-        }
-
-    fun init(context: Context) {
-        this.context = WeakReference(context)
     }
 }
