@@ -15,7 +15,7 @@ import com.topie.huaifang.extensions.HFDefaultPt2Handler
 import com.topie.huaifang.extensions.kGet
 import com.topie.huaifang.extensions.kGetOne
 import com.topie.huaifang.extensions.kTel
-import com.topie.huaifang.http.HFServiceDerived
+import com.topie.huaifang.http.HFRetrofit
 import com.topie.huaifang.http.bean.function.HFFunYellowPageResponseBody
 import com.topie.huaifang.http.subscribeApi
 import com.topie.huaifang.util.HFLogger
@@ -60,7 +60,7 @@ class HFFunYellowPageActivity : HFBaseTitleActivity() {
 
     private fun getFunPartyMembersList() {
         disposable?.takeIf { it.isDisposed.not() }?.dispose()
-        disposable = HFServiceDerived.getFunYellowPage().subscribeApi({
+        disposable = HFRetrofit.hfService.getFunYellowPage().subscribeApi({
             it.data?.data?.let {
                 Group.convertToGroupList(it)
             }?.let {

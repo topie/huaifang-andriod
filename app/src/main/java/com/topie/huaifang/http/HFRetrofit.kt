@@ -21,7 +21,6 @@ object HFRetrofit {
     private const val baseUrl = "http://huaifang.zt647.com/"
 
     private var client: OkHttpClient
-        private set
 
     private var retrofit: Retrofit
 
@@ -52,8 +51,6 @@ object HFRetrofit {
         hfService = retrofit.create(HFService::class.java)
     }
 }
-
-object HFServiceDerived : HFService by HFRetrofit.hfService
 
 fun <T> Observable<T>.composeApi(): Observable<T> {
     return subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())

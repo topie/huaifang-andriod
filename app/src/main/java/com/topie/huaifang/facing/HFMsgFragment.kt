@@ -16,7 +16,7 @@ import com.topie.huaifang.base.HFEmptyRecyclerViewHolder
 import com.topie.huaifang.extensions.HFDefaultPt2Handler
 import com.topie.huaifang.extensions.kGet
 import com.topie.huaifang.extensions.kParseUrl
-import com.topie.huaifang.http.HFServiceDerived
+import com.topie.huaifang.http.HFRetrofit
 import com.topie.huaifang.http.bean.communication.HFCommMsgDetail
 import com.topie.huaifang.http.subscribeApi
 import com.topie.huaifang.imageloader.HFImageView
@@ -54,7 +54,7 @@ class HFMsgFragment : HFBaseFragment() {
 
     private fun getMsgList() {
         disposable?.takeIf { !it.isDisposed }?.dispose()
-        disposable = HFServiceDerived.getCommMsgList().subscribeApi({
+        disposable = HFRetrofit.hfService.getCommMsgList().subscribeApi({
             it.data?.data?.let {
                 adapter.setListData(it)
                 adapter.notifyDataSetChanged()

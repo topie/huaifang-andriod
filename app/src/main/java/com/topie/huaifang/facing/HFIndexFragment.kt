@@ -10,13 +10,19 @@ import android.widget.TextView
 import com.topie.huaifang.R
 import com.topie.huaifang.account.HFAccountManager
 import com.topie.huaifang.base.HFBaseFragment
-import com.topie.huaifang.extensions.kStartActivity
+import com.topie.huaifang.extensions.*
 import com.topie.huaifang.function.guide.HFFunGuideActivity
 import com.topie.huaifang.function.live.HFFunLiveActivity
 import com.topie.huaifang.function.notice.HFFunPublicActivity
 import com.topie.huaifang.function.party.HFFunPartyActivity
 import com.topie.huaifang.function.yellowpage.HFFunYellowPageActivity
+import com.topie.huaifang.http.HFRetrofit
+import com.topie.huaifang.http.bean.communication.HFCommUserInfo
+import com.topie.huaifang.http.subscribeApi
+import com.topie.huaifang.imageloader.HFImageView
 import com.topie.huaifang.login.HFLoginActivity
+import io.reactivex.disposables.Disposable
+import kotlinx.android.synthetic.main.facing_index_fragment.*
 
 /**
  * Created by arman on 2017/9/16.
@@ -24,10 +30,107 @@ import com.topie.huaifang.login.HFLoginActivity
  */
 class HFIndexFragment : HFBaseFragment() {
 
+    var quesDisposable: Disposable? = null
+    var simFriendDisposable: Disposable? = null
+
     override fun onCreateViewSupport(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val inflate = inflater.inflate(R.layout.facing_index_fragment, container, false)
         initFunctions(inflate, savedInstanceState)
         return inflate
+    }
+
+    override fun onResume() {
+        super.onResume()
+        getFunQuestionList()
+        getCommSimilarFriendList()
+    }
+
+    /**
+     * 可能认识的人
+     */
+    private fun getCommSimilarFriendList() {
+        simFriendDisposable = HFRetrofit.hfService.getCommSimilarFriend().subscribeApi {
+            if (!it.resultOk) {
+                it.convertMessage().kToastLong()
+                return@subscribeApi
+            }
+            val list = it.data?.data?.takeIf { it.isNotEmpty() }
+            when (list) {
+                null -> {
+                    mView?.findViewById(R.id.tv_facing_similar_friends_title)?.visibility = View.GONE
+                    mView?.findViewById(R.id.ll_facing_similar_friends_content)?.visibility = View.GONE
+                }
+                else -> {
+                    mView?.findViewById(R.id.tv_facing_similar_friends_title)?.visibility = View.VISIBLE
+                    mView?.findViewById(R.id.ll_facing_similar_friends_content)?.let {
+                        it.visibility = View.VISIBLE
+                        var i = 0
+                        it.kForeach { v ->
+                            val userInfo = list.kGet(i++)
+                            when (userInfo) {
+                                null -> {
+                                    v.visibility = View.INVISIBLE
+                                }
+                                else -> {
+                                    v.visibility = View.VISIBLE
+                                    val ivHead = v.findViewById(R.id.iv_facing_friend_head) as? HFImageView
+                                    ivHead?.loadImageUri(userInfo.headImage?.kParseUrl())
+                                    val tvName = v.findViewById(R.id.tv_facing_friend_name) as? TextView
+                                    tvName?.text = userInfo.nickname ?: userInfo.mobilePhone
+                                    v.findViewById(R.id.tv_facing_friend_add)?.setOnClickListener {
+                                        addFriend(userInfo)
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+
+    /**
+     *  添加好友
+     */
+    private fun addFriend(userInfo: HFCommUserInfo) {
+        HFRetrofit.hfService.addCommFriend(userInfo.id).subscribeApi {
+            when {
+                it.resultOk -> getCommSimilarFriendList()
+                else -> it.convertMessage().kToastLong()
+            }
+        }
+    }
+
+    /**
+     * 调查问卷
+     */
+    private fun getFunQuestionList() {
+        quesDisposable = HFRetrofit.hfService.getFunQuestionList().subscribeApi {
+            if (!it.resultOk) {
+                return@subscribeApi
+            }
+            val list = it.data?.data?.takeIf { it.size >= 3 }
+            when (list) {
+                null -> ll_facing_index_questions.visibility = View.GONE
+                else -> {
+                    ll_facing_index_questions.visibility = View.VISIBLE
+                    val obj = ({ v: View, str: String? ->
+                        val textView = v.findViewById(R.id.tv_facing_question_desc) as TextView
+                        textView.text = str
+                    })
+                    obj(ll_facing_index_question_0, list[0].name)
+                    obj(ll_facing_index_question_1, list[1].name)
+                    obj(ll_facing_index_question_2, list[2].name)
+                }
+            }
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        quesDisposable?.takeIf { !it.isDisposed }?.dispose()
+        simFriendDisposable?.takeIf { !it.isDisposed }?.dispose()
     }
 
     private fun initFunctions(view: View, savedInstanceState: Bundle?) {

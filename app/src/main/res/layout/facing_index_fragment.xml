@@ -47,7 +47,7 @@
             android:layout_height="wrap_content"
             android:background="@android:color/white"
             android:orientation="vertical"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="match_parent"
@@ -153,6 +153,7 @@
 
         <!--可能认识的人-->
         <TextView
+            android:id="@+id/tv_facing_similar_friends_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
@@ -161,6 +162,7 @@
             android:textSize="14sp" />
 
         <LinearLayout
+            android:id="@+id/ll_facing_similar_friends_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
@@ -168,13 +170,21 @@
             android:orientation="horizontal"
             android:weightSum="4">
 
-            <include layout="@layout/facing_index_friend_item" />
+            <include
+                android:id="@+id/ll_facing_similar_friends_item0"
+                layout="@layout/facing_index_friend_item" />
 
-            <include layout="@layout/facing_index_friend_item" />
+            <include
+                android:id="@+id/ll_facing_similar_friends_item1"
+                layout="@layout/facing_index_friend_item" />
 
-            <include layout="@layout/facing_index_friend_item" />
+            <include
+                android:id="@+id/ll_facing_similar_friends_item2"
+                layout="@layout/facing_index_friend_item" />
 
-            <include layout="@layout/facing_index_friend_item" />
+            <include
+                android:id="@+id/ll_facing_similar_friends_item3"
+                layout="@layout/facing_index_friend_item" />
         </LinearLayout>
 
         <!--底部距离底边分割线-->

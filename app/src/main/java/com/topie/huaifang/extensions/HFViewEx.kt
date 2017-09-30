@@ -39,3 +39,14 @@ fun View.kHiddenChildren() {
 fun <T : View> View.kFindViewById(@IdRes id: Int): T? {
     return findViewById(id) as T
 }
+
+/**
+ * 遍历子View
+ */
+fun View.kForeach(each: (v: View) -> Unit) {
+    if (this is ViewGroup) {
+        for (i in 0 until childCount) {
+            each(getChildAt(i))
+        }
+    }
+}

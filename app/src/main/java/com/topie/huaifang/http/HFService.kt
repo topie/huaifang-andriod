@@ -115,4 +115,23 @@ interface HFService {
      */
     @GET("/api/m/yellowPage/list")
     fun getFunYellowPage(): Observable<HFFunYellowPageResponseBody>
+
+    /**
+     * 调查问卷列表
+     */
+    @GET("/api/m/question/list")
+    fun getFunQuestionList(): Observable<HFFunQuestionResponseBody>
+
+
+    /**
+     * 可能认识的人
+     */
+    @GET("/api/m/appUser/maybeKnown")
+    fun getCommSimilarFriend(): Observable<HFCommFriendsResponseBody>
+
+    /**
+     * 添加好友
+     */
+    @GET("/api/m/appUser/addFriend")
+    fun addCommFriend(@Query("id") id: Int): Observable<HFBaseResponseBody>
 }
