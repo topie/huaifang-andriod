@@ -1,10 +1,10 @@
 package com.topie.huaifang.extensions
 
-import android.util.Log
-import com.topie.huaifang.BuildConfig
+import com.topie.huaifang.util.HFLogger
 
 /**
  * Created by arman on 2017/7/11.
+ * Any类的扩展
  */
 
 fun Any?.kIsNull(): Boolean {
@@ -15,18 +15,10 @@ fun Any?.kIsNotNull(): Boolean {
     return this != null
 }
 
-fun Any?.log(msg: String) {
-    if (BuildConfig.DEBUG.not()) {
-        return
-    }
-    val tag = this?.javaClass?.simpleName ?: "NULL"
-    Log.i(tag, msg)
+fun log(msg: String) {
+    HFLogger.log(msg)
 }
 
-fun Any?.log(msg: String, throwable: Throwable) {
-    if (BuildConfig.DEBUG.not()) {
-        return
-    }
-    val tag = this?.javaClass?.simpleName ?: "NULL"
-    Log.e(tag, msg, throwable)
+fun log(msg: String, throwable: Throwable) {
+    HFLogger.log(msg, throwable)
 }
