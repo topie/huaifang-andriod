@@ -51,7 +51,7 @@ class HFIndexFragment : HFBaseFragment() {
     private fun getCommSimilarFriendList() {
         simFriendDisposable = HFRetrofit.hfService.getCommSimilarFriend().subscribeApi {
             if (!it.resultOk) {
-                it.convertMessage().kToastLong()
+                it.convertMessage().kToastShort()
                 return@subscribeApi
             }
             val list = it.data?.data?.takeIf { it.isNotEmpty() }
