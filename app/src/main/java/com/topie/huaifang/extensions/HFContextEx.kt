@@ -10,7 +10,9 @@ import android.os.Bundle
 import android.support.annotation.AnyRes
 import android.support.annotation.ColorRes
 import android.support.annotation.StringRes
+import android.view.View
 import android.widget.Toast
+import java.io.File
 import java.lang.ref.WeakReference
 
 
@@ -73,6 +75,26 @@ fun kToastLong(msg: String) {
 fun kToastShort(msg: String) {
     appContext?.let {
         HFToast.showToast(it, msg, Toast.LENGTH_SHORT)
+    }
+}
+
+fun Any?.kStartActivity(clazz: Class<out Activity>, bundle: Bundle? = null): Boolean {
+    return when {
+        this is Context -> kStartActivity(clazz, bundle)
+        this is View -> context.kStartActivity(clazz, bundle)
+        this is android.support.v4.app.Fragment -> if (isAdded && !isDetached && appContext != null) {
+            Intent(appContext, clazz).also {
+                if (bundle != null) {
+                    it.putExtras(bundle)
+                }
+            }.also {
+                startActivity(it)
+            }
+            true
+        } else {
+            context.kStartActivity(clazz, bundle)
+        }
+        else -> appContext.kStartActivity(clazz, bundle)
     }
 }
 

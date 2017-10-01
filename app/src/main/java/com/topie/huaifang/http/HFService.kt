@@ -134,4 +134,7 @@ interface HFService {
      */
     @GET("/api/m/appUser/addFriend")
     fun addCommFriend(@Query("id") id: Int): Observable<HFBaseResponseBody>
+
+    @GET("/api/logout")
+    fun logout(): Observable<HFBaseResponseBody>
 }

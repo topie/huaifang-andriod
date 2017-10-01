@@ -18,7 +18,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
  */
 object HFRetrofit {
 
-    private const val baseUrl = "http://huaifang.zt647.com/"
+    const val baseUrl = "http://huaifang.zt647.com/"
 
     private var client: OkHttpClient
 

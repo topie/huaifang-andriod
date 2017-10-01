@@ -9,14 +9,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.topie.huaifang.R
+import com.topie.huaifang.account.HFAccountManager
 import com.topie.huaifang.base.HFBaseFragment
 import com.topie.huaifang.base.HFBaseRecyclerAdapter
 import com.topie.huaifang.base.HFBaseRecyclerViewHolder
 import com.topie.huaifang.base.HFViewHolderFactory
 import com.topie.huaifang.communication.HFCommFriendsActivity
 import com.topie.huaifang.extensions.kStartActivity
+import com.topie.huaifang.extensions.kToastShort
 import com.topie.huaifang.extensions.log
+import com.topie.huaifang.http.HFRetrofit
+import com.topie.huaifang.http.subscribeApi
 import com.topie.huaifang.imageloader.HFImageView
+import com.topie.huaifang.login.HFLoginActivity
 
 /**
  * Created by arman on 2017/9/16.
@@ -37,6 +42,7 @@ class HFMineFragment : HFBaseFragment() {
         list.add(HFListItem(R.mipmap.ic_facing_mine_label, context.getString(R.string.facing_mine_label), 4))
         list.add(HFListItem(R.mipmap.ic_facing_mine_suggestion, context.getString(R.string.facing_mine_suggestion), 5))
         list.add(HFListItem(R.mipmap.ic_facing_mine_setting, context.getString(R.string.facing_mine_setting), 6))
+        list.add(HFListItem(0, context.getString(R.string.facing_mine_logout), 7))
         recyclerView.adapter = HFBaseRecyclerAdapter(ViewHolder.CREATOR, list)
         return inflate
     }
@@ -63,6 +69,14 @@ class HFMineFragment : HFBaseFragment() {
             super.onItemClicked(d)
             when (d?.itemType ?: -1) {
                 0 -> itemView.context.kStartActivity(HFCommFriendsActivity::class.java)
+                7 -> HFRetrofit.hfService.logout().subscribeApi {
+                    if (!it.resultOk) {
+                        it.convertMessage().kToastShort()
+                    } else {
+                        HFAccountManager.setToken(null)
+                        itemView.kStartActivity(HFLoginActivity::class.java)
+                    }
+                }
                 else -> log("itemType = ${d?.itemType}")
             }
         }

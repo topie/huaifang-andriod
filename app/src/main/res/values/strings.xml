@@ -27,6 +27,7 @@
     <string name="facing_mine_label">我的标签</string>
     <string name="facing_mine_suggestion">意见箱</string>
     <string name="facing_mine_setting">设置</string>
+    <string name="facing_mine_logout">退出登录</string>
     <string name="default_tip">提示</string>
     <string name="default_cancel">取消</string>
     <string name="default_ok">确定</string>

@@ -11,6 +11,7 @@ import android.util.AttributeSet
 import android.widget.ImageView
 import com.bumptech.glide.request.target.BitmapImageViewTarget
 import com.topie.huaifang.R
+import com.topie.huaifang.http.HFRetrofit
 import com.topie.huaifang.view.HFAspectRatioMeasure
 
 /**
@@ -57,7 +58,12 @@ class HFImageView @JvmOverloads constructor(context: Context, attrs: AttributeSe
     }
 
     fun loadImageUri(uri: Uri?) {
-        val load = GlideApp.with(this).asBitmap().load(uri)
+        val uri1 = uri?.toString()?.takeIf {
+            it.length > 1 && it[0] == '/'
+        }?.let {
+            Uri.parse(HFRetrofit.baseUrl + it.substring(1))
+        } ?: uri
+        val load = GlideApp.with(this).asBitmap().load(uri1)
         loadImage(load)
     }
 

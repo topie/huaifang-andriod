@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
+    <external-path
+        name="hf_image_temp"
+        path="Android/data/com.topie.huaifang/cache/picture/temp" />
+    <root-path
+        name="root-path"
+        path="." />
+</paths>
