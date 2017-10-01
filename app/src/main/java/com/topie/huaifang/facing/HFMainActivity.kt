@@ -6,9 +6,14 @@ import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import com.topie.huaifang.HFActivityManager
 import com.topie.huaifang.R
+import com.topie.huaifang.account.HFAccountManager
 import com.topie.huaifang.extensions.kGetIdentifier
+import com.topie.huaifang.extensions.kStartActivity
 import com.topie.huaifang.extensions.log
+import com.topie.huaifang.login.HFLoginActivity
+import com.topie.huaifang.view.HFTipDialog
 
 
 class HFMainActivity : AppCompatActivity() {
@@ -26,6 +31,22 @@ class HFMainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.facing_main_activity)
         initBottomView(savedInstanceState)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        //没有登录的状态下进入登录页面
+        if (!HFAccountManager.isLogin) {
+            HFTipDialog.Builder().also {
+                it.content = "登录后才能继续访问app"
+                it.onOkClicked = {
+                    kStartActivity(HFLoginActivity::class.java)
+                }
+                it.onCancelClicked = {
+                    HFActivityManager.closeAllActivities()
+                }
+            }.show(this@HFMainActivity)
+        }
     }
 
     private fun initBottomView(savedInstanceState: Bundle?) {
@@ -78,23 +99,22 @@ class HFMainActivity : AppCompatActivity() {
     private fun pushFragment(pFragmentClass: Class<out Fragment>) = try {
         val name = pFragmentClass.name
         val manager = supportFragmentManager
-        val fragment = manager.findFragmentByTag(name) ?: pFragmentClass.newInstance()
+
         val ft = manager.beginTransaction()
-        when (curFragment) {
-            null -> log("curFragment is null")
-            fragment -> log("fragment[$name] is showing")
-            else -> ft.hide(curFragment)
-        }
-        when {
-            fragment.isAdded -> ft.show(fragment)
-            else -> ft.add(R.id.fl_facing_frag, fragment, name)
-        }
-        val any = (0 until manager.backStackEntryCount).any { manager.getBackStackEntryAt(it).name == name }
-        if (!any) {
-            ft.addToBackStack(name)
+        curFragment = manager.findFragmentByTag(name)?.also {
+            if (it != curFragment) {
+                ft.attach(it)
+                if (curFragment != null) {
+                    ft.detach(curFragment)
+                }
+            }
+        } ?: pFragmentClass.newInstance().also {
+            ft.add(R.id.fl_facing_frag, it, name)
+            if (curFragment != null) {
+                ft.detach(curFragment)
+            }
         }
         ft.commitAllowingStateLoss()
-        curFragment = fragment
     } catch (pE: Exception) {
         log("", pE)
     }

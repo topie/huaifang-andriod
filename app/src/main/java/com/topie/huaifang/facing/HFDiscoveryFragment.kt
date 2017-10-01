@@ -7,8 +7,14 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import com.topie.huaifang.R
 import com.topie.huaifang.base.HFBaseFragment
+import com.topie.huaifang.base.HFBaseRecyclerAdapter
+import com.topie.huaifang.base.HFBaseRecyclerViewHolder
+import com.topie.huaifang.base.HFViewHolderFactory
+import com.topie.huaifang.extensions.kGetString
+import com.topie.huaifang.imageloader.HFImageView
 
 /**
  * Created by arman on 2017/9/16.
@@ -16,22 +22,46 @@ import com.topie.huaifang.base.HFBaseFragment
  */
 class HFDiscoveryFragment : HFBaseFragment() {
 
-    private var adapter: HFListAdapter? = null
-
     override fun onCreateViewSupport(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val inflate = inflater.inflate(R.layout.facing_list, container, false)
         val recyclerView = inflate.findViewById(R.id.rv_facing_list) as RecyclerView
         recyclerView.layoutManager = LinearLayoutManager(inflate.context)
         //create adapter
-        val list: ArrayList<HFListAdapter.HFListItem> = arrayListOf()
-        list.add(HFListAdapter.HFListItem(R.mipmap.ic_facing_discovery_neighborhood, context.getString(R.string.facing_discovery_neighborhood)))
-        list.add(HFListAdapter.HFListItem(R.mipmap.ic_facing_discovery_activity, context.getString(R.string.facing_discovery_activity)))
-        list.add(HFListAdapter.HFListItem(R.mipmap.ic_facing_discovery_forum, context.getString(R.string.facing_discovery_forum)))
-        list.add(HFListAdapter.HFListItem(R.mipmap.ic_facing_discovery_around, context.getString(R.string.facing_discovery_around)))
-        adapter = HFListAdapter(inflater.context, list)
-        recyclerView.adapter = adapter
+        val list: ArrayList<Item> = arrayListOf()
+        list.add(Item(R.mipmap.ic_facing_discovery_neighborhood, kGetString(R.string.facing_discovery_neighborhood), 0))
+        list.add(Item(R.mipmap.ic_facing_discovery_activity, kGetString(R.string.facing_discovery_activity), 1))
+        list.add(Item(R.mipmap.ic_facing_discovery_forum, kGetString(R.string.facing_discovery_forum), 2))
+        list.add(Item(R.mipmap.ic_facing_discovery_around, kGetString(R.string.facing_discovery_around), 3))
+        recyclerView.adapter = HFBaseRecyclerAdapter(ViewHolder.CREATOR, list)
         return inflate
     }
 
     private class Item(@DrawableRes val iconId: Int, val name: String?, val id: Int)
+
+    private class ViewHolder(itemView: View) : HFBaseRecyclerViewHolder<Item>(itemView, true) {
+
+        private val ivIcon: HFImageView = itemView.findViewById(R.id.iv_facing_list_icon) as HFImageView
+        private val tvName: TextView = itemView.findViewById(R.id.tv_facing_list_name) as TextView
+
+        override fun onBindData(d: Item) {
+            ivIcon.setImageResource(d.iconId)
+            tvName.text = d.name
+        }
+
+        override fun onItemClicked(d: Item?) {
+            super.onItemClicked(d)
+            d?.id?.let {
+
+            }
+        }
+
+        companion object CREATOR : HFViewHolderFactory<ViewHolder> {
+
+            override fun create(parent: ViewGroup, viewType: Int): ViewHolder {
+                val from = LayoutInflater.from(parent.context)
+                val itemView = from.inflate(R.layout.facing_list_item, parent, false)
+                return ViewHolder(itemView)
+            }
+        }
+    }
 }

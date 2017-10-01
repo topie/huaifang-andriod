@@ -12,5 +12,6 @@ class HFApplication : Application() {
         super.onCreate()
         kInitApplication()
         HFAccountManager.getToken()
+        registerActivityLifecycleCallbacks(HFActivityManager.HFActivityLifecycleCallbacks)
     }
 }

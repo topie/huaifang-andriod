@@ -18,8 +18,14 @@ class HFTipDialog private constructor(context: Context, private val builder: HFT
         setContentView(R.layout.view_tip_dialog)
         setWindowScreenWidth()
         tv_tip_dialog_content.text = builder.content
-        tv_tip_dialog_cancel.setOnClickListener { builder.onCancelClicked?.invoke() }
-        tv_tip_dialog_ok.setOnClickListener { builder.onOkClicked?.invoke() }
+        tv_tip_dialog_cancel.setOnClickListener {
+            builder.onCancelClicked?.invoke()
+            dismiss()
+        }
+        tv_tip_dialog_ok.setOnClickListener {
+            builder.onOkClicked?.invoke()
+            dismiss()
+        }
     }
 
     private fun setWindowScreenWidth() {

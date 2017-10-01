@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
+
     <application
         android:name=".HFApplication"
         android:allowBackup="true"
@@ -21,13 +22,28 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".login.HFLoginActivity" />
-        <activity android:name=".function.guide.HFFunGuideActivity" />
-        <activity android:name=".function.live.HFFunLiveActivity" />
-        <activity android:name=".function.notice.HFFunPublicActivity" />
-        <activity android:name=".communication.HFCommFriendsActivity" />
-        <activity android:name=".function.party.HFFunPartyActivity" />
-        <activity android:name=".function.yellowpage.HFFunYellowPageActivity" />
+        
+        <activity
+            android:name=".login.HFLoginActivity"
+            android:launchMode="singleInstance" />
+        <activity
+            android:name=".function.guide.HFFunGuideActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".function.live.HFFunLiveActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".function.notice.HFFunPublicActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".communication.HFCommFriendsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".function.party.HFFunPartyActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".function.yellowpage.HFFunYellowPageActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

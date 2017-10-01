@@ -1,12 +1,15 @@
 package com.topie.huaifang.login
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.topie.huaifang.HFBaseTitleActivity
 import com.topie.huaifang.R
 import com.topie.huaifang.account.HFAccountManager
+import com.topie.huaifang.extensions.kStartActivity
 import com.topie.huaifang.extensions.kToastLong
 import com.topie.huaifang.extensions.log
+import com.topie.huaifang.facing.HFMainActivity
 import com.topie.huaifang.http.HFRetrofit
 import com.topie.huaifang.http.composeApi
 import kotlinx.android.synthetic.main.login_activity.*
@@ -20,7 +23,9 @@ class HFLoginActivity : HFBaseTitleActivity() {
         const val EXTRA_IS_REGISTER = "extra_is_register"
     }
 
+    //标志此页面是否是注册页面
     private var isRegister = false
+    //是否是输入密码的step,只在注册页面有效（isRegister = true）
     private var inputPwd = false
 
     private var phone: String? = null
@@ -28,6 +33,15 @@ class HFLoginActivity : HFBaseTitleActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login_activity)
+        initView(intent)
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        initView(intent)
+    }
+
+    private fun initView(intent: Intent) {
         isRegister = intent.getBooleanExtra(EXTRA_IS_REGISTER, false)
         when (isRegister) {
             true -> {
@@ -52,8 +66,9 @@ class HFLoginActivity : HFBaseTitleActivity() {
                         if (!it.resultOk) {
                             log(it.convertMessage())
                         } else {
-                            kToastLong("注册成功")
+                            kToastLong("注册成功,请重新登录")
                             finish()
+                            kStartActivity(HFLoginActivity::class.java)
                         }
                     }, {
                         kToastLong(it.message ?: "error")
@@ -94,6 +109,11 @@ class HFLoginActivity : HFBaseTitleActivity() {
                     })
                 }
             }
+        }
+        //登录页面点击注册跳转到注册页面
+        tv_login_register_button.setOnClickListener {
+            val bundle: Bundle = Bundle().also { it.putBoolean(EXTRA_IS_REGISTER, true) }
+            kStartActivity(HFLoginActivity::class.java, bundle)
         }
     }
 
