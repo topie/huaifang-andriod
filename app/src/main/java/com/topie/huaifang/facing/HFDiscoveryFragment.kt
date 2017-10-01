@@ -1,6 +1,7 @@
 package com.topie.huaifang.facing
 
 import android.os.Bundle
+import android.support.annotation.DrawableRes
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -11,6 +12,7 @@ import com.topie.huaifang.base.HFBaseFragment
 
 /**
  * Created by arman on 2017/9/16.
+ * 主界面，发现
  */
 class HFDiscoveryFragment : HFBaseFragment() {
 
@@ -30,4 +32,6 @@ class HFDiscoveryFragment : HFBaseFragment() {
         recyclerView.adapter = adapter
         return inflate
     }
+
+    private class Item(@DrawableRes val iconId: Int, val name: String?, val id: Int)
 }

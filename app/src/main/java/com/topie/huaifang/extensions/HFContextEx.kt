@@ -54,6 +54,7 @@ fun kGetIdentifier(name: String, defType: String): Int {
 /**
  * 通过资源id获取对应的名称
  */
+@Suppress("unused")
 fun kGetResourceEntryName(@AnyRes resId: Int): String? {
     return try {
         appContext?.resources?.getResourceEntryName(resId)
@@ -132,12 +133,14 @@ fun Context.kTel(phoneNumber: String): Boolean {
  * 获取资源文件定义的颜色
  */
 fun kGetColor(@ColorRes id: Int): Int {
+    @Suppress("DEPRECATION")
     return appContext?.resources?.getColor(id) ?: 0xFFFFFFFF.toInt()
 }
 
 /**
  * 获取资源文件定义的字符串
  */
+@Suppress("unused")
 fun kGetString(@StringRes id: Int): String {
     return appContext?.resources?.getString(id) ?: ""
 }

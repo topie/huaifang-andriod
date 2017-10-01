@@ -20,10 +20,6 @@ open class HFBaseRecyclerAdapter<D, VH : HFBaseRecyclerViewHolder<D>>(private va
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
         return factory.create(parent, viewType)
     }
-
-    override fun getItemViewType(position: Int): Int {
-        return factory.getViewType(position)
-    }
 }
 
 abstract class HFBaseRecyclerViewHolder<D>(itemView: View, initItemClick: Boolean = false) : RecyclerView.ViewHolder(itemView) {

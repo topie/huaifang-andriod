@@ -30,8 +30,8 @@ import kotlinx.android.synthetic.main.facing_index_fragment.*
  */
 class HFIndexFragment : HFBaseFragment() {
 
-    var quesDisposable: Disposable? = null
-    var simFriendDisposable: Disposable? = null
+    private var quesDisposable: Disposable? = null
+    private var simFriendDisposable: Disposable? = null
 
     override fun onCreateViewSupport(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val inflate = inflater.inflate(R.layout.facing_index_fragment, container, false)
@@ -133,7 +133,7 @@ class HFIndexFragment : HFBaseFragment() {
         simFriendDisposable?.takeIf { !it.isDisposed }?.dispose()
     }
 
-    private fun initFunctions(view: View, savedInstanceState: Bundle?) {
+    private fun initFunctions(view: View, @Suppress("UNUSED_PARAMETER") savedInstanceState: Bundle?) {
         val fun0 = view.findViewById(R.id.ll_facing_fun_0)
         (fun0.findViewById(R.id.iv_facing_index_fun) as ImageView).setImageResource(R.mipmap.ic_facing_index_fun_announcement)
         (fun0.findViewById(R.id.tv_facing_index_fun) as TextView).setText(R.string.facing_index_fun_announcement)

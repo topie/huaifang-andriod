@@ -29,7 +29,7 @@ class HFMsgFragment : HFBaseFragment() {
 
     private lateinit var pt2FrameLayout: Pt2FrameLayout
     private var adapter: Adapter = Adapter()
-    var disposable: Disposable? = null
+    private var disposable: Disposable? = null
 
     override fun onCreateViewSupport(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         pt2FrameLayout = inflater.inflate(R.layout.base_pt2_recycler_layout, container, false) as Pt2FrameLayout
