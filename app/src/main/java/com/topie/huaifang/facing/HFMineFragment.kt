@@ -42,7 +42,7 @@ class HFMineFragment : HFBaseFragment() {
         list.add(HFListItem(R.mipmap.ic_facing_mine_label, context.getString(R.string.facing_mine_label), 4))
         list.add(HFListItem(R.mipmap.ic_facing_mine_suggestion, context.getString(R.string.facing_mine_suggestion), 5))
         list.add(HFListItem(R.mipmap.ic_facing_mine_setting, context.getString(R.string.facing_mine_setting), 6))
-        list.add(HFListItem(0, context.getString(R.string.facing_mine_logout), 7))
+        list.add(HFListItem(R.mipmap.ic_facing_mine_logout, context.getString(R.string.facing_mine_logout), 7))
         recyclerView.adapter = HFBaseRecyclerAdapter(ViewHolder.CREATOR, list)
         return inflate
     }

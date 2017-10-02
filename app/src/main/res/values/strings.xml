@@ -13,6 +13,7 @@
     <string name="facing_index_fun_live">居务公开</string>
     <string name="facing_index_fun_yellow_book">迷你黄页</string>
     <string name="facing_index_fun_party">社区党建</string>
+    <string name="facing_index_fun_library">社区图书馆</string>
     <string name="facing_index_friend">可能认识的人</string>
     <string name="facing_index_friend_add">+加为好友</string>
     <string name="facing_list_search_friend">搜索我的好友，发起聊天</string>
@@ -43,4 +44,5 @@
     <string name="default_login">登录</string>
     <string name="fun_guide_communicate">立即沟通</string>
     <string name="fun_guide_tel">拨打电话</string>
+    <string name="default_all">全部</string>
 </resources>

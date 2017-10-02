@@ -57,3 +57,12 @@ fun <T> List<T>.kGet(position: Int): T? {
     }
 }
 
+fun <T> List<T>.kClone(): MutableList<T> {
+    return ArrayList(this)
+}
+
+fun <T> T.kInto(list: MutableList<T>): T {
+    list.add(this)
+    return this
+}
+

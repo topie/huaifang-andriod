@@ -8,7 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.topie.huaifang.HFBaseTitleActivity
+import com.topie.huaifang.base.HFBaseTitleActivity
 import com.topie.huaifang.R
 import com.topie.huaifang.extensions.kReleaseSelf
 import com.topie.huaifang.http.HFRetrofit

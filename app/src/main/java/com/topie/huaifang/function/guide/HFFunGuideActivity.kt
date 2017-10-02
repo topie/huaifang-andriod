@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
-import com.topie.huaifang.HFBaseTitleActivity
+import com.topie.huaifang.base.HFBaseTitleActivity
 import com.topie.huaifang.R
 import com.topie.huaifang.extensions.log
 import com.topie.huaifang.http.HFRetrofit

@@ -1,6 +1,5 @@
 package com.topie.huaifang.facing
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,9 +7,9 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.topie.huaifang.R
-import com.topie.huaifang.account.HFAccountManager
 import com.topie.huaifang.base.HFBaseFragment
 import com.topie.huaifang.extensions.*
+import com.topie.huaifang.function.HFFunAllActivity
 import com.topie.huaifang.function.guide.HFFunGuideActivity
 import com.topie.huaifang.function.live.HFFunLiveActivity
 import com.topie.huaifang.function.notice.HFFunPublicActivity
@@ -20,7 +19,6 @@ import com.topie.huaifang.http.HFRetrofit
 import com.topie.huaifang.http.bean.communication.HFCommUserInfo
 import com.topie.huaifang.http.subscribeApi
 import com.topie.huaifang.imageloader.HFImageView
-import com.topie.huaifang.login.HFLoginActivity
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.facing_index_fragment.*
 
@@ -153,43 +151,32 @@ class HFIndexFragment : HFBaseFragment() {
         (fun5.findViewById(R.id.iv_facing_index_fun) as ImageView).setImageResource(R.mipmap.ic_facing_index_fun_yellow_book)
         (fun5.findViewById(R.id.tv_facing_index_fun) as TextView).setText(R.string.facing_index_fun_yellow_book)
 
+        val fun6 = view.findViewById(R.id.ll_facing_fun_6)
+        (fun6.findViewById(R.id.iv_facing_index_fun) as ImageView).setImageResource(R.mipmap.ic_facing_index_fun_all)
+        (fun6.findViewById(R.id.tv_facing_index_fun) as TextView).setText(R.string.default_all)
+
         fun0.setOnClickListener {
-            context?.let {
-                if (HFAccountManager.isLogin) {
-                    startActivity(Intent(it, HFFunPublicActivity::class.java))
-                } else {
-                    val intent = Intent(it, HFLoginActivity::class.java)
-                    intent.putExtra(HFLoginActivity.EXTRA_IS_REGISTER, true)
-                    startActivity(intent)
-                }
-            }
+            this@HFIndexFragment.kStartActivity(HFFunPublicActivity::class.java)
         }
 
         fun1.setOnClickListener {
-            context?.let {
-                if (HFAccountManager.isLogin) {
-                    val intent = Intent(it, HFFunGuideActivity::class.java)
-                    startActivity(intent)
-                } else {
-                    val intent = Intent(it, HFLoginActivity::class.java)
-                    intent.putExtra(HFLoginActivity.EXTRA_IS_REGISTER, false)
-                    startActivity(intent)
-                }
-            }
+            this@HFIndexFragment.kStartActivity(HFFunGuideActivity::class.java)
         }
 
         fun3.setOnClickListener {
-            context.kStartActivity(HFFunLiveActivity::class.java)
+            this@HFIndexFragment.kStartActivity(HFFunLiveActivity::class.java)
         }
 
         fun4.setOnClickListener {
-            context.kStartActivity(HFFunPartyActivity::class.java)
+            this@HFIndexFragment.kStartActivity(HFFunPartyActivity::class.java)
         }
 
         fun5.setOnClickListener {
-            context.kStartActivity(HFFunYellowPageActivity::class.java)
+            this@HFIndexFragment.kStartActivity(HFFunYellowPageActivity::class.java)
         }
 
-
+        fun6.setOnClickListener {
+            this@HFIndexFragment.kStartActivity(HFFunAllActivity::class.java)
+        }
     }
 }

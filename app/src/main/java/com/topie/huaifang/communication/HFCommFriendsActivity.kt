@@ -8,10 +8,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.topie.huaifang.HFBaseTitleActivity
 import com.topie.huaifang.R
 import com.topie.huaifang.base.HFBaseRecyclerAdapter
 import com.topie.huaifang.base.HFBaseRecyclerViewHolder
+import com.topie.huaifang.base.HFBaseTitleActivity
 import com.topie.huaifang.base.HFViewHolderFactory
 import com.topie.huaifang.extensions.kIsNotEmpty
 import com.topie.huaifang.http.HFRetrofit
@@ -34,12 +34,28 @@ class HFCommFriendsActivity : HFBaseTitleActivity() {
         setBaseTitle(R.string.facing_mine_friend)
         recyclerView.layoutManager = LinearLayoutManager(applicationContext)
         recyclerView.adapter = hfBaseRecyclerAdapter
-        HFRetrofit.hfService.getCommFriends().subscribeApi {
-            it.data?.data?.takeIf { it.isNotEmpty() }?.let { hfBaseRecyclerAdapter.list.addAll(it) }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (hfBaseRecyclerAdapter.list.isEmpty()) {
+            getData()
         }
     }
 
-    class ViewHolder(itemView: View) : HFBaseRecyclerViewHolder<HFCommUserInfo>(itemView) {
+    private fun getData() {
+        HFRetrofit.hfService.getCommFriends().subscribeApi {
+            it.data?.data?.takeIf {
+                it.isNotEmpty()
+            }?.let {
+                hfBaseRecyclerAdapter.list.clear()
+                hfBaseRecyclerAdapter.list.addAll(it)
+                hfBaseRecyclerAdapter.notifyDataSetChanged()
+            }
+        }
+    }
+
+    class ViewHolder(itemView: View) : HFBaseRecyclerViewHolder<HFCommUserInfo>(itemView, true) {
         private val hfImageView = itemView.findViewById(R.id.iv_facing_list_icon) as HFImageView
         private val textView = itemView.findViewById(R.id.tv_facing_list_name) as TextView
 

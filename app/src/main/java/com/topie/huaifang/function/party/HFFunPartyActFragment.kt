@@ -20,7 +20,7 @@ import com.topie.huaifang.extensions.kFormatTime
 import com.topie.huaifang.extensions.kParseUrl
 import com.topie.huaifang.http.HFRetrofit
 import com.topie.huaifang.http.bean.function.HFFunPartyResponseBody
-import com.topie.huaifang.http.subscribeApi
+import com.topie.huaifang.http.subscribeResultOkApi
 import com.topie.huaifang.imageloader.HFImageView
 import io.reactivex.disposables.Disposable
 
@@ -67,7 +67,7 @@ class HFFunPartyActFragment : HFBaseFragment() {
 
     private fun getFunPartyActList(pageSize: Int) {
         disposable?.takeIf { it.isDisposed.not() }?.dispose()
-        disposable = HFRetrofit.hfService.getFunPartyActList(pageSize).subscribeApi({
+        disposable = HFRetrofit.hfService.getFunPartyActList(pageSize).subscribeResultOkApi({
             it.data?.data?.takeIf { it.isNotEmpty() }?.let {
                 if (pageSize == 0) {
                     adapter.list.clear()

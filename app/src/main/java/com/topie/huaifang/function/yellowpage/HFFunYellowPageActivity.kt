@@ -9,7 +9,7 @@ import android.widget.BaseExpandableListAdapter
 import android.widget.ExpandableListView
 import android.widget.TextView
 import com.davdian.ptr.Pt2FrameLayout
-import com.topie.huaifang.HFBaseTitleActivity
+import com.topie.huaifang.base.HFBaseTitleActivity
 import com.topie.huaifang.R
 import com.topie.huaifang.extensions.HFDefaultPt2Handler
 import com.topie.huaifang.extensions.kGet
@@ -17,7 +17,7 @@ import com.topie.huaifang.extensions.kGetOne
 import com.topie.huaifang.extensions.kTel
 import com.topie.huaifang.http.HFRetrofit
 import com.topie.huaifang.http.bean.function.HFFunYellowPageResponseBody
-import com.topie.huaifang.http.subscribeApi
+import com.topie.huaifang.http.subscribeResultOkApi
 import com.topie.huaifang.util.HFLogger
 import com.topie.huaifang.view.HFTipDialog
 import io.reactivex.disposables.Disposable
@@ -60,7 +60,7 @@ class HFFunYellowPageActivity : HFBaseTitleActivity() {
 
     private fun getFunPartyMembersList() {
         disposable?.takeIf { it.isDisposed.not() }?.dispose()
-        disposable = HFRetrofit.hfService.getFunYellowPage().subscribeApi({
+        disposable = HFRetrofit.hfService.getFunYellowPage().subscribeResultOkApi({
             it.data?.data?.let {
                 Group.convertToGroupList(it)
             }?.let {

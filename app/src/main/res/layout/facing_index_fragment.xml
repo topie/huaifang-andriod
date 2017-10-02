@@ -149,6 +149,15 @@
                 android:layout_height="match_parent"
                 android:background="@color/colorGray" />
 
+            <include
+                android:id="@+id/ll_facing_fun_6"
+                layout="@layout/facing_index_fun_item" />
+
+            <View
+                android:layout_width="0.5dp"
+                android:layout_height="match_parent"
+                android:background="@color/colorGray" />
+
         </com.topie.huaifang.view.HFAspectLinearLayout>
 
         <!--可能认识的人-->

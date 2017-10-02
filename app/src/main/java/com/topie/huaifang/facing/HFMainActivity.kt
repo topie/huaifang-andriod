@@ -2,13 +2,13 @@ package com.topie.huaifang.facing
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.topie.huaifang.HFActivityManager
 import com.topie.huaifang.R
 import com.topie.huaifang.account.HFAccountManager
+import com.topie.huaifang.base.HFBaseActivity
 import com.topie.huaifang.extensions.kGetIdentifier
 import com.topie.huaifang.extensions.kStartActivity
 import com.topie.huaifang.extensions.log
@@ -16,7 +16,7 @@ import com.topie.huaifang.login.HFLoginActivity
 import com.topie.huaifang.view.HFTipDialog
 
 
-class HFMainActivity : AppCompatActivity() {
+class HFMainActivity : HFBaseActivity() {
 
     private var currentTabPosition = -1
 

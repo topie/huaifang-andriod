@@ -22,6 +22,8 @@ class HFDefaultPt2Handler(private val checkDoRefresh: ((content: View) -> Boolea
     constructor(onRefresh: () -> Unit)
             : this({ checkCanDoRefresh(it) }, { false }, onRefresh, {})
 
+    constructor() : this({ false }, { false }, {}, {})
+
     override fun checkCanDoRefresh(frame: PtrFrameLayout, content: View, header: View): Boolean {
         return checkDoRefresh(content)
     }

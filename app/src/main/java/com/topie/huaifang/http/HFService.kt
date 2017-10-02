@@ -137,4 +137,17 @@ interface HFService {
 
     @GET("/api/logout")
     fun logout(): Observable<HFBaseResponseBody>
+
+    /**
+     * 社区图书馆，导航
+     */
+    @GET("/api/m/libraryBook/category")
+    fun getFunLibraryMenus(): Observable<HFFunLibraryMenuResponseBody>
+
+
+    /**
+     * 社区图书馆，列表
+     */
+    @GET("/api/m/libraryBook/list")
+    fun getFunLibraryList(@Query("category") category: String, @Query("pageNum") pageNum: Int = 0, @Query("pageSize") pageSize: Int = 15): Observable<HFFunLibraryBookResponseBody>
 }

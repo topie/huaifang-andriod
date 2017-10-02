@@ -56,6 +56,18 @@ fun <T> Observable<T>.composeApi(): Observable<T> {
     return subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
 }
 
+fun <T : HFBaseResponseBody> Observable<T>.subscribeResultOkApi(onNext: ((t: T) -> Unit)): Disposable {
+    return subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
+        when {
+            it.resultOk -> onNext(it)
+            else -> it.convertMessage().kToastShort()
+        }
+    }, {
+        HFLogger.log("error", it)
+        it.message?.kToastShort()
+    })
+}
+
 fun <T : HFBaseResponseBody> Observable<T>.subscribeApi(onNext: ((t: T) -> Unit)): Disposable {
     return subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(onNext, {
         HFLogger.log("error", it)
@@ -63,13 +75,20 @@ fun <T : HFBaseResponseBody> Observable<T>.subscribeApi(onNext: ((t: T) -> Unit)
     })
 }
 
-fun <T : HFBaseResponseBody> Observable<T>.subscribeApi(onNext: ((t: T) -> Unit), onComplete: () -> Unit): Disposable {
+fun <T : HFBaseResponseBody> Observable<T>.subscribeResultOkApi(onNext: ((t: T) -> Unit), onComplete: () -> Unit): Disposable {
     return subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
         when {
             it.resultOk -> onNext(it)
             else -> it.convertMessage().kToastShort()
         }
     }, {
+        HFLogger.log("error", it)
+        it.message?.kToastShort()
+    }, onComplete)
+}
+
+fun <T : HFBaseResponseBody> Observable<T>.subscribeApi(onNext: ((t: T) -> Unit), onComplete: () -> Unit): Disposable {
+    return subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(onNext, {
         HFLogger.log("error", it)
         it.message?.kToastShort()
     }, onComplete)
