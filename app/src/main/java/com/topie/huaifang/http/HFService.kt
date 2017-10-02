@@ -150,4 +150,16 @@ interface HFService {
      */
     @GET("/api/m/libraryBook/list")
     fun getFunLibraryList(@Query("category") category: String, @Query("pageNum") pageNum: Int = 0, @Query("pageSize") pageSize: Int = 15): Observable<HFFunLibraryBookResponseBody>
+
+    /**
+     * 调查问卷详情
+     */
+    @GET("/api/m/question/item/list")
+    fun getFunQuestionDetail(@Query("infoId") infoId: Int): Observable<HFFunQuestionDetailResponseBody>
+
+    /**
+     * 提交调查问卷
+     */
+    @POST("/api/m/question/post")
+    fun postFunQuestions(@Body aBody: HFFunQuestionRequestBody): Observable<HFBaseResponseBody>
 }

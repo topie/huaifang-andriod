@@ -57,6 +57,7 @@
             android:name=".function.HFFunAllActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".function.library.HFFunLibraryActivity" />
+        <activity android:name=".function.other.HFQuestionActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

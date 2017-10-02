@@ -45,4 +45,6 @@
     <string name="fun_guide_communicate">立即沟通</string>
     <string name="fun_guide_tel">拨打电话</string>
     <string name="default_all">全部</string>
+    <string name="default_dot">.</string>
+    <string name="default_submit">提交</string>
 </resources>
