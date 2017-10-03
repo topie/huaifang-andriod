@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="@color/facing_index_background" />
+
+        <com.topie.huaifang.imageloader.HFImageView
+            android:id="@+id/iv_fun_party_detail_img"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/img_fun_part_act_detail_default"
+            app:aspectRatio="2.027"
+            app:defImageRes="@mipmap/img_fun_part_act_detail_default" />
+
+        <TextView
+            android:id="@+id/tv_fun_party_act_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:ellipsize="end"
+            android:lines="1"
+            android:maxLines="1"
+            android:text="南苑乡槐房村召开2017年创先争优活动的通知"
+            android:textColor="@color/colorDark"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tv_fun_party_act_read"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:ellipsize="end"
+            android:lines="1"
+            android:maxLines="1"
+            android:text="34人已读"
+            android:textColor="@color/colorGray"
+            android:textSize="12sp" />
+
+        <FrameLayout
+            android:id="@+id/fl_fun_party_act_join"
+            style="@style/item_selected_material"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_fun_party_act_detail_join"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="@string/function_party_act_join"
+                android:textColor="@android:color/white"
+                android:textSize="14sp" />
+        </FrameLayout>
+
+        <include
+            layout="@layout/facing_line_item"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_margin="10dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:text="党组织："
+                android:textColor="@color/colorDark"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_fun_party_act_organ"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/colorDark"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <include
+            layout="@layout/facing_line_item"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_margin="10dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:text="活动时间："
+                android:textColor="@color/colorDark"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_fun_party_act_time"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/colorDark"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <include
+            layout="@layout/facing_line_item"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_margin="10dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:text="活动地点："
+                android:textColor="@color/colorDark"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_fun_party_act_address"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/colorDark"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <include
+            layout="@layout/facing_line_item"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_margin="10dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:text="联系发起人："
+                android:textColor="@color/colorDark"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_fun_party_act_publisher"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/colorDark"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <include
+            layout="@layout/facing_line_item"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_margin="10dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="活动详情："
+                android:textColor="@color/colorDark"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_fun_party_act_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/colorDark"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <include
+            layout="@layout/facing_line_item"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_margin="10dp" />
+    </LinearLayout>
+
+</ScrollView>

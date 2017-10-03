@@ -18,6 +18,7 @@ import com.topie.huaifang.base.HFBaseRecyclerViewHolder
 import com.topie.huaifang.base.HFViewHolderFactory
 import com.topie.huaifang.extensions.kFormatTime
 import com.topie.huaifang.extensions.kParseUrl
+import com.topie.huaifang.extensions.kStartActivity
 import com.topie.huaifang.http.HFRetrofit
 import com.topie.huaifang.http.bean.function.HFFunPartyResponseBody
 import com.topie.huaifang.http.subscribeResultOkApi
@@ -34,7 +35,7 @@ class HFFunPartyActFragment : HFBaseFragment() {
     private val adapter = Adapter()
     private var disposable: Disposable? = null
 
-    val handler: AbsPt2Handler = object : AbsPt2Handler() {
+    private val handler: AbsPt2Handler = object : AbsPt2Handler() {
 
         override fun checkCanDoLoad(frame: PtlFrameLayout?, content: View?, footer: View?): Boolean {
             return super.checkCanDoLoad(frame, content, footer) && return adapter.list.size > 0
@@ -110,6 +111,15 @@ class HFFunPartyActFragment : HFBaseFragment() {
                 }
             }
             tvPublisher.text = d.publishUser?.let { "发布者：$it" }
+        }
+
+        override fun onItemClicked(d: HFFunPartyResponseBody.ListData?) {
+            super.onItemClicked(d)
+            if (d != null) {
+                val bundle = Bundle()
+                bundle.putSerializable(HFFunPartyActDetailActivity.EXTRA_DETAIL, d)
+                itemView.kStartActivity(HFFunPartyActDetailActivity::class.java, bundle)
+            }
         }
 
         companion object CREATOR : HFViewHolderFactory<ViewHolder> {

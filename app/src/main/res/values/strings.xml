@@ -52,4 +52,5 @@
     <string name="dispute_mediator_list_item_location_pre">调解地点：</string>
     <string name="dispute_mediator_list_item_communicate">立即沟通</string>
     <string name="dispute_mediator_list_item_tel">拨打电话</string>
+    <string name="function_party_act_join">立即参加</string>
 </resources>

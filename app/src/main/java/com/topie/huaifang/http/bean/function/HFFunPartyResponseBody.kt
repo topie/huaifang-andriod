@@ -1,6 +1,7 @@
 package com.topie.huaifang.http.bean.function
 
 import com.topie.huaifang.http.bean.HFBaseResponseBody
+import java.io.Serializable
 
 /**
  * Created by arman on 2017/9/24.
@@ -14,7 +15,7 @@ class HFFunPartyResponseBody : HFBaseResponseBody() {
         var data: List<ListData>? = null
     }
 
-    class ListData {
+    class ListData : Serializable {
         companion object {
             const val STATUS_WAIT = "0"
             const val STATUS_GOING = "1"
