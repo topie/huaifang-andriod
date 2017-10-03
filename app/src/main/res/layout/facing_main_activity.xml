@@ -12,11 +12,12 @@
         android:layout_height="0dp"
         android:layout_weight="1" />
 
+    <include layout="@layout/facing_line_item" />
     <!--首页底部四个按钮-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="#b3b3b3"
+        android:background="#f5f5f5"
         android:orientation="horizontal"
         android:weightSum="4">
 
