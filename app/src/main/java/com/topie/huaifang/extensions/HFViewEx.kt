@@ -1,6 +1,8 @@
 package com.topie.huaifang.extensions
 
 import android.support.annotation.IdRes
+import android.support.annotation.LayoutRes
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
@@ -49,4 +51,9 @@ fun View.kForeach(each: (v: View) -> Unit) {
             each(getChildAt(i))
         }
     }
+}
+
+fun ViewGroup.kInfalte(@LayoutRes layout: Int): View {
+    val from = LayoutInflater.from(context)
+    return from.inflate(layout, this, false)
 }

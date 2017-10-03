@@ -17,6 +17,7 @@ import com.topie.huaifang.communication.HFCommFriendsActivity
 import com.topie.huaifang.extensions.kGetString
 import com.topie.huaifang.extensions.kStartActivity
 import com.topie.huaifang.extensions.log
+import com.topie.huaifang.function.dispute.HFFunDisputeMediatorActivity
 import com.topie.huaifang.function.guide.HFFunGuideActivity
 import com.topie.huaifang.function.library.HFFunLibraryActivity
 import com.topie.huaifang.function.live.HFFunLiveActivity
@@ -45,6 +46,7 @@ class HFFunAllActivity : HFBaseTitleActivity() {
         list.add(HFListItem(R.mipmap.ic_facing_index_fun_party, kGetString(R.string.facing_index_fun_party), 4))
         list.add(HFListItem(R.mipmap.ic_facing_index_fun_yellow_book, kGetString(R.string.facing_index_fun_yellow_book), 5))
         list.add(HFListItem(R.mipmap.ic_facing_index_fun_library, kGetString(R.string.facing_index_fun_library), 6))
+        list.add(HFListItem(R.mipmap.ic_facing_index_fun_dispute, kGetString(R.string.facing_index_fun_dispute), 7))
         recyclerView.adapter = HFBaseRecyclerAdapter(ViewHolder, list)
     }
 
@@ -76,6 +78,7 @@ class HFFunAllActivity : HFBaseTitleActivity() {
                 4 -> itemView.kStartActivity(HFFunPartyActivity::class.java)
                 5 -> itemView.kStartActivity(HFFunYellowPageActivity::class.java)
                 6 -> itemView.kStartActivity(HFFunLibraryActivity::class.java)
+                7 -> itemView.kStartActivity(HFFunDisputeMediatorActivity::class.java)
                 else -> log("itemType = ${d?.itemType}")
             }
         }

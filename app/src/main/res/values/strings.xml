@@ -14,6 +14,7 @@
     <string name="facing_index_fun_yellow_book">迷你黄页</string>
     <string name="facing_index_fun_party">社区党建</string>
     <string name="facing_index_fun_library">社区图书馆</string>
+    <string name="facing_index_fun_dispute">纠纷调解</string>
     <string name="facing_index_friend">可能认识的人</string>
     <string name="facing_index_friend_add">+加为好友</string>
     <string name="facing_list_search_friend">搜索我的好友，发起聊天</string>
@@ -47,4 +48,8 @@
     <string name="default_all">全部</string>
     <string name="default_dot">.</string>
     <string name="default_submit">提交</string>
+    <string name="dispute_mediator_list_item_name_pre">调解人：</string>
+    <string name="dispute_mediator_list_item_location_pre">调解地点：</string>
+    <string name="dispute_mediator_list_item_communicate">立即沟通</string>
+    <string name="dispute_mediator_list_item_tel">拨打电话</string>
 </resources>

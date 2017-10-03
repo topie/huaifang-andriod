@@ -74,3 +74,19 @@ fun <T> T.kInto(list: MutableList<T>): T {
     return this
 }
 
+/**
+ * 替换list内容
+ */
+fun <T> List<T>.kInsteadTo(list: MutableList<T>) {
+    list.clear()
+    list.addAll(this)
+}
+
+/**
+ * 重新设置内容list
+ */
+fun <T> MutableList<T>.kReset(list: List<T>) {
+    clear()
+    addAll(list)
+}
+

@@ -162,4 +162,10 @@ interface HFService {
      */
     @POST("/api/m/question/post")
     fun postFunQuestions(@Body aBody: HFFunQuestionRequestBody): Observable<HFBaseResponseBody>
+
+    /**
+     * 纠纷调解
+     */
+    @GET("/api/m/disputeResolution/list")
+    fun getFunDisputeMediatorList(): Observable<HFfunDisputeMediatorResponseBody>
 }
