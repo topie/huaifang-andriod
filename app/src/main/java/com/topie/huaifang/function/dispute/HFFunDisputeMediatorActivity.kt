@@ -9,10 +9,7 @@ import android.widget.TextView
 import com.topie.huaifang.R
 import com.topie.huaifang.base.HFBaseRecyclerViewHolder
 import com.topie.huaifang.base.HFBaseTitleActivity
-import com.topie.huaifang.extensions.kInfalte
-import com.topie.huaifang.extensions.kInsteadTo
-import com.topie.huaifang.extensions.kInto
-import com.topie.huaifang.extensions.kTel
+import com.topie.huaifang.extensions.*
 import com.topie.huaifang.http.HFRetrofit
 import com.topie.huaifang.http.bean.function.HFfunDisputeMediatorResponseBody
 import com.topie.huaifang.http.subscribeResultOkApi
@@ -88,11 +85,11 @@ class HFFunDisputeMediatorActivity : HFBaseTitleActivity() {
     }
 
     private class ViewHolder(itemView: View) : HFBaseRecyclerViewHolder<HFfunDisputeMediatorResponseBody.ListData>(itemView) {
-        val llComm = itemView.findViewById(R.id.ll_dispute_mediator_list_item_comm)!!
-        val llTel = itemView.findViewById(R.id.ll_dispute_mediator_list_item_tel)!!
-        val tvTitle: TextView = itemView.findViewById(R.id.tv_dispute_mediator_list_item_title) as TextView
-        val tvName: TextView = itemView.findViewById(R.id.tv_dispute_mediator_list_item_name) as TextView
-        val tvLocation: TextView = itemView.findViewById(R.id.tv_dispute_mediator_list_item_location) as TextView
+        val llComm = itemView.kFindViewById<View>(R.id.ll_dispute_mediator_list_item_comm)
+        val llTel = itemView.kFindViewById<View>(R.id.ll_dispute_mediator_list_item_tel)
+        val tvTitle: TextView = itemView.kFindViewById(R.id.tv_dispute_mediator_list_item_title)
+        val tvName: TextView = itemView.kFindViewById(R.id.tv_dispute_mediator_list_item_name)
+        val tvLocation: TextView = itemView.kFindViewById(R.id.tv_dispute_mediator_list_item_location)
 
         override fun onBindData(d: HFfunDisputeMediatorResponseBody.ListData) {
             tvTitle.text = d.title

@@ -55,12 +55,12 @@ class HFIndexFragment : HFBaseFragment() {
             val list = it.data?.data?.takeIf { it.isNotEmpty() }
             when (list) {
                 null -> {
-                    mView?.findViewById(R.id.tv_facing_similar_friends_title)?.visibility = View.GONE
-                    mView?.findViewById(R.id.ll_facing_similar_friends_content)?.visibility = View.GONE
+                    mView?.kFindViewById<View>(R.id.tv_facing_similar_friends_title)?.visibility = View.GONE
+                    mView?.kFindViewById<View>(R.id.ll_facing_similar_friends_content)?.visibility = View.GONE
                 }
                 else -> {
-                    mView?.findViewById(R.id.tv_facing_similar_friends_title)?.visibility = View.VISIBLE
-                    mView?.findViewById(R.id.ll_facing_similar_friends_content)?.let {
+                    mView?.kFindViewById<View>(R.id.tv_facing_similar_friends_title)?.visibility = View.VISIBLE
+                    mView?.kFindViewById<View>(R.id.ll_facing_similar_friends_content)?.let {
                         it.visibility = View.VISIBLE
                         var i = 0
                         it.kForeach { v ->
@@ -71,11 +71,11 @@ class HFIndexFragment : HFBaseFragment() {
                                 }
                                 else -> {
                                     v.visibility = View.VISIBLE
-                                    val ivHead = v.findViewById(R.id.iv_facing_friend_head) as? HFImageView
-                                    ivHead?.loadImageUri(userInfo.headImage?.kParseUrl())
-                                    val tvName = v.findViewById(R.id.tv_facing_friend_name) as? TextView
-                                    tvName?.text = userInfo.nickname ?: userInfo.mobilePhone
-                                    v.findViewById(R.id.tv_facing_friend_add)?.setOnClickListener {
+                                    val ivHead: HFImageView = v.findViewById(R.id.iv_facing_friend_head)
+                                    ivHead.loadImageUri(userInfo.headImage?.kParseUrl())
+                                    val tvName: TextView = v.findViewById(R.id.tv_facing_friend_name)
+                                    tvName.text = userInfo.nickname ?: userInfo.mobilePhone
+                                    v.findViewById<View>(R.id.tv_facing_friend_add).setOnClickListener {
                                         addFriend(userInfo)
                                     }
                                 }
@@ -114,7 +114,7 @@ class HFIndexFragment : HFBaseFragment() {
                 else -> {
                     ll_facing_index_questions.visibility = View.VISIBLE
                     val obj = ({ v: View, str: String? ->
-                        val textView = v.findViewById(R.id.tv_facing_question_desc) as TextView
+                        val textView: TextView = v.kFindViewById(R.id.tv_facing_question_desc)
                         textView.text = str
                     })
                     obj(ll_facing_index_question_0, list[0].name)
@@ -132,28 +132,28 @@ class HFIndexFragment : HFBaseFragment() {
     }
 
     private fun initFunctions(view: View, @Suppress("UNUSED_PARAMETER") savedInstanceState: Bundle?) {
-        val fun0 = view.findViewById(R.id.ll_facing_fun_0)
-        (fun0.findViewById(R.id.iv_facing_index_fun) as ImageView).setImageResource(R.mipmap.ic_facing_index_fun_announcement)
-        (fun0.findViewById(R.id.tv_facing_index_fun) as TextView).setText(R.string.facing_index_fun_announcement)
-        val fun1 = view.findViewById(R.id.ll_facing_fun_1)
-        (fun1.findViewById(R.id.iv_facing_index_fun) as ImageView).setImageResource(R.mipmap.ic_facing_index_fun_guide)
-        (fun1.findViewById(R.id.tv_facing_index_fun) as TextView).setText(R.string.facing_index_fun_guide)
-        val fun2 = view.findViewById(R.id.ll_facing_fun_2)
-        (fun2.findViewById(R.id.iv_facing_index_fun) as ImageView).setImageResource(R.mipmap.ic_facing_index_fun_bazaar)
-        (fun2.findViewById(R.id.tv_facing_index_fun) as TextView).setText(R.string.facing_index_fun_bazaar)
-        val fun3 = view.findViewById(R.id.ll_facing_fun_3)
-        (fun3.findViewById(R.id.iv_facing_index_fun) as ImageView).setImageResource(R.mipmap.ic_facing_index_fun_live)
-        (fun3.findViewById(R.id.tv_facing_index_fun) as TextView).setText(R.string.facing_index_fun_live)
-        val fun4 = view.findViewById(R.id.ll_facing_fun_4)
-        (fun4.findViewById(R.id.iv_facing_index_fun) as ImageView).setImageResource(R.mipmap.ic_facing_index_fun_party)
-        (fun4.findViewById(R.id.tv_facing_index_fun) as TextView).setText(R.string.facing_index_fun_party)
-        val fun5 = view.findViewById(R.id.ll_facing_fun_5)
-        (fun5.findViewById(R.id.iv_facing_index_fun) as ImageView).setImageResource(R.mipmap.ic_facing_index_fun_yellow_book)
-        (fun5.findViewById(R.id.tv_facing_index_fun) as TextView).setText(R.string.facing_index_fun_yellow_book)
+        val fun0 = view.kFindViewById<View>(R.id.ll_facing_fun_0)
+        fun0.kFindViewById<ImageView>(R.id.iv_facing_index_fun).setImageResource(R.mipmap.ic_facing_index_fun_announcement)
+        fun0.kFindViewById<TextView>(R.id.tv_facing_index_fun).setText(R.string.facing_index_fun_announcement)
+        val fun1 = view.kFindViewById<View>(R.id.ll_facing_fun_1)
+        fun1.kFindViewById<ImageView>(R.id.iv_facing_index_fun).setImageResource(R.mipmap.ic_facing_index_fun_guide)
+        fun1.kFindViewById<TextView>(R.id.tv_facing_index_fun).setText(R.string.facing_index_fun_guide)
+        val fun2 = view.kFindViewById<View>(R.id.ll_facing_fun_2)
+        fun2.kFindViewById<ImageView>(R.id.iv_facing_index_fun).setImageResource(R.mipmap.ic_facing_index_fun_bazaar)
+        fun2.kFindViewById<TextView>(R.id.tv_facing_index_fun).setText(R.string.facing_index_fun_bazaar)
+        val fun3 = view.kFindViewById<View>(R.id.ll_facing_fun_3)
+        fun3.kFindViewById<ImageView>(R.id.iv_facing_index_fun).setImageResource(R.mipmap.ic_facing_index_fun_live)
+        fun3.kFindViewById<TextView>(R.id.tv_facing_index_fun).setText(R.string.facing_index_fun_live)
+        val fun4 = view.kFindViewById<View>(R.id.ll_facing_fun_4)
+        fun4.kFindViewById<ImageView>(R.id.iv_facing_index_fun).setImageResource(R.mipmap.ic_facing_index_fun_party)
+        fun4.kFindViewById<TextView>(R.id.tv_facing_index_fun).setText(R.string.facing_index_fun_party)
+        val fun5 = view.kFindViewById<View>(R.id.ll_facing_fun_5)
+        fun5.kFindViewById<ImageView>(R.id.iv_facing_index_fun).setImageResource(R.mipmap.ic_facing_index_fun_yellow_book)
+        fun5.kFindViewById<TextView>(R.id.tv_facing_index_fun).setText(R.string.facing_index_fun_yellow_book)
 
-        val fun6 = view.findViewById(R.id.ll_facing_fun_6)
-        (fun6.findViewById(R.id.iv_facing_index_fun) as ImageView).setImageResource(R.mipmap.ic_facing_index_fun_all)
-        (fun6.findViewById(R.id.tv_facing_index_fun) as TextView).setText(R.string.default_all)
+        val fun6 = view.kFindViewById<View>(R.id.ll_facing_fun_6)
+        fun6.kFindViewById<ImageView>(R.id.iv_facing_index_fun).setImageResource(R.mipmap.ic_facing_index_fun_all)
+        fun6.kFindViewById<TextView>(R.id.tv_facing_index_fun).setText(R.string.default_all)
 
         fun0.setOnClickListener {
             this@HFIndexFragment.kStartActivity(HFFunPublicActivity::class.java)

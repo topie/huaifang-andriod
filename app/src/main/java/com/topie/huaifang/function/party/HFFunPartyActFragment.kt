@@ -16,6 +16,7 @@ import com.topie.huaifang.base.HFBaseFragment
 import com.topie.huaifang.base.HFBaseRecyclerAdapter
 import com.topie.huaifang.base.HFBaseRecyclerViewHolder
 import com.topie.huaifang.base.HFViewHolderFactory
+import com.topie.huaifang.extensions.kFindViewById
 import com.topie.huaifang.extensions.kFormatTime
 import com.topie.huaifang.extensions.kParseUrl
 import com.topie.huaifang.extensions.kStartActivity
@@ -53,7 +54,7 @@ class HFFunPartyActFragment : HFBaseFragment() {
     override fun onCreateViewSupport(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         pt2FrameLayout = inflater.inflate(R.layout.base_pt2_recycler_layout, container, false) as Pt2FrameLayout
         pt2FrameLayout.setPt2Handler(handler)
-        val recyclerView: RecyclerView = pt2FrameLayout.findViewById(R.id.rv_base_pt2) as RecyclerView
+        val recyclerView: RecyclerView = pt2FrameLayout.kFindViewById(R.id.rv_base_pt2)
         recyclerView.layoutManager = LinearLayoutManager(inflater.context)
         recyclerView.adapter = adapter
         return pt2FrameLayout
@@ -91,12 +92,12 @@ class HFFunPartyActFragment : HFBaseFragment() {
         : HFBaseRecyclerAdapter<HFFunPartyResponseBody.ListData, ViewHolder>(ViewHolder.CREATOR)
 
     private class ViewHolder(itemView: View) : HFBaseRecyclerViewHolder<HFFunPartyResponseBody.ListData>(itemView, true) {
-        val imageView: HFImageView = itemView.findViewById(R.id.iv_fun_party_list_item) as HFImageView
-        val tvTitle: TextView = itemView.findViewById(R.id.tv_fun_party_list_item_title) as TextView
-        val tvTime: TextView = itemView.findViewById(R.id.tv_fun_party_list_item_time) as TextView
-        val tvStatus: TextView = itemView.findViewById(R.id.tv_fun_party_list_item_status) as TextView
-        val tvPublisher: TextView = itemView.findViewById(R.id.tv_fun_party_list_item_publisher) as TextView
-        val tvApply: TextView = itemView.findViewById(R.id.tv_fun_party_list_item_apply) as TextView
+        val imageView: HFImageView = itemView.kFindViewById(R.id.iv_fun_party_list_item)
+        val tvTitle: TextView = itemView.kFindViewById(R.id.tv_fun_party_list_item_title)
+        val tvTime: TextView = itemView.kFindViewById(R.id.tv_fun_party_list_item_time)
+        val tvStatus: TextView = itemView.kFindViewById(R.id.tv_fun_party_list_item_status)
+        val tvPublisher: TextView = itemView.kFindViewById(R.id.tv_fun_party_list_item_publisher)
+        val tvApply: TextView = itemView.kFindViewById(R.id.tv_fun_party_list_item_apply)
 
         override fun onBindData(d: HFFunPartyResponseBody.ListData) {
             imageView.loadImageUri(d.image.kParseUrl())

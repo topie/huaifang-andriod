@@ -14,6 +14,7 @@ import com.davdian.ptr.Pt2FrameLayout
 import com.davdian.ptr.ptl.PtlFrameLayout
 import com.topie.huaifang.R
 import com.topie.huaifang.base.HFBaseFragment
+import com.topie.huaifang.extensions.kFindViewById
 import com.topie.huaifang.extensions.kGet
 import com.topie.huaifang.extensions.kGetOne
 import com.topie.huaifang.http.HFRetrofit
@@ -51,7 +52,7 @@ class HFFunPartyMembersFragment : HFBaseFragment() {
         adapter = Adapter(inflater.context)
         pt2FrameLayout = inflater.inflate(R.layout.base_pt2_list_layout, container, false) as Pt2FrameLayout
         pt2FrameLayout.setPt2Handler(handler)
-        val listView: ExpandableListView = pt2FrameLayout.findViewById(R.id.elv_base_pt2) as ExpandableListView
+        val listView: ExpandableListView = pt2FrameLayout.kFindViewById(R.id.elv_base_pt2)
         listView.setAdapter(adapter)
         return pt2FrameLayout
     }
@@ -102,7 +103,7 @@ class HFFunPartyMembersFragment : HFBaseFragment() {
 
         override fun getGroupView(groupPosition: Int, isExpanded: Boolean, convertView: View?, parent: ViewGroup?): View {
             val view = convertView ?: inflater.inflate(R.layout.function_party_members_group_title, parent, false)
-            val textView = view.findViewById(R.id.tv_fun_party_members_node) as TextView
+            val textView = view.kFindViewById<TextView>(R.id.tv_fun_party_members_node)
             textView.text = getGroup(groupPosition)?.note
             return view
         }
@@ -121,8 +122,8 @@ class HFFunPartyMembersFragment : HFBaseFragment() {
 
         override fun getChildView(groupPosition: Int, childPosition: Int, isLastChild: Boolean, convertView: View?, parent: ViewGroup?): View {
             val view = convertView ?: inflater.inflate(R.layout.function_party_members_group_item, parent, false)
-            val tvName = view.findViewById(R.id.tv_fun_party_members_name) as TextView
-            val tvFlag = view.findViewById(R.id.tv_fun_party_members_flag) as TextView
+            val tvName = view.kFindViewById<TextView>(R.id.tv_fun_party_members_name)
+            val tvFlag = view.kFindViewById<TextView>(R.id.tv_fun_party_members_flag)
             tvName.text = getChild(groupPosition, childPosition)?.name
             tvFlag.text = getChild(groupPosition, childPosition)?.flag
             return view

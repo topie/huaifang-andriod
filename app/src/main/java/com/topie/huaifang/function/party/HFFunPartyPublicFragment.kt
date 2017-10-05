@@ -16,6 +16,7 @@ import com.topie.huaifang.base.HFBaseFragment
 import com.topie.huaifang.base.HFBaseRecyclerAdapter
 import com.topie.huaifang.base.HFBaseRecyclerViewHolder
 import com.topie.huaifang.base.HFViewHolderFactory
+import com.topie.huaifang.extensions.kFindViewById
 import com.topie.huaifang.extensions.kFormatTime
 import com.topie.huaifang.http.HFRetrofit
 import com.topie.huaifang.http.bean.function.HFFunPartyPublicResponseBody
@@ -49,7 +50,7 @@ class HFFunPartyPublicFragment : HFBaseFragment() {
     override fun onCreateViewSupport(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         pt2FrameLayout = inflater.inflate(R.layout.base_pt2_recycler_layout, container, false) as Pt2FrameLayout
         pt2FrameLayout.setPt2Handler(handler)
-        val recyclerView: RecyclerView = pt2FrameLayout.findViewById(R.id.rv_base_pt2) as RecyclerView
+        val recyclerView: RecyclerView = pt2FrameLayout.kFindViewById(R.id.rv_base_pt2)
         recyclerView.layoutManager = LinearLayoutManager(inflater.context)
         recyclerView.adapter = adapter
         return pt2FrameLayout
@@ -81,9 +82,9 @@ class HFFunPartyPublicFragment : HFBaseFragment() {
     }
 
     private class ViewHolder(itemView: View) : HFBaseRecyclerViewHolder<HFFunPartyPublicResponseBody.ListData>(itemView, true) {
-        val tvTitle: TextView = itemView.findViewById(R.id.tv_fun_party_public_list_item_title) as TextView
-        val tvTime: TextView = itemView.findViewById(R.id.tv_fun_party_public_list_item_time) as TextView
-        val tvPublisher: TextView = itemView.findViewById(R.id.tv_fun_party_public_list_item_publisher) as TextView
+        val tvTitle: TextView = itemView.kFindViewById(R.id.tv_fun_party_public_list_item_title)
+        val tvTime: TextView = itemView.kFindViewById(R.id.tv_fun_party_public_list_item_time)
+        val tvPublisher: TextView = itemView.kFindViewById(R.id.tv_fun_party_public_list_item_publisher)
 
         override fun onBindData(d: HFFunPartyPublicResponseBody.ListData) {
             tvTitle.text = d.title

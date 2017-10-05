@@ -8,16 +8,17 @@ import android.widget.FrameLayout.LayoutParams
 import android.widget.TextView
 import com.topie.huaifang.R
 import com.topie.huaifang.extensions.kClone
+import com.topie.huaifang.extensions.kFindViewById
 import com.topie.huaifang.extensions.kReleaseSelf
 import com.topie.huaifang.extensions.kRemoveChildsWithout
 import io.reactivex.disposables.Disposable
 
 /**
  * Created by arman on 2017/9/20.
+ * 带有标题的activity，和系统一个用法
  */
 abstract class HFBaseTitleActivity : AppCompatActivity() {
-    var mRootView: ViewGroup? = null
-        private set
+    private var mRootView: ViewGroup? = null
 
     val pauseDisableList: MutableList<Disposable> = arrayListOf()
 
@@ -35,7 +36,7 @@ abstract class HFBaseTitleActivity : AppCompatActivity() {
 
     override fun setContentView(layoutResID: Int) {
         checkRootView()
-        val viewGroup = mRootView!!.findViewById(R.id.fl_base_title_root) as ViewGroup
+        val viewGroup: ViewGroup = mRootView!!.kFindViewById(R.id.fl_base_title_root)
         val inflate = LayoutInflater.from(this)
                 .inflate(layoutResID, viewGroup, false)
         setContentView(inflate)
@@ -44,7 +45,7 @@ abstract class HFBaseTitleActivity : AppCompatActivity() {
     override fun setContentView(view: View?) {
         checkRootView()
         view?.let {
-            val container = mRootView!!.findViewById(R.id.fl_base_title_container)
+            val container: View = mRootView!!.kFindViewById(R.id.fl_base_title_container)
             val height = container.layoutParams.height.let { Math.max(0, it) }
             val lp = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
             lp.topMargin = height
@@ -69,10 +70,10 @@ abstract class HFBaseTitleActivity : AppCompatActivity() {
             mRootView = LayoutInflater.from(this)
                     .inflate(
                             R.layout.base_title_layout,
-                            findViewById(android.R.id.content) as ViewGroup,
+                            kFindViewById(android.R.id.content),
                             false
                     ) as ViewGroup?
-            mRootView!!.findViewById(R.id.iv_base_title_back).setOnClickListener {
+            mRootView!!.kFindViewById<View>(R.id.iv_base_title_back).setOnClickListener {
                 onBackPressed()
             }
         }
@@ -82,12 +83,12 @@ abstract class HFBaseTitleActivity : AppCompatActivity() {
     }
 
     fun setBaseTitle(id: Int) {
-        val textView = mRootView!!.findViewById(R.id.tv_base_title) as TextView
+        val textView: TextView = mRootView!!.kFindViewById(R.id.tv_base_title)
         textView.setText(id)
     }
 
     fun setBaseTitle(title: String) {
-        val textView = mRootView!!.findViewById(R.id.tv_base_title) as TextView
+        val textView: TextView = mRootView!!.kFindViewById(R.id.tv_base_title)
         textView.text = title
     }
 }

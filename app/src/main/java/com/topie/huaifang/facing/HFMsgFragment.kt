@@ -34,7 +34,7 @@ class HFMsgFragment : HFBaseFragment() {
     override fun onCreateViewSupport(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         pt2FrameLayout = inflater.inflate(R.layout.base_pt2_recycler_layout, container, false) as Pt2FrameLayout
         pt2FrameLayout.setPt2Handler(HFDefaultPt2Handler { getMsgList() })
-        val recyclerView: RecyclerView = pt2FrameLayout.findViewById(R.id.rv_base_pt2) as RecyclerView
+        val recyclerView: RecyclerView = pt2FrameLayout.kFindViewById(R.id.rv_base_pt2)
         recyclerView.layoutManager = LinearLayoutManager(pt2FrameLayout.context)
         recyclerView.adapter = adapter
         return pt2FrameLayout
@@ -63,9 +63,9 @@ class HFMsgFragment : HFBaseFragment() {
     }
 
     private class ViewHolder(itemView: View) : HFBaseRecyclerViewHolder<HFCommMsgDetail>(itemView, true) {
-        private val ivIcon: HFImageView = itemView.findViewById(R.id.iv_facing_list_icon) as HFImageView
+        private val ivIcon: HFImageView = itemView.kFindViewById(R.id.iv_facing_list_icon)
 
-        private val tvName: TextView = itemView.findViewById(R.id.tv_facing_list_name) as TextView
+        private val tvName: TextView = itemView.kFindViewById(R.id.tv_facing_list_name)
         override fun onBindData(d: HFCommMsgDetail) {
             ivIcon.loadImageUri(d.icon?.kParseUrl())
             tvName.text = d.title

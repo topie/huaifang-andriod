@@ -9,12 +9,9 @@ import android.widget.BaseExpandableListAdapter
 import android.widget.ExpandableListView
 import android.widget.TextView
 import com.davdian.ptr.Pt2FrameLayout
-import com.topie.huaifang.base.HFBaseTitleActivity
 import com.topie.huaifang.R
-import com.topie.huaifang.extensions.HFDefaultPt2Handler
-import com.topie.huaifang.extensions.kGet
-import com.topie.huaifang.extensions.kGetOne
-import com.topie.huaifang.extensions.kTel
+import com.topie.huaifang.base.HFBaseTitleActivity
+import com.topie.huaifang.extensions.*
 import com.topie.huaifang.http.HFRetrofit
 import com.topie.huaifang.http.bean.function.HFFunYellowPageResponseBody
 import com.topie.huaifang.http.subscribeResultOkApi
@@ -38,9 +35,9 @@ class HFFunYellowPageActivity : HFBaseTitleActivity() {
         setContentView(R.layout.base_pt2_list_layout)
         setBaseTitle(R.string.facing_index_fun_yellow_book)
         adapter = Adapter(this)
-        pt2FrameLayout = findViewById(R.id.pt2_base_pt2) as Pt2FrameLayout
+        pt2FrameLayout = kFindViewById(R.id.pt2_base_pt2)
         pt2FrameLayout.setPt2Handler(HFDefaultPt2Handler { getFunPartyMembersList() })
-        val listView: ExpandableListView = pt2FrameLayout.findViewById(R.id.elv_base_pt2) as ExpandableListView
+        val listView: ExpandableListView = pt2FrameLayout.kFindViewById(R.id.elv_base_pt2)
         listView.setAdapter(adapter)
         listView.setOnChildClickListener { _, _, _, _, id ->
             val builder = HFTipDialog.Builder()
@@ -98,7 +95,7 @@ class HFFunYellowPageActivity : HFBaseTitleActivity() {
 
         override fun getGroupView(groupPosition: Int, isExpanded: Boolean, convertView: View?, parent: ViewGroup?): View {
             val view = convertView ?: inflater.inflate(R.layout.function_party_members_group_title, parent, false)
-            val textView = view.findViewById(R.id.tv_fun_party_members_node) as TextView
+            val textView = view.kFindViewById<TextView>(R.id.tv_fun_party_members_node)
             textView.text = getGroup(groupPosition)?.typeStr
             return view
         }
@@ -117,8 +114,8 @@ class HFFunYellowPageActivity : HFBaseTitleActivity() {
 
         override fun getChildView(groupPosition: Int, childPosition: Int, isLastChild: Boolean, convertView: View?, parent: ViewGroup?): View {
             val view = convertView ?: inflater.inflate(R.layout.function_yellow_page_list_item, parent, false)
-            val tvName = view.findViewById(R.id.tv_fun_yellow_page_name) as TextView
-            val tvFlag = view.findViewById(R.id.tv_fun_yellow_page_phone) as TextView
+            val tvName = view.kFindViewById<TextView>(R.id.tv_fun_yellow_page_name)
+            val tvFlag = view.kFindViewById<TextView>(R.id.tv_fun_yellow_page_phone)
             tvName.text = getChild(groupPosition, childPosition)?.name
             tvFlag.text = getChild(groupPosition, childPosition)?.mobilePhone
             return view

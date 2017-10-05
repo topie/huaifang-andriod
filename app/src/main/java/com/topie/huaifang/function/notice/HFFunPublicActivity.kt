@@ -8,8 +8,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.topie.huaifang.base.HFBaseTitleActivity
 import com.topie.huaifang.R
+import com.topie.huaifang.base.HFBaseTitleActivity
+import com.topie.huaifang.extensions.kFindViewById
 import com.topie.huaifang.extensions.kReleaseSelf
 import com.topie.huaifang.http.HFRetrofit
 import com.topie.huaifang.http.composeApi
@@ -35,7 +36,7 @@ class HFFunPublicActivity : HFBaseTitleActivity() {
     }
 
 
-    class VPAdapter(val titleList: List<String>) : PagerAdapter() {
+    class VPAdapter(private val titleList: List<String>) : PagerAdapter() {
 
         private val list: SparseArray<ViewHolder> = SparseArray()
 
@@ -71,7 +72,7 @@ class HFFunPublicActivity : HFBaseTitleActivity() {
 
     class ViewHolder(val itemView: View, val position: Int) {
 
-        private val textView:TextView = itemView.findViewById(R.id.tv_fun_public_list_item) as TextView
+        private val textView: TextView = itemView.kFindViewById(R.id.tv_fun_public_list_item)
 
         init {
             textView.text = "item{$position}"

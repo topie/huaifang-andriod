@@ -13,6 +13,7 @@ import com.topie.huaifang.R
 import com.topie.huaifang.base.HFBaseRecyclerViewHolder
 import com.topie.huaifang.base.HFBaseTitleActivity
 import com.topie.huaifang.base.HFEmptyRecyclerViewHolder
+import com.topie.huaifang.extensions.kFindViewById
 import com.topie.huaifang.extensions.kInto
 import com.topie.huaifang.extensions.kToastShort
 import com.topie.huaifang.http.HFRetrofit
@@ -137,8 +138,8 @@ class HFQuestionActivity : HFBaseTitleActivity() {
     }
 
     private class OptionViewHolder(val requestBody: HFFunQuestionRequestBody, itemView: View) : HFBaseRecyclerViewHolder<Item>(itemView) {
-        val tvTitle: TextView = itemView.findViewById(R.id.tv_question_list_item_title) as TextView
-        val radioButton: RadioButton = itemView.findViewById(R.id.rb_question_list_item) as RadioButton
+        val tvTitle: TextView = itemView.kFindViewById(R.id.tv_question_list_item_title)
+        val radioButton: RadioButton = itemView.kFindViewById(R.id.rb_question_list_item)
 
         override fun onBindData(d: Item) {
             tvTitle.text = d.optionText
@@ -160,8 +161,8 @@ class HFQuestionActivity : HFBaseTitleActivity() {
 
     private class TitleViewHolder(itemView: View) : HFBaseRecyclerViewHolder<Item>(itemView) {
 
-        val tvPosition: TextView = itemView.findViewById(R.id.tv_question_list_item_position) as TextView
-        val tvTitle: TextView = itemView.findViewById(R.id.tv_question_list_item_title) as TextView
+        val tvPosition: TextView = itemView.kFindViewById(R.id.tv_question_list_item_position)
+        val tvTitle: TextView = itemView.kFindViewById(R.id.tv_question_list_item_title)
 
         override fun onBindData(d: Item) {
             val text = "${d.questionIndex}."

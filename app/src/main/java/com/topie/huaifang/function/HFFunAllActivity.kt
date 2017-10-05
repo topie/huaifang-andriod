@@ -14,6 +14,7 @@ import com.topie.huaifang.base.HFBaseRecyclerViewHolder
 import com.topie.huaifang.base.HFBaseTitleActivity
 import com.topie.huaifang.base.HFViewHolderFactory
 import com.topie.huaifang.communication.HFCommFriendsActivity
+import com.topie.huaifang.extensions.kFindViewById
 import com.topie.huaifang.extensions.kGetString
 import com.topie.huaifang.extensions.kStartActivity
 import com.topie.huaifang.extensions.log
@@ -36,7 +37,7 @@ class HFFunAllActivity : HFBaseTitleActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.facing_list)
         setBaseTitle("全部应用")
-        val recyclerView: RecyclerView = findViewById(R.id.rv_facing_list) as RecyclerView
+        val recyclerView: RecyclerView = kFindViewById(R.id.rv_facing_list)
         recyclerView.layoutManager = LinearLayoutManager(this)
         val list: ArrayList<HFListItem> = arrayListOf()
         list.add(HFListItem(R.mipmap.ic_facing_index_fun_announcement, kGetString(R.string.facing_index_fun_announcement), 0))
@@ -52,8 +53,8 @@ class HFFunAllActivity : HFBaseTitleActivity() {
 
     class ViewHolder(itemView: View) : HFBaseRecyclerViewHolder<HFListItem>(itemView, true) {
 
-        private val ivIcon: HFImageView = itemView.findViewById(R.id.iv_facing_list_icon) as HFImageView
-        private val tvName: TextView = itemView.findViewById(R.id.tv_facing_list_name) as TextView
+        private val ivIcon: HFImageView = itemView.kFindViewById(R.id.iv_facing_list_icon)
+        private val tvName: TextView = itemView.kFindViewById(R.id.tv_facing_list_name)
 
         companion object CREATOR : HFViewHolderFactory<ViewHolder> {
             override fun create(parent: ViewGroup, viewType: Int): ViewHolder {

@@ -16,6 +16,7 @@ import com.topie.huaifang.base.HFBaseFragment
 import com.topie.huaifang.base.HFBaseRecyclerAdapter
 import com.topie.huaifang.base.HFBaseRecyclerViewHolder
 import com.topie.huaifang.base.HFViewHolderFactory
+import com.topie.huaifang.extensions.kFindViewById
 import com.topie.huaifang.extensions.kToastLong
 import com.topie.huaifang.http.HFRetrofit
 import com.topie.huaifang.http.bean.function.HFFunGuideListResponseBody
@@ -48,7 +49,7 @@ class HFFunGuideFragment : HFBaseFragment() {
                 getFunGuideList()
             }
         })
-        val recyclerView: RecyclerView = pt2FrameLayout!!.findViewById(R.id.rv_base_pt2) as RecyclerView
+        val recyclerView: RecyclerView = pt2FrameLayout!!.kFindViewById(R.id.rv_base_pt2)
         recyclerView.layoutManager = LinearLayoutManager(inflater.context)
         recyclerView.adapter = adapter
         recyclerView.layoutParams = RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
@@ -115,8 +116,8 @@ class HFFunGuideFragment : HFBaseFragment() {
     }
 
     private class TopViewHolder(itemView: View) : HFBaseRecyclerViewHolder<Any>(itemView) {
-        val tvName: TextView = (itemView.findViewById(R.id.tv_fun_guide_name) as TextView?)!!
-        val tvAddress: TextView = (itemView.findViewById(R.id.tv_fun_guide_address) as TextView?)!!
+        val tvName: TextView = itemView.kFindViewById(R.id.tv_fun_guide_name)
+        val tvAddress: TextView = itemView.kFindViewById(R.id.tv_fun_guide_address)
         override fun onBindData(d: Any) {
             if (d is HFFunGuideMenuResponseBody.ListData) {
                 tvName.text = d.name
@@ -130,9 +131,9 @@ class HFFunGuideFragment : HFBaseFragment() {
     }
 
     private class ItemViewHolder(itemView: View) : HFBaseRecyclerViewHolder<Any>(itemView) {
-        val tvName: TextView = (itemView.findViewById(R.id.tv_fun_guide_list_item_title) as TextView?)!!
-        val tvTime: TextView = (itemView.findViewById(R.id.tv_fun_guide_list_item_time) as TextView?)!!
-        val tvRead: TextView = (itemView.findViewById(R.id.tv_fun_guide_list_item_read) as TextView?)!!
+        val tvName: TextView = itemView.kFindViewById(R.id.tv_fun_guide_list_item_title)
+        val tvTime: TextView = itemView.kFindViewById(R.id.tv_fun_guide_list_item_time)
+        val tvRead: TextView = itemView.kFindViewById(R.id.tv_fun_guide_list_item_read)
         override fun onBindData(d: Any) {
             if (d is HFFunGuideListResponseBody.ListData) {
                 tvName.text = d.title

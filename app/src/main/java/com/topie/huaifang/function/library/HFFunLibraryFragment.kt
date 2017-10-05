@@ -13,10 +13,7 @@ import com.topie.huaifang.base.HFBaseFragment
 import com.topie.huaifang.base.HFBaseRecyclerAdapter
 import com.topie.huaifang.base.HFBaseRecyclerViewHolder
 import com.topie.huaifang.base.HFViewHolderFactory
-import com.topie.huaifang.extensions.HFDefaultPt2Handler
-import com.topie.huaifang.extensions.kInto
-import com.topie.huaifang.extensions.kParseUrl
-import com.topie.huaifang.extensions.log
+import com.topie.huaifang.extensions.*
 import com.topie.huaifang.http.HFRetrofit
 import com.topie.huaifang.http.bean.function.HFFunLibraryBookResponseBody
 import com.topie.huaifang.http.subscribeResultOkApi
@@ -51,7 +48,7 @@ class HFFunLibraryFragment : HFBaseFragment() {
         }, { ->
             getListData(mPageNum)
         }))
-        val recyclerView = pt2FrameLayout.findViewById(R.id.rv_base_pt2) as RecyclerView
+        val recyclerView: RecyclerView = pt2FrameLayout.kFindViewById(R.id.rv_base_pt2)
         recyclerView.layoutManager = LinearLayoutManager(inflater.context)
         recyclerView.adapter = mAdapter
         mAdapter.notifyDataSetChanged()
@@ -97,11 +94,11 @@ class HFFunLibraryFragment : HFBaseFragment() {
 
     private class ViewHolder(itemView: View) : HFBaseRecyclerViewHolder<HFFunLibraryBookResponseBody.ListData>(itemView, true) {
 
-        private val ivCover: HFImageView = itemView.findViewById(R.id.iv_fun_library_cover) as HFImageView
-        private val tvStatus: TextView = itemView.findViewById(R.id.tv_fun_library_list_item_status) as TextView
-        private val tvName: TextView = itemView.findViewById(R.id.tv_fun_library_list_item_name) as TextView
-        private val tvAuthor: TextView = itemView.findViewById(R.id.tv_fun_library_list_item_author) as TextView
-        private val tvDesc: TextView = itemView.findViewById(R.id.tv_fun_library_list_item_desc) as TextView
+        private val ivCover: HFImageView = itemView.kFindViewById(R.id.iv_fun_library_cover)
+        private val tvStatus: TextView = itemView.kFindViewById(R.id.tv_fun_library_list_item_status)
+        private val tvName: TextView = itemView.kFindViewById(R.id.tv_fun_library_list_item_name)
+        private val tvAuthor: TextView = itemView.kFindViewById(R.id.tv_fun_library_list_item_author)
+        private val tvDesc: TextView = itemView.kFindViewById(R.id.tv_fun_library_list_item_desc)
         override fun onBindData(d: HFFunLibraryBookResponseBody.ListData) {
             ivCover.loadImageUri(d.image?.kParseUrl())
             tvStatus.text = d.status

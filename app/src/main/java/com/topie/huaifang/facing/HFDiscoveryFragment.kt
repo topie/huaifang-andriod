@@ -13,6 +13,7 @@ import com.topie.huaifang.base.HFBaseFragment
 import com.topie.huaifang.base.HFBaseRecyclerAdapter
 import com.topie.huaifang.base.HFBaseRecyclerViewHolder
 import com.topie.huaifang.base.HFViewHolderFactory
+import com.topie.huaifang.extensions.kFindViewById
 import com.topie.huaifang.extensions.kGetString
 import com.topie.huaifang.imageloader.HFImageView
 
@@ -24,7 +25,7 @@ class HFDiscoveryFragment : HFBaseFragment() {
 
     override fun onCreateViewSupport(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val inflate = inflater.inflate(R.layout.facing_list, container, false)
-        val recyclerView = inflate.findViewById(R.id.rv_facing_list) as RecyclerView
+        val recyclerView: RecyclerView = inflate.kFindViewById(R.id.rv_facing_list)
         recyclerView.layoutManager = LinearLayoutManager(inflate.context)
         //create adapter
         val list: ArrayList<Item> = arrayListOf()
@@ -40,8 +41,8 @@ class HFDiscoveryFragment : HFBaseFragment() {
 
     private class ViewHolder(itemView: View) : HFBaseRecyclerViewHolder<Item>(itemView, true) {
 
-        private val ivIcon: HFImageView = itemView.findViewById(R.id.iv_facing_list_icon) as HFImageView
-        private val tvName: TextView = itemView.findViewById(R.id.tv_facing_list_name) as TextView
+        private val ivIcon: HFImageView = itemView.kFindViewById(R.id.iv_facing_list_icon)
+        private val tvName: TextView = itemView.kFindViewById(R.id.tv_facing_list_name)
 
         override fun onBindData(d: Item) {
             ivIcon.setImageResource(d.iconId)

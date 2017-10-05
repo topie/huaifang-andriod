@@ -9,6 +9,7 @@ import com.topie.huaifang.HFActivityManager
 import com.topie.huaifang.R
 import com.topie.huaifang.account.HFAccountManager
 import com.topie.huaifang.base.HFBaseActivity
+import com.topie.huaifang.extensions.kFindViewById
 import com.topie.huaifang.extensions.kGetIdentifier
 import com.topie.huaifang.extensions.kStartActivity
 import com.topie.huaifang.extensions.log
@@ -59,16 +60,14 @@ class HFMainActivity : HFBaseActivity() {
             val layoutId = kGetIdentifier("ll_facing_bottom_tab_$i", "id")
             val drawableId = kGetIdentifier("ic_facing_bottom_tab_$i", "drawable")
             val stringId = kGetIdentifier("facing_bottom_tab_$i", "string")
-            val layout = findViewById(layoutId)
+            val layout = kFindViewById<View>(layoutId)
             log("layoutId=$layoutId,mipmapId=$drawableId,stringId=$stringId,")
-            if (layout != null) {
-                val imageView: ImageView = layout.findViewById(R.id.iv_facing_bottom_tab) as ImageView
-                val textView: TextView = layout.findViewById(R.id.tv_facing_bottom_tab) as TextView
-                imageView.setImageResource(drawableId)
-                textView.setText(stringId)
-                layout.setOnClickListener(listener)
-                layout.setTag(R.id.id_facing_bottom_index, i)
-            }
+            val imageView: ImageView = layout.kFindViewById(R.id.iv_facing_bottom_tab)
+            val textView: TextView = layout.kFindViewById(R.id.tv_facing_bottom_tab)
+            imageView.setImageResource(drawableId)
+            textView.setText(stringId)
+            layout.setOnClickListener(listener)
+            layout.setTag(R.id.id_facing_bottom_index, i)
         }
         selectTab(tabIndex)
     }
@@ -77,7 +76,7 @@ class HFMainActivity : HFBaseActivity() {
         log("selectTab index=$index")
         for (i in 0..3) {
             val layoutId = resources.getIdentifier("ll_facing_bottom_tab_$i", "id", packageName)
-            findViewById(layoutId)?.let {
+            kFindViewById<View>(layoutId).let {
                 if (i == index) {
                     it.isSelected = true
                 } else if (it.isSelected) {

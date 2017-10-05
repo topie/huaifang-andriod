@@ -15,6 +15,7 @@ import com.topie.huaifang.base.HFBaseRecyclerAdapter
 import com.topie.huaifang.base.HFBaseRecyclerViewHolder
 import com.topie.huaifang.base.HFViewHolderFactory
 import com.topie.huaifang.communication.HFCommFriendsActivity
+import com.topie.huaifang.extensions.kFindViewById
 import com.topie.huaifang.extensions.kStartActivity
 import com.topie.huaifang.extensions.kToastShort
 import com.topie.huaifang.extensions.log
@@ -32,7 +33,7 @@ class HFMineFragment : HFBaseFragment() {
 
     override fun onCreateViewSupport(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val inflate = inflater.inflate(R.layout.facing_list, container, false)
-        val recyclerView: RecyclerView = inflate.findViewById(R.id.rv_facing_list) as RecyclerView
+        val recyclerView: RecyclerView = inflate.kFindViewById(R.id.rv_facing_list)
         recyclerView.layoutManager = LinearLayoutManager(inflate.context)
         val list: ArrayList<HFListItem> = arrayListOf()
         list.add(HFListItem(R.mipmap.ic_facing_mine_friend, context.getString(R.string.facing_mine_friend), 0))
@@ -49,8 +50,8 @@ class HFMineFragment : HFBaseFragment() {
 
     class ViewHolder(itemView: View) : HFBaseRecyclerViewHolder<HFListItem>(itemView, true) {
 
-        private val ivIcon: HFImageView = itemView.findViewById(R.id.iv_facing_list_icon) as HFImageView
-        private val tvName: TextView = itemView.findViewById(R.id.tv_facing_list_name) as TextView
+        private val ivIcon: HFImageView = itemView.kFindViewById(R.id.iv_facing_list_icon)
+        private val tvName: TextView = itemView.kFindViewById(R.id.tv_facing_list_name)
 
         companion object CREATOR : HFViewHolderFactory<ViewHolder> {
             override fun create(parent: ViewGroup, viewType: Int): ViewHolder {

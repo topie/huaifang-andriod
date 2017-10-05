@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.topie.huaifang.base.HFBaseTitleActivity
 import com.topie.huaifang.R
+import com.topie.huaifang.extensions.kFindViewById
 import com.topie.huaifang.http.HFRetrofit
 import com.topie.huaifang.http.bean.function.HFLiveListResponseBody
 import com.topie.huaifang.http.subscribeApi
@@ -47,7 +48,7 @@ class HFFunLiveActivity : HFBaseTitleActivity() {
 
         override fun instantiateItem(container: ViewGroup, position: Int): Any {
             val inflate = LayoutInflater.from(container.context).inflate(R.layout.function_live_list, container, false)
-            val textView: TextView = inflate.findViewById(R.id.tv_fun_live_list_item) as TextView
+            val textView: TextView = inflate.kFindViewById(R.id.tv_fun_live_list_item)
             textView.text = getListData(position)?.content
             container.addView(inflate)
             return inflate

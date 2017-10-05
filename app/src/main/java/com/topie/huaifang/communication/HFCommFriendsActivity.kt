@@ -13,6 +13,7 @@ import com.topie.huaifang.base.HFBaseRecyclerAdapter
 import com.topie.huaifang.base.HFBaseRecyclerViewHolder
 import com.topie.huaifang.base.HFBaseTitleActivity
 import com.topie.huaifang.base.HFViewHolderFactory
+import com.topie.huaifang.extensions.kFindViewById
 import com.topie.huaifang.extensions.kIsNotEmpty
 import com.topie.huaifang.http.HFRetrofit
 import com.topie.huaifang.http.bean.communication.HFCommUserInfo
@@ -56,8 +57,8 @@ class HFCommFriendsActivity : HFBaseTitleActivity() {
     }
 
     class ViewHolder(itemView: View) : HFBaseRecyclerViewHolder<HFCommUserInfo>(itemView, true) {
-        private val hfImageView = itemView.findViewById(R.id.iv_facing_list_icon) as HFImageView
-        private val textView = itemView.findViewById(R.id.tv_facing_list_name) as TextView
+        private val hfImageView: HFImageView = itemView.kFindViewById(R.id.iv_facing_list_icon)
+        private val textView: TextView = itemView.kFindViewById(R.id.tv_facing_list_name)
 
         companion object CREATOR : HFViewHolderFactory<ViewHolder> {
             override fun create(parent: ViewGroup, viewType: Int): ViewHolder {

@@ -1,5 +1,6 @@
 package com.topie.huaifang.extensions
 
+import android.app.Activity
 import android.support.annotation.IdRes
 import android.support.annotation.LayoutRes
 import android.view.LayoutInflater
@@ -38,8 +39,13 @@ fun View.kHiddenChildren() {
 }
 
 @Suppress("UNCHECKED_CAST")
-fun <T : View> View.kFindViewById(@IdRes id: Int): T? {
-    return findViewById(id) as T
+fun <T : View> View.kFindViewById(@IdRes id: Int): T {
+    return findViewById(id)
+}
+
+@Suppress("UNCHECKED_CAST")
+fun <T : View> Activity.kFindViewById(@IdRes id: Int): T {
+    return findViewById(id)
 }
 
 /**
