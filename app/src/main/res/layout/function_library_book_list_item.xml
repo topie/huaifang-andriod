@@ -81,7 +81,7 @@
     </LinearLayout>
 
     <include
-        layout="@layout/facing_line_item"
+        layout="@layout/function_line_item"
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:layout_below="@id/ll_fun_library_cover"

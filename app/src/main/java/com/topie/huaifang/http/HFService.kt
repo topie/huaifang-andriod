@@ -7,7 +7,10 @@ import com.topie.huaifang.http.bean.function.*
 import com.topie.huaifang.http.bean.login.HFCheckPhoneResponseBody
 import com.topie.huaifang.http.bean.login.HFLoginResponseBody
 import io.reactivex.Observable
+import okhttp3.MultipartBody
 import retrofit2.http.*
+import java.io.File
+
 
 /**
  * Created by arman on 2017/7/14.
@@ -171,4 +174,16 @@ interface HFService {
      */
     @GET("/api/m/disputeResolution/list")
     fun getFunDisputeMediatorList(): Observable<HFfunDisputeMediatorResponseBody>
+
+    /**
+     * 上传文件
+     */
+    @Multipart
+    @POST("/api/m/file/uploadFile")
+    fun uploadFile(@Part file: MultipartBody.Part): Observable<HFFunUploadFileResponseBody>
+
+    /**
+     * 上传文件
+     */
+    fun uploadFile(file: File): Observable<HFFunUploadFileResponseBody>
 }

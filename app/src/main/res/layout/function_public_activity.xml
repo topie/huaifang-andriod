@@ -14,7 +14,7 @@
         android:layout_height="10dp"
         android:background="@android:color/white" />
 
-    <include layout="@layout/facing_line_item" />
+    <include layout="@layout/function_line_item" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -31,7 +31,7 @@
 
     </LinearLayout>
 
-    <include layout="@layout/facing_line_item" />
+    <include layout="@layout/function_line_item" />
 
 
 </LinearLayout>

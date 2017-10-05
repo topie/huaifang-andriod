@@ -2,16 +2,18 @@ package com.topie.huaifang.http
 
 import com.topie.huaifang.extensions.kToastShort
 import com.topie.huaifang.http.bean.HFBaseResponseBody
+import com.topie.huaifang.http.bean.function.HFFunUploadFileResponseBody
 import com.topie.huaifang.http.converter.HFGsonConverterFactory
 import com.topie.huaifang.util.HFLogger
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import okhttp3.Interceptor
-import okhttp3.OkHttpClient
+import okhttp3.*
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
+import java.io.File
+
 
 /**
  * Created by arman on 2017/7/14.
@@ -30,7 +32,7 @@ object HFRetrofit {
     init {
         client = OkHttpClient.Builder().build()!!
         retrofit = buildRetrofit()
-        hfService = retrofit.create(HFService::class.java)
+        hfService = HFServiceDerived(retrofit.create(HFService::class.java))
     }
 
     private fun buildRetrofit(): Retrofit {
@@ -48,7 +50,16 @@ object HFRetrofit {
     fun addIntercept(interceptor: Interceptor) {
         client = client.newBuilder().addInterceptor(interceptor).build()
         retrofit = buildRetrofit()
-        hfService = retrofit.create(HFService::class.java)
+        hfService = HFServiceDerived(retrofit.create(HFService::class.java))
+    }
+}
+
+private class HFServiceDerived(service: HFService) : HFService by service {
+    override fun uploadFile(file: File): Observable<HFFunUploadFileResponseBody> {
+        val requestFile = RequestBody.create(MediaType.parse("application/otcet-stream"), file)
+        val body = MultipartBody.Part.createFormData("file", file.name, requestFile)
+        RequestBody.create(MediaType.parse("application/otcet-stream"), file)
+        return uploadFile(body)
     }
 }
 

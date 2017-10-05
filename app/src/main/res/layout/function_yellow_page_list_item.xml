@@ -29,5 +29,5 @@
             android:textSize="14sp" />
     </LinearLayout>
 
-    <include layout="@layout/facing_line_item" />
+    <include layout="@layout/function_line_item" />
 </LinearLayout>

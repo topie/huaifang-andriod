@@ -135,7 +135,6 @@ class HFHttpLoggingInterceptor(private val logger: HFLogger) : Interceptor {
                 sb.append(" (").append(requestBody!!.contentLength()).append("-byte body)")
                 sb.append(STR_ENTER)
             }
-
             if (logHeaders) {
                 if (hasRequestBody) {
                     // Request body headers are only present when installed as a network interceptor. Force
@@ -159,8 +158,8 @@ class HFHttpLoggingInterceptor(private val logger: HFLogger) : Interceptor {
                     }
                     i++
                 }
-
-                if (!logBody || !hasRequestBody) {
+                val isMultiParty = requestBody?.contentType()?.toString()?.contains("multipart/form-data") ?: false
+                if (!logBody || !hasRequestBody || isMultiParty) {
                     sb.append(STR_END).append(request.method()).append(STR_ENTER)
                 } else if (bodyEncoded(request.headers())) {
                     sb.append(STR_END).append(request.method()).append(" (encoded body omitted)").append(STR_ENTER)

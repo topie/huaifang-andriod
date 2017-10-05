@@ -14,7 +14,7 @@ import com.topie.huaifang.base.HFBaseFragment
 import com.topie.huaifang.base.HFBaseRecyclerAdapter
 import com.topie.huaifang.base.HFBaseRecyclerViewHolder
 import com.topie.huaifang.base.HFViewHolderFactory
-import com.topie.huaifang.communication.HFCommFriendsActivity
+import com.topie.huaifang.function.communication.HFCommFriendsActivity
 import com.topie.huaifang.extensions.kFindViewById
 import com.topie.huaifang.extensions.kStartActivity
 import com.topie.huaifang.extensions.kToastShort

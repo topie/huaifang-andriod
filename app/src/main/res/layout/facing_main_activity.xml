@@ -12,7 +12,7 @@
         android:layout_height="0dp"
         android:layout_weight="1" />
 
-    <include layout="@layout/facing_line_item" />
+    <include layout="@layout/function_line_item" />
     <!--首页底部四个按钮-->
     <LinearLayout
         android:layout_width="match_parent"

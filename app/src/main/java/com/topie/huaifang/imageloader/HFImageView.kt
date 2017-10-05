@@ -5,6 +5,7 @@ import android.app.Fragment
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.support.annotation.AttrRes
 import android.util.AttributeSet
@@ -73,6 +74,8 @@ class HFImageView @JvmOverloads constructor(context: Context, attrs: AttributeSe
             HFMemoryCache.put(mDefImageRes, bitmap)
             if (mRoundedAsCircle || mRoundedCornerRadius > 0) {
                 load.placeholder(HFRoundedBitmapDrawable(this, bitmap))
+            } else {
+                load.placeholder(BitmapDrawable(resources, bitmap))
             }
         }
         if (mRoundedAsCircle || mRoundedCornerRadius > 0) {

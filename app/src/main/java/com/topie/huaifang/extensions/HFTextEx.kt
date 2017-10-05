@@ -2,6 +2,7 @@ package com.topie.huaifang.extensions
 
 import android.net.Uri
 import android.text.TextUtils
+import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -29,6 +30,13 @@ fun String?.kParseUrl(): Uri? {
         return null
     }
     return Uri.parse(this)
+}
+
+fun String?.kParseFileUri(): Uri? {
+    if (kIsEmpty()) {
+        return null
+    }
+    return Uri.fromFile(File(this))
 }
 
 /**

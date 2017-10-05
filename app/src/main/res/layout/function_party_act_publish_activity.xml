@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/facing_index_background"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include layout="@layout/function_thick_line_item" />
+
+        <!-- 活动主题-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="70dp"
+                android:text="活动主题"
+                android:textColor="@color/colorDark"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/et_fun_party_act_publish_topic"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:hint="请填写活动主题"
+                android:textColor="@color/colorDark"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:src="@mipmap/ic_forward"
+                android:visibility="invisible" />
+        </LinearLayout>
+
+        <include layout="@layout/function_line_item" />
+
+        <!--活动地点-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="70dp"
+                android:text="活动地点"
+                android:textColor="@color/colorDark"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/et_fun_party_act_publish_address"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:hint="请填写活动地点（选填）"
+                android:textColor="@color/colorDark"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:src="@mipmap/ic_forward"
+                android:visibility="invisible" />
+        </LinearLayout>
+
+        <include layout="@layout/function_line_item" />
+
+        <!--开始时间-->
+        <LinearLayout
+            android:id="@+id/ll_fun_party_act_publish_start"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="70dp"
+                android:text="开始时间"
+                android:textColor="@color/colorDark"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_fun_party_act_publish_start"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:hint="点击选择开始时间（选填）"
+                android:textColor="@color/colorDark"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:id="@+id/iv_fun_party_act_publish_start_forward"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:src="@mipmap/ic_forward" />
+        </LinearLayout>
+
+        <include layout="@layout/function_line_item" />
+
+        <!--结束时间-->
+        <LinearLayout
+            android:id="@+id/ll_fun_party_act_publish_end"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="70dp"
+                android:text="结束时间"
+                android:textColor="@color/colorDark"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_fun_party_act_publish_end"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:hint="点击选择结束时间（选填）"
+                android:textColor="@color/colorDark"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:id="@+id/iv_fun_party_act_publish_end_forward"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:src="@mipmap/ic_forward" />
+        </LinearLayout>
+
+        <include layout="@layout/function_thick_line_item" />
+
+        <!-- 活动内容-->
+        <EditText
+            android:id="@+id/tv_fun_party_act_publish_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:gravity="top"
+            android:hint="请填写活动内容"
+            android:lines="10"
+            android:padding="10dp"
+            android:textColor="@color/colorDark"
+            android:textSize="14sp" />
+
+        <include layout="@layout/function_thick_line_item" />
+
+        <!--图片-->
+        <LinearLayout
+            android:id="@+id/ll_fun_party_act_publish_img"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="70dp"
+                android:text="图片"
+                android:textColor="@color/colorDark"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:textColor="@color/colorDark"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:id="@+id/iv_fun_party_act_publish_img_forward"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:src="@mipmap/ic_forward" />
+        </LinearLayout>
+
+        <com.topie.huaifang.imageloader.HFImageView
+            android:id="@+id/iv_fun_party_act_publish_img"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/img_fun_part_act_detail_default"
+            android:visibility="gone"
+            app:aspectRatio="2.027"
+            app:defImageRes="@mipmap/img_fun_part_act_detail_default" />
+
+        <include layout="@layout/function_line_item" />
+
+        <!--附件-->
+        <LinearLayout
+            android:id="@+id/ll_fun_party_act_publish_enclosure"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="70dp"
+                android:text="附件"
+                android:textColor="@color/colorDark"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_fun_party_act_enclosure"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:textColor="@color/colorDark"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:id="@+id/iv_fun_party_act_publish_enclosure_forward"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:src="@mipmap/ic_forward" />
+        </LinearLayout>
+
+        <include layout="@layout/function_thick_line_item" />
+
+        <!--活动范围-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="70dp"
+                android:text="活动范围"
+                android:textColor="@color/colorDark"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_fun_party_act_publish_range"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:textColor="@color/colorDark"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:id="@+id/iv_fun_party_act_publish_range_forward"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:src="@mipmap/ic_forward" />
+        </LinearLayout>
+
+        <include layout="@layout/function_line_item" />
+
+        <!-- 发布者-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="70dp"
+                android:text="发布者"
+                android:textColor="@color/colorDark"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/et_fun_party_act_publish_publisher"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:hint="请填写填写发布人或发布单位"
+                android:textColor="@color/colorDark"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:src="@mipmap/ic_forward"
+                android:visibility="invisible" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_fun_party_act_publish"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_fun_party_act_publish"
+                android:gravity="center"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                android:text="发布"
+                android:textColor="@android:color/white"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

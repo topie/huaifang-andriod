@@ -1,4 +1,4 @@
-package com.topie.huaifang.communication
+package com.topie.huaifang.function.communication
 
 import android.net.Uri
 import android.os.Bundle

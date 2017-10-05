@@ -4,6 +4,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -41,7 +43,7 @@
             android:name=".function.notice.HFFunPublicActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".communication.HFCommFriendsActivity"
+            android:name="com.topie.huaifang.function.communication.HFCommFriendsActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".function.party.HFFunPartyActivity"
@@ -50,7 +52,7 @@
             android:name=".function.yellowpage.HFFunYellowPageActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".HFGetPictureActivity"
+            android:name=".HFGetFileActivity"
             android:screenOrientation="portrait"
             android:theme="@style/HFTransparent" />
         <activity
@@ -60,6 +62,7 @@
         <activity android:name=".function.other.HFQuestionActivity" />
         <activity android:name=".function.dispute.HFFunDisputeMediatorActivity" />
         <activity android:name=".function.party.HFFunPartyActDetailActivity" />
+        <activity android:name=".function.party.HFFunPartyActPublishActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

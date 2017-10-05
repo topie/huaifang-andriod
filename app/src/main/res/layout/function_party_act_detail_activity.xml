@@ -10,10 +10,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="10dp"
-            android:background="@color/facing_index_background" />
+        <include layout="@layout/function_thick_line_item" />
 
         <com.topie.huaifang.imageloader.HFImageView
             android:id="@+id/iv_fun_party_detail_img"
@@ -70,7 +67,7 @@
         </FrameLayout>
 
         <include
-            layout="@layout/facing_line_item"
+            layout="@layout/function_line_item"
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:layout_margin="10dp" />
@@ -100,7 +97,7 @@
         </LinearLayout>
 
         <include
-            layout="@layout/facing_line_item"
+            layout="@layout/function_line_item"
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:layout_margin="10dp" />
@@ -130,7 +127,7 @@
         </LinearLayout>
 
         <include
-            layout="@layout/facing_line_item"
+            layout="@layout/function_line_item"
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:layout_margin="10dp" />
@@ -160,7 +157,7 @@
         </LinearLayout>
 
         <include
-            layout="@layout/facing_line_item"
+            layout="@layout/function_line_item"
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:layout_margin="10dp" />
@@ -190,7 +187,7 @@
         </LinearLayout>
 
         <include
-            layout="@layout/facing_line_item"
+            layout="@layout/function_line_item"
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:layout_margin="10dp" />
@@ -220,7 +217,7 @@
         </LinearLayout>
 
         <include
-            layout="@layout/facing_line_item"
+            layout="@layout/function_line_item"
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:layout_margin="10dp" />
