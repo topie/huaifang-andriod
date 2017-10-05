@@ -1,6 +1,7 @@
 package com.topie.huaifang.http.bean.function
 
 import com.topie.huaifang.http.bean.HFBaseResponseBody
+import java.io.Serializable
 
 /**
  * Created by arman on 2017/9/25.
@@ -15,7 +16,7 @@ class HFFunPartyPublicResponseBody : HFBaseResponseBody() {
         var data: List<ListData>? = null
     }
 
-    class ListData {
+    class ListData : Serializable {
         var id: Int = 0
         var publishTime: String? = null
         var file: String? = null

@@ -7,7 +7,10 @@ import com.topie.huaifang.http.bean.function.*
 import com.topie.huaifang.http.bean.login.HFCheckPhoneResponseBody
 import com.topie.huaifang.http.bean.login.HFLoginResponseBody
 import io.reactivex.Observable
+import okhttp3.Callback
 import okhttp3.MultipartBody
+import okhttp3.ResponseBody
+import retrofit2.Call
 import retrofit2.http.*
 import java.io.File
 
@@ -186,4 +189,12 @@ interface HFService {
      * 上传文件
      */
     fun uploadFile(file: File): Observable<HFFunUploadFileResponseBody>
+
+    @Streaming
+    @GET("{url}")
+    fun downloadFile(@Path(value = "url", encoded = true) path: String): Call<ResponseBody>
+
+
+    fun downloadFile(path: String, directory: String, onProgress: ((progress: Int) -> Unit), onFinish: ((filePath: String) -> Unit), onFailure: ((error: Throwable) -> Unit))
+
 }

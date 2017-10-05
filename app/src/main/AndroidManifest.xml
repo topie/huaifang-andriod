@@ -63,6 +63,7 @@
         <activity android:name=".function.dispute.HFFunDisputeMediatorActivity" />
         <activity android:name=".function.party.HFFunPartyActDetailActivity" />
         <activity android:name=".function.party.HFFunPartyActPublishActivity" />
+        <activity android:name=".function.party.HFFunPartyPublicDetailActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

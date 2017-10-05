@@ -1,6 +1,7 @@
 package com.topie.huaifang.extensions
 
 import java.io.File
+import java.io.InputStream
 
 /*
  * Created by arman on 2017/10/1.
@@ -20,4 +21,12 @@ fun kGetCachePictureDir(): File? {
 
 fun File.kMkdirs() {
     parentFile.takeIf { !it.exists() }?.mkdirs()
+}
+
+fun kGetExtraFilesDir(): File? {
+    return appContext?.getExternalFilesDir(null)
+}
+
+fun kWrite2File(inputStream: InputStream, file: File) {
+    
 }
