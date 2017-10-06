@@ -53,4 +53,8 @@
     <string name="dispute_mediator_list_item_communicate">立即沟通</string>
     <string name="dispute_mediator_list_item_tel">拨打电话</string>
     <string name="function_party_act_join">立即参加</string>
+    <string name="function_party_members_detail_flag">党员标识</string>
+    <string name="function_party_members_detail_tag">党员标签</string>
+    <string name="function_party_members_detail_msg">发送消息</string>
+    <string name="function_party_members_detail_friend">加为好友</string>
 </resources>

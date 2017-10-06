@@ -17,6 +17,7 @@ import com.topie.huaifang.base.HFBaseFragment
 import com.topie.huaifang.extensions.kFindViewById
 import com.topie.huaifang.extensions.kGet
 import com.topie.huaifang.extensions.kGetOne
+import com.topie.huaifang.extensions.kStartActivity
 import com.topie.huaifang.http.HFRetrofit
 import com.topie.huaifang.http.bean.function.HFFunPartyMemberResponseBody
 import com.topie.huaifang.http.subscribeResultOkApi
@@ -54,6 +55,15 @@ class HFFunPartyMembersFragment : HFBaseFragment() {
         pt2FrameLayout.setPt2Handler(handler)
         val listView: ExpandableListView = pt2FrameLayout.kFindViewById(R.id.elv_base_pt2)
         listView.setAdapter(adapter)
+        listView.setOnChildClickListener { _, _, groupPosition, childPosition, _ ->
+            return@setOnChildClickListener adapter.getChild(groupPosition, childPosition)?.let {
+                Bundle().apply {
+                    putSerializable(HFFunPartyMembersDetailActivity.EXTRA_DATA, it)
+                }.let {
+                    this@HFFunPartyMembersFragment.kStartActivity(HFFunPartyMembersDetailActivity::class.java, it)
+                }
+            } ?: false
+        }
         return pt2FrameLayout
     }
 

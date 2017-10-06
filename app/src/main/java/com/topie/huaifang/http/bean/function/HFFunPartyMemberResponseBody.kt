@@ -1,6 +1,7 @@
 package com.topie.huaifang.http.bean.function
 
 import com.topie.huaifang.http.bean.HFBaseResponseBody
+import java.io.Serializable
 
 /**
  * Created by arman on 2017/9/25.
@@ -14,7 +15,7 @@ class HFFunPartyMemberResponseBody : HFBaseResponseBody() {
         var data: List<ListData>? = null
     }
 
-    class ListData {
+    class ListData : Serializable {
         var nodeName: String? = null    //所属党组织
         var enterDate: String? = null   //入党时间
         var code: String? = null        //党员编号
