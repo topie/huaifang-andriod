@@ -17,7 +17,6 @@ import com.topie.huaifang.base.HFBaseRecyclerAdapter
 import com.topie.huaifang.base.HFBaseRecyclerViewHolder
 import com.topie.huaifang.base.HFViewHolderFactory
 import com.topie.huaifang.extensions.kFindViewById
-import com.topie.huaifang.extensions.kFormatTime
 import com.topie.huaifang.http.HFRetrofit
 import com.topie.huaifang.http.bean.function.HFFunPartyPublicResponseBody
 import com.topie.huaifang.http.subscribeResultOkApi
@@ -88,7 +87,7 @@ class HFFunPartyPublicFragment : HFBaseFragment() {
 
         override fun onBindData(d: HFFunPartyPublicResponseBody.ListData) {
             tvTitle.text = d.title
-            tvTime.text = d.publishTime.kFormatTime("时间 yyyy-MM-dd")
+            tvTime.text = d.publishTime
             tvPublisher.text = d.publishUser?.let { "发布者：$it" }
         }
 

@@ -17,7 +17,6 @@ import com.topie.huaifang.base.HFBaseRecyclerAdapter
 import com.topie.huaifang.base.HFBaseRecyclerViewHolder
 import com.topie.huaifang.base.HFViewHolderFactory
 import com.topie.huaifang.extensions.kFindViewById
-import com.topie.huaifang.extensions.kFormatTime
 import com.topie.huaifang.extensions.kParseUrl
 import com.topie.huaifang.extensions.kStartActivity
 import com.topie.huaifang.http.HFRetrofit
@@ -102,7 +101,7 @@ class HFFunPartyActFragment : HFBaseFragment() {
         override fun onBindData(d: HFFunPartyResponseBody.ListData) {
             imageView.loadImageUri(d.image.kParseUrl())
             tvTitle.text = d.topic
-            tvTime.text = d.beginTime.kFormatTime("时间 yyyy-MM-dd")
+            tvTime.text = d.beginTime
             tvStatus.text = d.status?.let {
                 when (it) {
                     HFFunPartyResponseBody.ListData.STATUS_WAIT -> "未开始"

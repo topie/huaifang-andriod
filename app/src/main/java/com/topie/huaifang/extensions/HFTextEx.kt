@@ -6,9 +6,7 @@ import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 
-/**
- * Created by arman on 2017/9/21.
- */
+
 fun String?.kIsEmpty(): Boolean {
     return TextUtils.isEmpty(this)
 }
@@ -39,13 +37,24 @@ fun String?.kParseFileUri(): Uri? {
     return Uri.fromFile(File(this))
 }
 
+private val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+
 /**
- * yyyy-MM-dd HH:mm:ss
+ * 转化为常规时间，后台约定
  */
-fun String?.kFormatTime(format: String): String? {
-    if (kIsEmpty()) {
-        return null
+fun Date.kToSimpleFormat(): String {
+    return simpleDateFormat.format(this)
+}
+
+
+/**
+ * 常规时间转化为date实例
+ */
+fun String.kSimpleFormatToDate(): Date? {
+    return try {
+        simpleDateFormat.parse(this)
+    } catch (ex: Exception) {
+        log("kSimpleFormatToDate", ex)
+        null
     }
-    val formatter = SimpleDateFormat(format, Locale.getDefault())
-    return formatter.format(this)
 }

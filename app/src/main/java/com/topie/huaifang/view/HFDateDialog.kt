@@ -20,7 +20,6 @@ class HFDateDialog(context: Context) : Dialog(context) {
         set(value) {
             field = value
             mCalendar.time = mDate
-            updateView()
         }
 
     private val mCalendar: Calendar = Calendar.getInstance().also { it.time = mDate }
