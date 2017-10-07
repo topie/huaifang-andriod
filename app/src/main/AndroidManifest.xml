@@ -66,6 +66,7 @@
         <activity android:name=".function.party.HFFunPartyPublicDetailActivity" />
         <activity android:name=".function.party.HFFunPartyMembersDetailActivity" />
         <activity android:name=".function.live.HFFunLiveRepairsApplyActivity" />
+        <activity android:name=".function.live.HFFunLiveRepairsListActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

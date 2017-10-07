@@ -72,7 +72,7 @@ class HFFunDisputeMediatorActivity : HFBaseTitleActivity() {
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-            val viewHolder = ViewHolder(parent.kInfalte(R.layout.function_dispute_mediator_list_item))
+            val viewHolder = ViewHolder(parent.kInflate(R.layout.function_dispute_mediator_list_item))
             viewHolder.llComm.setOnClickListener {
                 commObj?.invoke(mList[viewHolder.adapterPosition])
             }

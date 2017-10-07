@@ -201,4 +201,10 @@ interface HFService {
     @POST("/api/m/repairReport/post")
     fun postFunLiveRepairs(@Body requestBody: HFFunLiveRepairsApplyRequestBody): Observable<HFBaseResponseBody>
 
+    /**
+     * 物业报修
+     */
+    @GET("/api/m/repairReport/list")
+    fun getFunLiveRepairsList(): Observable<HFFunLiveRepairsListResponseBody>
+
 }

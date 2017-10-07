@@ -59,7 +59,7 @@ fun View.kForeach(each: (v: View) -> Unit) {
     }
 }
 
-fun ViewGroup.kInfalte(@LayoutRes layout: Int): View {
+fun ViewGroup.kInflate(@LayoutRes layout: Int): View {
     val from = LayoutInflater.from(context)
     return from.inflate(layout, this, false)
 }

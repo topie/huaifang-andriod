@@ -22,7 +22,7 @@ import com.topie.huaifang.function.dispute.HFFunDisputeMediatorActivity
 import com.topie.huaifang.function.guide.HFFunGuideActivity
 import com.topie.huaifang.function.library.HFFunLibraryActivity
 import com.topie.huaifang.function.live.HFFunLiveActivity
-import com.topie.huaifang.function.live.HFFunLiveRepairsApplyActivity
+import com.topie.huaifang.function.live.HFFunLiveRepairsListActivity
 import com.topie.huaifang.function.notice.HFFunPublicActivity
 import com.topie.huaifang.function.party.HFFunPartyActPublishActivity
 import com.topie.huaifang.function.party.HFFunPartyActivity
@@ -85,7 +85,7 @@ class HFFunAllActivity : HFBaseTitleActivity() {
                 6 -> itemView.kStartActivity(HFFunLibraryActivity::class.java)
                 7 -> itemView.kStartActivity(HFFunDisputeMediatorActivity::class.java)
                 8 -> itemView.kStartActivity(HFFunPartyActPublishActivity::class.java)
-                9 -> itemView.kStartActivity(HFFunLiveRepairsApplyActivity::class.java)
+                9 -> itemView.kStartActivity(HFFunLiveRepairsListActivity::class.java)
                 else -> log("itemType = ${d?.itemType}")
             }
         }

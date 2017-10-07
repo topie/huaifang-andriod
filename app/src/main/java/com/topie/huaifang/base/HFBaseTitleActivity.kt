@@ -91,4 +91,14 @@ abstract class HFBaseTitleActivity : AppCompatActivity() {
         val textView: TextView = mRootView!!.kFindViewById(R.id.tv_base_title)
         textView.text = title
     }
+
+    fun setBaseTitleRight(id: Int) {
+        val textView: TextView = mRootView!!.kFindViewById(R.id.tv_base_title_right)
+        textView.setText(id)
+    }
+
+    fun setBaseTitleRight(title: String) {
+        val textView: TextView = mRootView!!.kFindViewById(R.id.tv_base_title_right)
+        textView.text = title
+    }
 }
