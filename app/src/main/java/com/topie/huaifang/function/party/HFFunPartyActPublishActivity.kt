@@ -88,7 +88,7 @@ class HFFunPartyActPublishActivity : HFBaseTitleActivity() {
                     imgUrl = null
                     updateView()
                 } else {
-                    HFRetrofit.hfService.uploadFile(File(firstOrNull)).subscribeResultOkApi {
+                    HFRetrofit.hfService.uploadImage(File(firstOrNull)).subscribeResultOkApi {
                         if (it.data?.attachmentUrl.kIsEmpty()) {
                             imgUrl = null
                             updateView()

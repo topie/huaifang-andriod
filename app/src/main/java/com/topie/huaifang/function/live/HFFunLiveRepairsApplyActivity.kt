@@ -35,7 +35,7 @@ class HFFunLiveRepairsApplyActivity : HFBaseTitleActivity() {
             super.handleMessage(msg)
             for (key in repairsImages.keys) {
                 repairsImages[key]?.takeIf { it.isNotEmpty() } ?: let {
-                    HFRetrofit.hfService.uploadFile(File(key)).subscribe({
+                    HFRetrofit.hfService.uploadImage(File(key)).subscribe({
                         if (it.resultOk) {
                             it.data?.attachmentUrl?.also {
                                 log("put [$key] to [$it]")

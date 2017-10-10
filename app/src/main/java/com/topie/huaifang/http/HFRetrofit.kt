@@ -1,9 +1,7 @@
 package com.topie.huaifang.http
 
 import android.os.AsyncTask
-import com.topie.huaifang.extensions.kSafeClose
-import com.topie.huaifang.extensions.kToastShort
-import com.topie.huaifang.extensions.log
+import com.topie.huaifang.extensions.*
 import com.topie.huaifang.http.bean.HFBaseResponseBody
 import com.topie.huaifang.http.bean.function.HFFunUploadFileResponseBody
 import com.topie.huaifang.http.converter.HFGsonConverterFactory
@@ -66,6 +64,26 @@ private class HFServiceDerived(service: HFService) : HFService by service {
         val body = MultipartBody.Part.createFormData("file", file.name, requestFile)
         RequestBody.create(MediaType.parse("application/otcet-stream"), file)
         return uploadFile(body)
+    }
+
+    override fun uploadImage(file: File, targetWidth: Int, targetHeight: Int): Observable<HFFunUploadFileResponseBody> {
+        return Observable.create<File?> {
+            val compressFile = kGetExtraCacheDir()?.let {
+                File(it, Date().kToSimpleFormat() + ".jpg")
+            }?.takeIf {
+                kCompress(file, it, targetWidth, targetHeight)
+            }
+            it.onNext(compressFile)
+            it.onComplete()
+        }.subscribeOn(Schedulers.io()).flatMap {
+            if (it != null) {
+                uploadFile(it)
+            } else {
+                Observable.create {
+                    throw IOException("图片上传失败")
+                }
+            }
+        }
     }
 
     override fun downloadFile(path: String, directory: String, onProgress: (progress: Int) -> Unit, onFinish: (filePath: String) -> Unit, onFailure: (error: Throwable) -> Unit) {

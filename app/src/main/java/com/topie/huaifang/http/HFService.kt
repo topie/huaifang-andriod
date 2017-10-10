@@ -6,6 +6,7 @@ import com.topie.huaifang.http.bean.communication.HFCommMsgListResponseBody
 import com.topie.huaifang.http.bean.function.*
 import com.topie.huaifang.http.bean.login.HFCheckPhoneResponseBody
 import com.topie.huaifang.http.bean.login.HFLoginResponseBody
+import com.topie.huaifang.util.HFDimensUtils
 import io.reactivex.Observable
 import okhttp3.MultipartBody
 import okhttp3.ResponseBody
@@ -188,6 +189,11 @@ interface HFService {
      * 上传文件
      */
     fun uploadFile(file: File): Observable<HFFunUploadFileResponseBody>
+
+    /**
+     * 上传图片
+     */
+    fun uploadImage(file: File, targetWidth: Int = HFDimensUtils.screenWidth / 2, targetHeight: Int = HFDimensUtils.screenHeight / 2): Observable<HFFunUploadFileResponseBody>
 
     @Streaming
     @GET("{url}")

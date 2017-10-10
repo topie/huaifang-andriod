@@ -68,12 +68,12 @@ class HFFunLiveRepairsDetailActivity : HFBaseTitleActivity() {
                     ll.removeAllViews()
                     it.forEach {
                         val inflate = ll.kInflate(R.layout.function_live_repairs_progress_item)
-                        val tvTitle: TextView = ll.kFindViewById(R.id.tv_fun_live_repairs_progress_name)
-                        val tvTime: TextView = ll.kFindViewById(R.id.tv_fun_live_repairs_progress_time)
-                        val tvStatus: TextView = ll.kFindViewById(R.id.tv_fun_live_repairs_progress_status)
-                        val tvRepairerName: TextView = ll.kFindViewById(R.id.tv_fun_live_repairs_repairer_name)
-                        val tvRepairerTel: TextView = ll.kFindViewById(R.id.tv_fun_live_repairs_repairer_tel)
-                        val tvRepairTime: TextView = ll.kFindViewById(R.id.tv_fun_live_repairs_repair_time)
+                        val tvTitle: TextView = inflate.kFindViewById(R.id.tv_fun_live_repairs_progress_name)
+                        val tvTime: TextView = inflate.kFindViewById(R.id.tv_fun_live_repairs_progress_time)
+                        val tvStatus: TextView = inflate.kFindViewById(R.id.tv_fun_live_repairs_progress_status)
+                        val tvRepairerName: TextView = inflate.kFindViewById(R.id.tv_fun_live_repairs_repairer_name)
+                        val tvRepairerTel: TextView = inflate.kFindViewById(R.id.tv_fun_live_repairs_repairer_tel)
+                        val tvRepairTime: TextView = inflate.kFindViewById(R.id.tv_fun_live_repairs_repair_time)
 
                         tvTitle.text = it.contactPerson
                         tvTime.text = it.processTime

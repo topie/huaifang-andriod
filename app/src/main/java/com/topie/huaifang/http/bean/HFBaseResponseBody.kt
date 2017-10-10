@@ -6,9 +6,9 @@ package com.topie.huaifang.http.bean
  */
 open class HFBaseResponseBody {
     @Suppress("MemberVisibilityCanPrivate")
-    val code: Int = 0
+    var code: Int = 0
     @Suppress("MemberVisibilityCanPrivate")
-    val message: String? = null
+    var message: String? = null
     var json: String? = null
 
     val resultOk: Boolean

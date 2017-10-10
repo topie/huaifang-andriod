@@ -27,6 +27,10 @@ fun kGetExtraFilesDir(): File? {
     return appContext?.getExternalFilesDir(null)
 }
 
+fun kGetExtraCacheDir(): File? {
+    return appContext?.externalCacheDir
+}
+
 fun kWrite2File(inputStream: InputStream, file: File) {
-    
+
 }

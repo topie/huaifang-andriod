@@ -2,7 +2,10 @@ package com.topie.huaifang.extensions
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Matrix
+import android.media.ExifInterface
 import java.io.*
+
 
 fun kCompress(file: File, targetWidth: Int, targetHeight: Int): Bitmap? {
     return BitmapFactory.Options().also {
@@ -38,7 +41,7 @@ fun kCompress(file: File, targetWidth: Int, targetHeight: Int): Bitmap? {
 }
 
 
-fun kCompress(file: File, outputFile: File, targetWidth: Int, targetHeight: Int): Boolean? {
+fun kCompress(file: File, outputFile: File, targetWidth: Int, targetHeight: Int): Boolean {
     return BitmapFactory.Options().also {
         it.inPreferredConfig = Bitmap.Config.ARGB_8888
         it.inJustDecodeBounds = true
@@ -102,4 +105,35 @@ fun getInSampleSize(outWidth: Int, outHeight: Int, targetWidth: Int, targetHeigh
     }
     log("sampleSize = {$sampleSize}, width = {$outWidth}, height = {$outHeight}, targetWidth = {$targetWidth} , targetHeight = {$targetHeight}")
     return sampleSize
+}
+
+/**
+ * 获取角度
+ *
+ * @param path
+ * @return
+ */
+fun kReadPictureDegree(path: String): Int {
+    return try {
+        val exifInterface = ExifInterface(path)
+        val orientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
+        when (orientation) {
+            ExifInterface.ORIENTATION_ROTATE_90 -> 90
+            ExifInterface.ORIENTATION_ROTATE_180 -> 180
+            ExifInterface.ORIENTATION_ROTATE_270 -> 270
+            else -> 0
+        }
+    } catch (e: IOException) {
+        log("kReadPictureDegree", e)
+        0
+    }
+}
+
+/**
+ * 旋转角度
+ */
+fun Bitmap.kRotate(rotate: Float): Bitmap {
+    val mtx = Matrix()
+    mtx.postRotate(rotate)
+    return Bitmap.createBitmap(this, 0, 0, width, height, mtx, true)
 }
