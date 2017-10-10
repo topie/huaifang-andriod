@@ -22,6 +22,7 @@ import com.topie.huaifang.function.dispute.HFFunDisputeMediatorActivity
 import com.topie.huaifang.function.guide.HFFunGuideActivity
 import com.topie.huaifang.function.library.HFFunLibraryActivity
 import com.topie.huaifang.function.live.HFFunLiveActivity
+import com.topie.huaifang.function.live.HFFunLiveBazaarActivity
 import com.topie.huaifang.function.live.HFFunLiveRepairsListActivity
 import com.topie.huaifang.function.notice.HFFunPublicActivity
 import com.topie.huaifang.function.party.HFFunPartyActPublishActivity
@@ -52,6 +53,7 @@ class HFFunAllActivity : HFBaseTitleActivity() {
         list.add(HFListItem(R.mipmap.ic_facing_index_fun_dispute, kGetString(R.string.facing_index_fun_dispute), 7))
         list.add(HFListItem(R.mipmap.ic_facing_index_fun_dispute, "发布活动", 8))
         list.add(HFListItem(R.mipmap.ic_facing_index_fun_dispute, "物业报修", 9))
+        list.add(HFListItem(R.mipmap.ic_facing_index_fun_dispute, kGetString(R.string.facing_index_fun_bazaar), 10))
         recyclerView.adapter = HFBaseRecyclerAdapter(ViewHolder, list)
     }
 
@@ -86,6 +88,7 @@ class HFFunAllActivity : HFBaseTitleActivity() {
                 7 -> itemView.kStartActivity(HFFunDisputeMediatorActivity::class.java)
                 8 -> itemView.kStartActivity(HFFunPartyActPublishActivity::class.java)
                 9 -> itemView.kStartActivity(HFFunLiveRepairsListActivity::class.java)
+                10 -> itemView.kStartActivity(HFFunLiveBazaarActivity::class.java)
                 else -> log("itemType = ${d?.itemType}")
             }
         }

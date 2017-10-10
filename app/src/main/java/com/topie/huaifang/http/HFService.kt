@@ -219,4 +219,9 @@ interface HFService {
     @GET("/api/m/repairReport/process/list")
     fun getFunLiveRepairsProgress(@Query("id") id: Int): Observable<HFFunLiveRepairsProgressResponseBody>
 
+    @POST("/api/m/marketLine/post")
+    fun postFunLiveBazaar(@Body requestBody: HFFunLiveBazaarApplyRequestBody): Observable<HFBaseResponseBody>
+
+    @GET("/api/m/marketLine/list")
+    fun getFunLiveBazaarList(@Query("type") type: Int, @Query("pageNum") pageNum: Int = 0, @Query("pageSize") pageSize: Int = 15): Observable<HFFunLiveBazaarResponseBody>
 }

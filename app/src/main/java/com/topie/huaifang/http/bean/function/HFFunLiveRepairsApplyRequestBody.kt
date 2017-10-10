@@ -1,12 +1,10 @@
 package com.topie.huaifang.http.bean.function
 
-import com.topie.huaifang.http.bean.HFBaseResponseBody
-
 /**
  * Created by arman on 2017/10/7.
  * 物业报修提交
  */
-class HFFunLiveRepairsApplyRequestBody : HFBaseResponseBody() {
+class HFFunLiveRepairsApplyRequestBody {
     var roomNumber: String? = null
     var contactPhone: String? = null
     var contactPerson: String? = null

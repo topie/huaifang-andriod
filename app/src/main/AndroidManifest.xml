@@ -68,6 +68,9 @@
         <activity android:name=".function.live.HFFunLiveRepairsApplyActivity" />
         <activity android:name=".function.live.HFFunLiveRepairsListActivity" />
         <activity android:name=".function.live.HFFunLiveRepairsDetailActivity" />
+        <activity android:name=".function.live.HFFunLiveBazaarApplyActivity" />
+        <activity android:name=".function.live.HFFunLiveBazaarActivity" />
+        <activity android:name=".function.live.HFFunLiveBazaarDetailActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

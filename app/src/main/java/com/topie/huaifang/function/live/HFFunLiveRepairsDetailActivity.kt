@@ -85,6 +85,7 @@ class HFFunLiveRepairsDetailActivity : HFBaseTitleActivity() {
 
                         ll.addView(inflate)
                     }
+                    mProgressDataList = it
                 }
             }.kInto(pauseDisableList)
         }
@@ -102,7 +103,9 @@ class HFFunLiveRepairsDetailActivity : HFBaseTitleActivity() {
             override fun create(parent: ViewGroup, viewType: Int): ImagesViewHolder {
                 val hfImageView = HFImageView(parent.context)
                 val dp80 = HFDimensUtils.dp2px(80.toFloat())
-                hfImageView.layoutParams = RecyclerView.LayoutParams(dp80, dp80)
+                hfImageView.layoutParams = RecyclerView.LayoutParams(dp80, dp80).also {
+                    it.rightMargin = HFDimensUtils.dp2px(10.toFloat())
+                }
                 hfImageView.setAspectRatio(1.toFloat())
                 return ImagesViewHolder(hfImageView)
             }
