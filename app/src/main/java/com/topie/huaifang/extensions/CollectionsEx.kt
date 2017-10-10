@@ -90,3 +90,11 @@ fun <T> MutableList<T>.kReset(list: List<T>) {
     addAll(list)
 }
 
+fun <T> List<T>?.kIsEmpty(): Boolean {
+    return this?.isEmpty() ?: true
+}
+
+fun <T> List<T>?.kIsNotEmpty(): Boolean {
+    return this?.isNotEmpty() ?: false
+}
+

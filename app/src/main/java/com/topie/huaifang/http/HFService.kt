@@ -207,4 +207,10 @@ interface HFService {
     @GET("/api/m/repairReport/list")
     fun getFunLiveRepairsList(): Observable<HFFunLiveRepairsListResponseBody>
 
+    /**
+     * 物业保修进度
+     */
+    @GET("/api/m/repairReport/process/list")
+    fun getFunLiveRepairsProgress(@Query("id") id: Int): Observable<HFFunLiveRepairsProgressResponseBody>
+
 }

@@ -78,5 +78,15 @@ class HFFunLiveRepairsListActivity : HFBaseTitleActivity() {
             tvTime.text = d.reportTime
             tvStatus.text = d.status
         }
+
+        override fun onItemClicked(d: HFFunLiveRepairsListResponseBody.ListData?) {
+            super.onItemClicked(d)
+            d?.let {
+                Bundle()
+            }?.also {
+                it.putSerializable(HFFunLiveRepairsDetailActivity.EXTRA_DATA, d)
+                itemView.kStartActivity(HFFunLiveRepairsDetailActivity::class.java, it)
+            }
+        }
     }
 }
