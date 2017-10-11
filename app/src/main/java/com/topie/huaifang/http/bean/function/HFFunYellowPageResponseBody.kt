@@ -19,6 +19,6 @@ class HFFunYellowPageResponseBody : HFBaseResponseBody() {
         var mobilePhone: String? = null//联系电话
         var name: String? = null//名称
         var id: Int = 0
-        var getTypeStr: String? = null//类型
+        var typeStr: String? = null//类型
     }
 }

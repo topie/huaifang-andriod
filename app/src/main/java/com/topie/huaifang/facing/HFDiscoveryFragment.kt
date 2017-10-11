@@ -15,6 +15,8 @@ import com.topie.huaifang.base.HFBaseRecyclerViewHolder
 import com.topie.huaifang.base.HFViewHolderFactory
 import com.topie.huaifang.extensions.kFindViewById
 import com.topie.huaifang.extensions.kGetString
+import com.topie.huaifang.extensions.kStartActivity
+import com.topie.huaifang.function.discovery.HFFunDisNeighborhoodActivity
 import com.topie.huaifang.imageloader.HFImageView
 
 /**
@@ -51,8 +53,10 @@ class HFDiscoveryFragment : HFBaseFragment() {
 
         override fun onItemClicked(d: Item?) {
             super.onItemClicked(d)
-            d?.id?.let {
-
+            when ((d?.id ?: -1)) {
+                0 -> {
+                    itemView.kStartActivity(HFFunDisNeighborhoodActivity::class.java)
+                }
             }
         }
 

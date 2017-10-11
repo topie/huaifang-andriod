@@ -12,6 +12,7 @@ import com.topie.huaifang.extensions.*
 import com.topie.huaifang.function.HFFunAllActivity
 import com.topie.huaifang.function.guide.HFFunGuideActivity
 import com.topie.huaifang.function.live.HFFunLiveActivity
+import com.topie.huaifang.function.live.HFFunLiveBazaarActivity
 import com.topie.huaifang.function.notice.HFFunPublicActivity
 import com.topie.huaifang.function.party.HFFunPartyActivity
 import com.topie.huaifang.function.yellowpage.HFFunYellowPageActivity
@@ -155,12 +156,17 @@ class HFIndexFragment : HFBaseFragment() {
         fun6.kFindViewById<ImageView>(R.id.iv_facing_index_fun).setImageResource(R.mipmap.ic_facing_index_fun_all)
         fun6.kFindViewById<TextView>(R.id.tv_facing_index_fun).setText(R.string.default_all)
 
+        //通知公告
         fun0.setOnClickListener {
             this@HFIndexFragment.kStartActivity(HFFunPublicActivity::class.java)
         }
-
+        //办事指南
         fun1.setOnClickListener {
             this@HFIndexFragment.kStartActivity(HFFunGuideActivity::class.java)
+        }
+        //邻里圈
+        fun2.setOnClickListener {
+            this@HFIndexFragment.kStartActivity(HFFunLiveBazaarActivity::class.java)
         }
 
         fun3.setOnClickListener {

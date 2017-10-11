@@ -40,7 +40,7 @@
             <ImageView
                 android:layout_width="12dp"
                 android:layout_height="12dp"
-                android:src="@mipmap/ic_forward"
+                android:src="@mipmap/ic_default_forward"
                 android:visibility="invisible" />
         </LinearLayout>
 
@@ -78,7 +78,7 @@
             <ImageView
                 android:layout_width="12dp"
                 android:layout_height="12dp"
-                android:src="@mipmap/ic_forward"
+                android:src="@mipmap/ic_default_forward"
                 android:visibility="invisible" />
         </LinearLayout>
 
@@ -115,7 +115,7 @@
             <ImageView
                 android:layout_width="12dp"
                 android:layout_height="12dp"
-                android:src="@mipmap/ic_forward"
+                android:src="@mipmap/ic_default_forward"
                 android:visibility="invisible" />
         </LinearLayout>
 
@@ -154,7 +154,7 @@
             <ImageView
                 android:layout_width="12dp"
                 android:layout_height="12dp"
-                android:src="@mipmap/ic_forward" />
+                android:src="@mipmap/ic_default_forward" />
         </LinearLayout>
 
         <include layout="@layout/function_line_item" />
@@ -191,7 +191,7 @@
             <ImageView
                 android:layout_width="12dp"
                 android:layout_height="12dp"
-                android:src="@mipmap/ic_forward"
+                android:src="@mipmap/ic_default_forward"
                 android:visibility="invisible" />
         </LinearLayout>
 
@@ -245,7 +245,7 @@
             <ImageView
                 android:layout_width="12dp"
                 android:layout_height="12dp"
-                android:src="@mipmap/ic_forward"
+                android:src="@mipmap/ic_default_forward"
                 android:visibility="visible" />
         </LinearLayout>
 

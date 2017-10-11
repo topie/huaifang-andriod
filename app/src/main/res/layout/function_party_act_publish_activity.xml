@@ -47,7 +47,7 @@
                 android:layout_height="16dp"
                 android:layout_marginBottom="5dp"
                 android:layout_marginTop="5dp"
-                android:src="@mipmap/ic_forward"
+                android:src="@mipmap/ic_default_forward"
                 android:visibility="invisible" />
         </LinearLayout>
 
@@ -87,7 +87,7 @@
                 android:layout_height="16dp"
                 android:layout_marginBottom="5dp"
                 android:layout_marginTop="5dp"
-                android:src="@mipmap/ic_forward"
+                android:src="@mipmap/ic_default_forward"
                 android:visibility="invisible" />
         </LinearLayout>
 
@@ -129,7 +129,7 @@
                 android:layout_height="16dp"
                 android:layout_marginBottom="5dp"
                 android:layout_marginTop="5dp"
-                android:src="@mipmap/ic_forward" />
+                android:src="@mipmap/ic_default_forward" />
         </LinearLayout>
 
         <include layout="@layout/function_line_item" />
@@ -170,7 +170,7 @@
                 android:layout_height="16dp"
                 android:layout_marginBottom="5dp"
                 android:layout_marginTop="5dp"
-                android:src="@mipmap/ic_forward" />
+                android:src="@mipmap/ic_default_forward" />
         </LinearLayout>
 
         <include layout="@layout/function_thick_line_item" />
@@ -225,7 +225,7 @@
                 android:layout_height="16dp"
                 android:layout_marginBottom="5dp"
                 android:layout_marginTop="5dp"
-                android:src="@mipmap/ic_forward" />
+                android:src="@mipmap/ic_default_forward" />
         </LinearLayout>
 
         <com.topie.huaifang.imageloader.HFImageView
@@ -275,7 +275,7 @@
                 android:layout_height="16dp"
                 android:layout_marginBottom="5dp"
                 android:layout_marginTop="5dp"
-                android:src="@mipmap/ic_forward" />
+                android:src="@mipmap/ic_default_forward" />
         </LinearLayout>
 
         <include layout="@layout/function_thick_line_item" />
@@ -314,7 +314,7 @@
                 android:layout_height="16dp"
                 android:layout_marginBottom="5dp"
                 android:layout_marginTop="5dp"
-                android:src="@mipmap/ic_forward" />
+                android:src="@mipmap/ic_default_forward" />
         </LinearLayout>
 
         <include layout="@layout/function_line_item" />
@@ -353,7 +353,7 @@
                 android:layout_height="16dp"
                 android:layout_marginBottom="5dp"
                 android:layout_marginTop="5dp"
-                android:src="@mipmap/ic_forward"
+                android:src="@mipmap/ic_default_forward"
                 android:visibility="invisible" />
         </LinearLayout>
 

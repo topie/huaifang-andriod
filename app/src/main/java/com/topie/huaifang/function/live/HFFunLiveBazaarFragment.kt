@@ -1,6 +1,5 @@
 package com.topie.huaifang.function.live
 
-import android.net.Uri
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -13,7 +12,6 @@ import com.davdian.ptr.Pt2FrameLayout
 import com.topie.huaifang.R
 import com.topie.huaifang.base.HFBaseFragment
 import com.topie.huaifang.base.HFBaseRecyclerViewHolder
-import com.topie.huaifang.base.HFViewHolderFactory
 import com.topie.huaifang.extensions.*
 import com.topie.huaifang.function.kShowTelDialog
 import com.topie.huaifang.http.HFRetrofit

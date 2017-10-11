@@ -224,4 +224,13 @@ interface HFService {
 
     @GET("/api/m/marketLine/list")
     fun getFunLiveBazaarList(@Query("type") type: Int, @Query("pageNum") pageNum: Int = 0, @Query("pageSize") pageSize: Int = 15): Observable<HFFunLiveBazaarResponseBody>
+
+    /**
+     * 发布邻里圈
+     */
+    @POST("/api/m/appTimeLine/post")
+    fun postFunDisNeighborhood(@Body requestBody: HFFunLiveBazaarApplyRequestBody): Observable<HFBaseResponseBody>
+
+    @GET("/api/m/appTimeLine/list")
+    fun getFunDisNeighborhoodList(@Query("pageNum") pageNum: Int = 0, @Query("pageSize") pageSize: Int = 15): Observable<HFFunDisNeighborhoodResponseBody>
 }

@@ -71,6 +71,8 @@
         <activity android:name=".function.live.HFFunLiveBazaarApplyActivity" />
         <activity android:name=".function.live.HFFunLiveBazaarActivity" />
         <activity android:name=".function.live.HFFunLiveBazaarDetailActivity" />
+        <activity android:name=".function.discovery.HFFunDisNeighborhoodApplyActivity" />
+        <activity android:name=".function.discovery.HFFunDisNeighborhoodActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

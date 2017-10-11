@@ -141,8 +141,8 @@ class HFFunYellowPageActivity : HFBaseTitleActivity() {
                 val groupList = ArrayList<Group>()
                 list.forEach { item ->
                     groupList.kGetOne(
-                            { item.getTypeStr == it.typeStr },
-                            { Group(item.getTypeStr) }
+                            { item.typeStr == it.typeStr },
+                            { Group(item.typeStr) }
                     ).list.add(item)
                 }
                 return groupList

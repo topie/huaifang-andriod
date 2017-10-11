@@ -40,9 +40,12 @@ fun <K, V> MutableMap<K, V>.kGetValueNotNull(k: K, valueCreator: (k: K) -> V): V
 }
 
 fun <T> MutableList<T>.kGetOne(collect: ((t: T) -> Boolean), oneCreator: () -> T): T {
-    val first = first(collect)
+    val first = when {
+        isNotEmpty() -> first(collect)
+        else -> null
+    }
     if (first.kIsNotNull()) {
-        return first
+        return first!!
     }
     val t = oneCreator()
     add(t)
