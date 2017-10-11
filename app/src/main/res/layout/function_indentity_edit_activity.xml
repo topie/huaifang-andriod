@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/function_thick_line_item" />
+
+    <!--身份-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:lines="1"
+            android:maxLines="1"
+            android:text="我的身份"
+            android:textColor="@color/colorDark"
+            android:textSize="14sp" />
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rb_fun_identity_sf_zhu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="住户"
+                android:textSize="12sp" />
+
+            <RadioButton
+                android:id="@+id/rb_fun_identity_sf_zu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:text="租户"
+                android:textSize="12sp" />
+        </RadioGroup>
+    </LinearLayout>
+
+    <include layout="@layout/function_line_item" />
+
+    <!--我的姓名-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:lines="1"
+            android:maxLines="1"
+            android:text="我的姓名"
+            android:textColor="@color/colorDark"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/et_fun_identity_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_weight="1"
+            android:background="@null"
+            android:lines="1"
+            android:maxLines="1"
+            android:textColor="@color/colorDark"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <include layout="@layout/function_line_item" />
+
+    <!--身份证号-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:lines="1"
+            android:maxLines="1"
+            android:text="身份证号"
+            android:textColor="@color/colorDark"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/et_fun_identity_number"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_weight="1"
+            android:background="@null"
+            android:lines="1"
+            android:maxLines="1"
+            android:textColor="@color/colorDark"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <include
+        layout="@layout/function_line_item"
+        android:layout_width="match_parent"
+        android:layout_height="20dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:lines="1"
+        android:maxLines="1"
+        android:text="房间信息"
+        android:textColor="@color/colorDark"
+        android:textSize="14sp" />
+
+    <include layout="@layout/function_line_item" />
+
+    <!--小区-->
+    <LinearLayout
+        android:id="@+id/ll_fun_identity_xq"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:gravity="center_vertical|right">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="请选择小区"
+            android:lines="1"
+            android:maxLines="1"
+            android:textColor="@color/colorDark"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:src="@mipmap/ic_default_forward"
+            android:visibility="visible" />
+    </LinearLayout>
+
+    <include layout="@layout/function_line_item" />
+
+
+    <!--楼号-->
+    <LinearLayout
+        android:id="@+id/ll_fun_identity_lh"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:gravity="center_vertical|right">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="请选择楼号"
+            android:lines="1"
+            android:maxLines="1"
+            android:textColor="@color/colorDark"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:src="@mipmap/ic_default_forward"
+            android:visibility="visible" />
+    </LinearLayout>
+
+    <include layout="@layout/function_line_item" />
+
+    <!--单元-->
+    <LinearLayout
+        android:id="@+id/ll_fun_identity_dy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:gravity="center_vertical|right">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="请选择单元"
+            android:lines="1"
+            android:maxLines="1"
+            android:textColor="@color/colorDark"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:src="@mipmap/ic_default_forward"
+            android:visibility="visible" />
+    </LinearLayout>
+
+    <include layout="@layout/function_line_item" />
+
+    <!--楼层-->
+    <LinearLayout
+        android:id="@+id/ll_fun_identity_lc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:gravity="center_vertical|right">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="请选择楼层"
+            android:lines="1"
+            android:maxLines="1"
+            android:textColor="@color/colorDark"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:src="@mipmap/ic_default_forward"
+            android:visibility="visible" />
+    </LinearLayout>
+
+    <include layout="@layout/function_line_item" />
+
+    <!--门牌-->
+    <LinearLayout
+        android:id="@+id/ll_fun_identity_mp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:gravity="center_vertical|right">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="请选择楼牌"
+            android:lines="1"
+            android:maxLines="1"
+            android:textColor="@color/colorDark"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:src="@mipmap/ic_default_forward"
+            android:visibility="visible" />
+    </LinearLayout>
+
+    <include layout="@layout/function_line_item" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_weight="1"
+        android:gravity="bottom"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_fun_identity_submit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_fun_party_act_publish"
+            android:gravity="center"
+            android:paddingBottom="20dp"
+            android:paddingTop="10dp"
+            android:text="@string/default_submit"
+            android:textColor="@android:color/white"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+</LinearLayout>

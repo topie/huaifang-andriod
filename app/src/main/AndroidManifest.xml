@@ -74,6 +74,8 @@
         <activity android:name=".function.discovery.HFFunDisNeighborhoodApplyActivity" />
         <activity android:name=".function.discovery.HFFunDisNeighborhoodActivity" />
         <activity android:name=".function.communication.HFCommChatActivity" />
+        <activity android:name=".function.identity.HFFunIdentityShowActivity" />
+        <activity android:name=".function.identity.HFFunIdentityEditActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

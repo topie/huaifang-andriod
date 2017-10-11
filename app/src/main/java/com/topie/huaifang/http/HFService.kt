@@ -233,4 +233,23 @@ interface HFService {
 
     @GET("/api/m/appTimeLine/list")
     fun getFunDisNeighborhoodList(@Query("pageNum") pageNum: Int = 0, @Query("pageSize") pageSize: Int = 15): Observable<HFFunDisNeighborhoodResponseBody>
+
+    /**
+     * 我的信息
+     */
+    @GET("/api/m/appUser/authInfo")
+    fun getFunIdentityDate(): Observable<HFFunIdentityResponseBody>
+
+    /**
+     * 房间联动信息
+     */
+    @GET("/api/m/houseInfo/node")
+    fun getFunIdentityNote(@Query("parentId") parentId: Int = -1): Observable<ResponseBody>
+
+    /**
+     * 发布邻里圈
+     */
+    @POST("/api/m/appUser/auth")
+    fun postFunIdentity(@Body requestBody: HFFunIdentityEditRequestBody): Observable<HFBaseResponseBody>
+
 }
