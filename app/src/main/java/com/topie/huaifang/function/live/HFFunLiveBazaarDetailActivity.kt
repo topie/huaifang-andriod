@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.ViewGroup
 import com.topie.huaifang.R
 import com.topie.huaifang.base.HFBaseTitleActivity
-import com.topie.huaifang.extensions.kParseFileUri
+import com.topie.huaifang.extensions.kParseUrl
 import com.topie.huaifang.function.kShowTelDialog
 import com.topie.huaifang.http.bean.function.HFFunLiveBazaarResponseBody
 import com.topie.huaifang.imageloader.HFImageView
@@ -36,7 +36,7 @@ class HFFunLiveBazaarDetailActivity : HFBaseTitleActivity() {
             lp.topMargin = HFDimensUtils.dp2px(5.toFloat())
             hfImageView.layoutParams = lp
             hfImageView.setAspectRatio(1.toFloat())
-            hfImageView.loadImageUri(it.kParseFileUri())
+            hfImageView.loadImageUri(it.kParseUrl())
             ll_fun_live_bazaar_content.addView(hfImageView)
         }
         ll_fun_live_bazaar_tel.setOnClickListener {

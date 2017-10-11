@@ -154,46 +154,36 @@ class HFFunLiveBazaarFragment : HFBaseFragment() {
             tvName.text = d.addUserName
             tvTime.text = d.publishTime
             tvContent.text = d.content
-            llImages.removeAllViews()
-            d.images?.split(",")?.map {
-                it.trim().kParseUrl() ?: Uri.EMPTY
-            }?.forEachIndexed { index, uri ->
-                if (index >= 3) {
-                    return
-                }
-                val hfImageView = HFImageView(itemView.context).apply {
-                    setAspectRatio(1.toFloat())
-                    layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT).also {
-                        it.rightMargin = HFDimensUtils.dp2px(10.toFloat())
+            //删除旧的View
+            val imageViewList = ArrayList<HFImageView>().apply {
+                for (i in 0 until llImages.childCount) {
+                    val childAt = llImages.getChildAt(i)
+                    if (childAt is HFImageView) {
+                        childAt.setImageDrawable(null)
+                        add(childAt)
                     }
-                    setAspectRatio(1.toFloat())
-                    loadImageUri(uri)
                 }
+                llImages.removeAllViews()
+            }
+            //获取新数据
+            val list = d.images?.split(",") ?: arrayListOf(null, null, null)
+            //添加新的View
+            for (i in 0..2) {
+                val hfImageView = imageViewList.kGet(i) ?: HFImageView(itemView.context).apply {
+                    setAspectRatio(1.toFloat())
+                    layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT).apply {
+                        rightMargin = when (i) {
+                            2 -> 0
+                            else -> HFDimensUtils.dp2px(10.toFloat())
+                        }
+                        weight = 1.toFloat()
+                    }
+                }
+                hfImageView.loadImageUri(list.kGet(i)?.trim()?.kParseUrl())
                 llImages.addView(hfImageView)
             }
 
         }
-
-        private class ImagesViewHolder(itemView: View) : HFBaseRecyclerViewHolder<Uri>(itemView, true) {
-            val imageView: HFImageView = itemView as HFImageView
-            override fun onBindData(d: Uri) {
-                imageView.loadImageUri(d)
-            }
-
-            companion object CREATOR : HFViewHolderFactory<ImagesViewHolder> {
-
-                override fun create(parent: ViewGroup, viewType: Int): ImagesViewHolder {
-                    val hfImageView = HFImageView(parent.context)
-                    val dp80 = HFDimensUtils.dp2px(80.toFloat())
-                    hfImageView.layoutParams = RecyclerView.LayoutParams(dp80, dp80).also {
-                        it.rightMargin = HFDimensUtils.dp2px(10.toFloat())
-                    }
-                    hfImageView.setAspectRatio(1.toFloat())
-                    return ImagesViewHolder(hfImageView)
-                }
-            }
-        }
-
     }
 
 }

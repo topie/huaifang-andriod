@@ -135,7 +135,7 @@ class HFFunLiveBazaarApplyActivity : HFBaseTitleActivity() {
                 it.isNotEmpty()
             } ?: throw IllegalArgumentException("请填写手机号")
             //用户名称
-            contactPhone = et_fun_live_bazaar_apply_name?.text?.toString()?.trim()?.takeIf {
+            addUserName = et_fun_live_bazaar_apply_name?.text?.toString()?.trim()?.takeIf {
                 it.isNotEmpty()
             } ?: throw IllegalArgumentException("请填写用户名称")
             //内容
