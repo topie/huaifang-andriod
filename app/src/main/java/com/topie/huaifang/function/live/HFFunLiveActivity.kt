@@ -24,13 +24,8 @@ class HFFunLiveActivity : HFBaseTitleActivity() {
         setContentView(R.layout.function_guide_activity)
         setBaseTitle(R.string.facing_index_fun_live)
         HFRetrofit.hfService.getFunLiveList().subscribeApi {
-            val intRange = 0..10
-            val list: MutableList<HFLiveListResponseBody.ListData> = arrayListOf()
-            for (i in intRange) {
-                list.add(HFLiveListResponseBody.ListData())
-            }
             val vpAdapter = VPAdapter()
-            vpAdapter.list = list
+            vpAdapter.list = it.data?.data
             vp_fun_guide.adapter = vpAdapter
             tl_fun_guide.setupWithViewPager(vp_fun_guide)
             vpAdapter.notifyDataSetChanged()

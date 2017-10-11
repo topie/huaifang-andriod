@@ -22,17 +22,8 @@ class HFFunGuideActivity : HFBaseTitleActivity() {
         setContentView(R.layout.function_guide_activity)
         setBaseTitle(R.string.facing_index_fun_guide)
         HFRetrofit.hfService.getFunGuideMenu().composeApi().subscribe({
-            val intRange = 0..10
-            for (i in intRange) {
-                tl_fun_guide.addTab(tl_fun_guide.newTab().setText("title{$i}"))
-            }
-
-            val list: MutableList<HFFunGuideMenuResponseBody.ListData> = arrayListOf()
-            for (i in intRange) {
-                list.add(HFFunGuideMenuResponseBody.ListData())
-            }
             val vpAdapter = VPAdapter(supportFragmentManager)
-            vpAdapter.list = list
+            vpAdapter.list = it.data?.data
             vp_fun_guide.adapter = vpAdapter
             tl_fun_guide.setupWithViewPager(vp_fun_guide)
             vpAdapter.notifyDataSetChanged()
