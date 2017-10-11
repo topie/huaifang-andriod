@@ -136,6 +136,9 @@ public class Pt2FrameLayout extends PtrFrameLayout {
 
         @Override
         public boolean checkCanDoLoad(PtlFrameLayout frame, View content, View footer) {
+            if (content instanceof PtlFrameLayout) {
+                content = ((PtlFrameLayout) content).getContentView();
+            }
             return mBase != null && mBase.checkCanDoLoad(frame, content, footer) && !isRefreshing();
         }
 
@@ -148,6 +151,9 @@ public class Pt2FrameLayout extends PtrFrameLayout {
 
         @Override
         public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
+            if (content instanceof PtlFrameLayout) {
+                content = ((PtlFrameLayout) content).getContentView();
+            }
             return Math.abs(mPtrIndicator.getOffsetY()) > Math.abs(mPtrIndicator.getOffsetX())
                     && mBase != null
                     && mBase.checkCanDoRefresh(frame, content, header)

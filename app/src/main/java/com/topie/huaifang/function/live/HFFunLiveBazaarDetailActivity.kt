@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import com.topie.huaifang.R
 import com.topie.huaifang.base.HFBaseTitleActivity
 import com.topie.huaifang.extensions.kParseUrl
-import com.topie.huaifang.function.kShowTelDialog
+import com.topie.huaifang.kShowTelDialog
 import com.topie.huaifang.http.bean.function.HFFunLiveBazaarResponseBody
 import com.topie.huaifang.imageloader.HFImageView
 import com.topie.huaifang.util.HFDimensUtils

@@ -22,7 +22,7 @@ import com.topie.huaifang.extensions.log
 import com.topie.huaifang.http.HFRetrofit
 import com.topie.huaifang.http.subscribeApi
 import com.topie.huaifang.imageloader.HFImageView
-import com.topie.huaifang.login.HFLoginActivity
+import com.topie.huaifang.account.HFLoginActivity
 
 /**
  * Created by arman on 2017/9/16.

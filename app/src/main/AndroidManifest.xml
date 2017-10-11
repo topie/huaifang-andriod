@@ -31,7 +31,7 @@
         </activity>
 
         <activity
-            android:name=".login.HFLoginActivity"
+            android:name=".account.HFLoginActivity"
             android:launchMode="singleInstance" />
         <activity
             android:name=".function.guide.HFFunGuideActivity"
@@ -73,6 +73,7 @@
         <activity android:name=".function.live.HFFunLiveBazaarDetailActivity" />
         <activity android:name=".function.discovery.HFFunDisNeighborhoodApplyActivity" />
         <activity android:name=".function.discovery.HFFunDisNeighborhoodActivity" />
+        <activity android:name=".function.communication.HFCommChatActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

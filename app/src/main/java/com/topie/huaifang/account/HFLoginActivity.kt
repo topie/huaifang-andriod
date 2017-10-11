@@ -1,11 +1,10 @@
-package com.topie.huaifang.login
+package com.topie.huaifang.account
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.topie.huaifang.base.HFBaseTitleActivity
 import com.topie.huaifang.R
-import com.topie.huaifang.account.HFAccountManager
 import com.topie.huaifang.extensions.kStartActivity
 import com.topie.huaifang.extensions.kToastLong
 import com.topie.huaifang.extensions.log

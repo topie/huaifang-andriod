@@ -31,7 +31,7 @@ class HFFunDisNeighborhoodActivity : HFBaseTitleActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.base_pt2_recycler_layout)
-        setBaseTitle(R.string.facing_index_fun_bazaar)
+        setBaseTitle(R.string.facing_discovery_neighborhood)
         setBaseTitleRight("发布")
         tv_base_title_right.setOnClickListener {
             this@HFFunDisNeighborhoodActivity.kStartActivity(HFFunDisNeighborhoodApplyActivity::class.java)
@@ -69,7 +69,6 @@ class HFFunDisNeighborhoodActivity : HFBaseTitleActivity() {
     private class Adapter : RecyclerView.Adapter<ViewHolder>() {
 
         private val mList: MutableList<HFFunDisNeighborhoodResponseBody.ListData> = arrayListOf()
-        var mOnCallTel: ((phoneNum: String) -> Unit)? = null
         var mPageSize = 0
             private set
 

@@ -13,7 +13,7 @@ import com.topie.huaifang.R
 import com.topie.huaifang.base.HFBaseFragment
 import com.topie.huaifang.base.HFBaseRecyclerViewHolder
 import com.topie.huaifang.extensions.*
-import com.topie.huaifang.function.kShowTelDialog
+import com.topie.huaifang.kShowTelDialog
 import com.topie.huaifang.http.HFRetrofit
 import com.topie.huaifang.http.bean.function.HFFunLiveBazaarResponseBody
 import com.topie.huaifang.http.subscribeResultOkApi

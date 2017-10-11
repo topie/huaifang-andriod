@@ -5,8 +5,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <ExpandableListView
-        android:id="@+id/elv_base_pt2"
+    <com.davdian.ptr.ptl.PtlFrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
+
+        <ExpandableListView
+            android:id="@+id/elv_base_pt2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </com.davdian.ptr.ptl.PtlFrameLayout>
 </com.davdian.ptr.Pt2FrameLayout>

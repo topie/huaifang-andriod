@@ -13,7 +13,7 @@ import com.topie.huaifang.extensions.kFindViewById
 import com.topie.huaifang.extensions.kGetIdentifier
 import com.topie.huaifang.extensions.kStartActivity
 import com.topie.huaifang.extensions.log
-import com.topie.huaifang.login.HFLoginActivity
+import com.topie.huaifang.account.HFLoginActivity
 import com.topie.huaifang.view.HFTipDialog
 
 

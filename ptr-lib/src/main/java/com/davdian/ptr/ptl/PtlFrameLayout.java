@@ -274,6 +274,10 @@ public class PtlFrameLayout extends ViewGroup {
         return mFooterView;
     }
 
+    public View getContentView() {
+        return mContentView;
+    }
+
     public boolean dispatchTouchEventSupper(MotionEvent e) {
         Log.i(LOG_TAG, "dispatchTouchEventSupper: ");
         return super.dispatchTouchEvent(e);
