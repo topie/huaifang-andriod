@@ -36,7 +36,7 @@ class HFFunLiveBazaarDetailActivity : HFBaseTitleActivity() {
             lp.topMargin = HFDimensUtils.dp2px(5.toFloat())
             hfImageView.layoutParams = lp
             hfImageView.setAspectRatio(1.toFloat())
-            hfImageView.loadImageUri(it.kParseUrl())
+            hfImageView.loadImageUri(it.trim().kParseUrl())
             ll_fun_live_bazaar_content.addView(hfImageView)
         }
         ll_fun_live_bazaar_tel.setOnClickListener {
