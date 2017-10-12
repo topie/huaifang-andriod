@@ -46,7 +46,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center">
+            android:gravity="center"
+            android:visibility="gone">
 
             <ImageView
                 android:layout_width="25dp"
@@ -66,7 +67,8 @@
         <View
             android:layout_width="0.5dp"
             android:layout_height="match_parent"
-            android:background="@color/colorGray" />
+            android:background="@color/colorGray"
+            android:visibility="gone" />
 
         <LinearLayout
             android:id="@+id/ll_fun_tel"

@@ -16,12 +16,14 @@ import com.topie.huaifang.base.HFBaseFragment
 import com.topie.huaifang.base.HFBaseRecyclerAdapter
 import com.topie.huaifang.base.HFBaseRecyclerViewHolder
 import com.topie.huaifang.base.HFViewHolderFactory
+import com.topie.huaifang.extensions.kFindActivity
 import com.topie.huaifang.extensions.kFindViewById
 import com.topie.huaifang.extensions.kToastLong
 import com.topie.huaifang.http.HFRetrofit
 import com.topie.huaifang.http.bean.function.HFFunGuideListResponseBody
 import com.topie.huaifang.http.bean.function.HFFunGuideMenuResponseBody
 import com.topie.huaifang.http.composeApi
+import com.topie.huaifang.kShowTelDialog
 import io.reactivex.disposables.Disposable
 
 /**
@@ -118,16 +120,31 @@ class HFFunGuideFragment : HFBaseFragment() {
     private class TopViewHolder(itemView: View) : HFBaseRecyclerViewHolder<Any>(itemView) {
         val tvName: TextView = itemView.kFindViewById(R.id.tv_fun_guide_name)
         val tvAddress: TextView = itemView.kFindViewById(R.id.tv_fun_guide_address)
+        var phone: String? = null
+
+        init {
+            itemView.findViewById<View>(R.id.ll_fun_tel).setOnClickListener {
+                val context = itemView.context
+                context.kFindActivity()?.takeIf {
+                    phone != null
+                }?.also {
+                    it.kShowTelDialog(phone!!)
+                }
+            }
+
+        }
+
         override fun onBindData(d: Any) {
             if (d is HFFunGuideMenuResponseBody.ListData) {
                 tvName.text = d.name
                 tvAddress.text = d.address
+                phone = d.phone
             } else {
                 tvName.text = null
                 tvAddress.text = null
+                phone = null
             }
         }
-
     }
 
     private class ItemViewHolder(itemView: View) : HFBaseRecyclerViewHolder<Any>(itemView) {

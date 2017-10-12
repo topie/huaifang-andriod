@@ -10,6 +10,7 @@ import com.topie.huaifang.extensions.log
 import com.topie.huaifang.http.HFRetrofit
 import com.topie.huaifang.http.bean.function.HFFunGuideMenuResponseBody
 import com.topie.huaifang.http.composeApi
+import com.topie.huaifang.http.subscribeResultOkApi
 import kotlinx.android.synthetic.main.function_guide_activity.*
 
 /**
@@ -21,15 +22,13 @@ class HFFunGuideActivity : HFBaseTitleActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.function_guide_activity)
         setBaseTitle(R.string.facing_index_fun_guide)
-        HFRetrofit.hfService.getFunGuideMenu().composeApi().subscribe({
+        HFRetrofit.hfService.getFunGuideMenu().subscribeResultOkApi {
             val vpAdapter = VPAdapter(supportFragmentManager)
             vpAdapter.list = it.data?.data
             vp_fun_guide.adapter = vpAdapter
             tl_fun_guide.setupWithViewPager(vp_fun_guide)
             vpAdapter.notifyDataSetChanged()
-        }, {
-
-        })
+        }
     }
 
 
@@ -49,7 +48,7 @@ class HFFunGuideActivity : HFBaseTitleActivity() {
         }
 
         override fun getPageTitle(position: Int): CharSequence {
-            return "title{$position}"
+            return list?.get(position)?.title ?: position.toString()
         }
 
     }
