@@ -2,18 +2,11 @@ package com.topie.huaifang.function.notice
 
 import android.os.Bundle
 import android.support.design.widget.TabLayout
-import android.support.v4.view.PagerAdapter
-import android.util.SparseArray
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.TextView
+import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentManager
+import android.support.v4.app.FragmentPagerAdapter
 import com.topie.huaifang.R
 import com.topie.huaifang.base.HFBaseTitleActivity
-import com.topie.huaifang.extensions.kFindViewById
-import com.topie.huaifang.extensions.kReleaseSelf
-import com.topie.huaifang.http.HFRetrofit
-import com.topie.huaifang.http.composeApi
 import kotlinx.android.synthetic.main.function_guide_activity.*
 
 /**
@@ -26,9 +19,9 @@ class HFFunPublicActivity : HFBaseTitleActivity() {
         setContentView(R.layout.function_guide_activity)
         setBaseTitle(R.string.facing_index_fun_announcement)
         val titleList: ArrayList<String> = arrayListOf()
-        titleList.add("物业公告")
         titleList.add("社区公告")
-        val vpAdapter = VPAdapter(titleList)
+        titleList.add("物业公告")
+        val vpAdapter = VPAdapter(titleList,supportFragmentManager)
         vp_fun_guide.adapter = vpAdapter
         tl_fun_guide.setupWithViewPager(vp_fun_guide)
         tl_fun_guide.tabMode = TabLayout.MODE_FIXED
@@ -36,28 +29,9 @@ class HFFunPublicActivity : HFBaseTitleActivity() {
     }
 
 
-    class VPAdapter(private val titleList: List<String>) : PagerAdapter() {
-
-        private val list: SparseArray<ViewHolder> = SparseArray()
-
-        override fun isViewFromObject(view: View, any: Any): Boolean {
-            return view == any
-        }
-
-        override fun instantiateItem(container: ViewGroup, position: Int): Any {
-            val viewHolder = list[position] ?: let {
-                val inflate = LayoutInflater.from(container.context).inflate(R.layout.function_public_list_item, container, false)
-                val viewHolder = ViewHolder(inflate, position)
-                list.put(position, viewHolder)
-                return@let viewHolder
-            }
-            viewHolder.itemView.kReleaseSelf()
-            container.addView(viewHolder.itemView)
-            return viewHolder.itemView
-        }
-
-        override fun destroyItem(container: ViewGroup, position: Int, any: Any) {
-            container.removeView(any as View)
+    class VPAdapter(private val titleList: List<String>, fm: FragmentManager) : FragmentPagerAdapter(fm) {
+        override fun getItem(position: Int): Fragment {
+            return HFFunNoteFragment.newInstance(position)
         }
 
         override fun getCount(): Int {
@@ -66,21 +40,6 @@ class HFFunPublicActivity : HFBaseTitleActivity() {
 
         override fun getPageTitle(position: Int): CharSequence {
             return titleList[position]
-        }
-
-    }
-
-    class ViewHolder(val itemView: View, val position: Int) {
-
-        private val textView: TextView = itemView.kFindViewById(R.id.tv_fun_public_list_item)
-
-        init {
-            textView.text = "item{$position}"
-            HFRetrofit.hfService.getFunPublicList(position).composeApi().subscribe({
-
-            }, {
-
-            })
         }
     }
 }

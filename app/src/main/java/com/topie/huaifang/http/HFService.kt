@@ -72,7 +72,7 @@ interface HFService {
      * 通知公告 详情
      */
     @GET("/api/m/notice/detail")
-    fun getFunPublicDetail(@Query("id") type: Int): Observable<HFFunPublicResponseBody>
+    fun getFunPublicDetail(@Query("id") type: Int): Observable<HFFunPublicDetailResponseBody>
 
     /**
      * 我的好友

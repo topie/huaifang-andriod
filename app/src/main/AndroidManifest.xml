@@ -76,6 +76,7 @@
         <activity android:name=".function.communication.HFCommChatActivity" />
         <activity android:name=".function.identity.HFFunIdentityShowActivity" />
         <activity android:name=".function.identity.HFFunIdentityEditActivity" />
+        <activity android:name=".function.notice.HFFunNoteDetailActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

@@ -87,7 +87,7 @@ abstract class HFBaseTitleActivity : AppCompatActivity() {
         textView.setText(id)
     }
 
-    fun setBaseTitle(title: String) {
+    fun setBaseTitle(title: String?) {
         val textView: TextView = mRootView!!.kFindViewById(R.id.tv_base_title)
         textView.text = title
     }

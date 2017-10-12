@@ -2,6 +2,7 @@ package com.topie.huaifang.function.live
 
 import android.os.Bundle
 import android.support.v4.view.PagerAdapter
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,7 +45,7 @@ class HFFunLiveActivity : HFBaseTitleActivity() {
         override fun instantiateItem(container: ViewGroup, position: Int): Any {
             val inflate = LayoutInflater.from(container.context).inflate(R.layout.function_live_list, container, false)
             val textView: TextView = inflate.kFindViewById(R.id.tv_fun_live_list_item)
-            textView.text = getListData(position)?.content
+            textView.text = getListData(position)?.content?.let { Html.fromHtml(it) }
             container.addView(inflate)
             return inflate
         }
