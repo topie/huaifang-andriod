@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginLeft="10dp"
@@ -9,24 +10,28 @@
     android:orientation="horizontal"
     android:padding="10dp">
 
-    <ImageView
+    <com.topie.huaifang.imageloader.HFImageView
+        android:id="@+id/iv_fun_guide_list_item"
         android:layout_width="75dp"
         android:layout_height="75dp"
-        android:src="@mipmap/ic_function_guide_item" />
+        android:src="@mipmap/ic_function_guide_item"
+        app:defImageRes="@mipmap/ic_function_guide_item" />
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="75dp"
         android:layout_marginLeft="10dp"
-        android:layout_marginStart="10dp">
+        android:layout_marginStart="10dp"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/tv_fun_guide_list_item_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="end"
-            android:lines="2"
-            android:maxLines="2"
+            android:lines="1"
+            android:maxLines="1"
             android:textColor="@color/colorBlack"
             android:textSize="14sp" />
 
@@ -48,8 +53,9 @@
             android:layout_alignParentRight="true"
             android:maxLines="1"
             android:textColor="@color/colorBlack"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            android:visibility="gone" />
 
-    </RelativeLayout>
+    </LinearLayout>
 
 </LinearLayout>

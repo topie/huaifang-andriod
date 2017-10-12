@@ -1,6 +1,7 @@
 package com.topie.huaifang.function.guide
 
 import android.os.Bundle
+import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
@@ -27,6 +28,10 @@ class HFFunGuideActivity : HFBaseTitleActivity() {
             vpAdapter.list = it.data?.data
             vp_fun_guide.adapter = vpAdapter
             tl_fun_guide.setupWithViewPager(vp_fun_guide)
+            tl_fun_guide.tabMode = when {
+                vpAdapter.count > 3 -> TabLayout.MODE_SCROLLABLE
+                else -> TabLayout.MODE_FIXED
+            }
             vpAdapter.notifyDataSetChanged()
         }
     }
@@ -37,7 +42,6 @@ class HFFunGuideActivity : HFBaseTitleActivity() {
         var list: List<HFFunGuideMenuResponseBody.ListData>? = null
 
         override fun getItem(position: Int): Fragment {
-            log("getItem[$position]")
             val hfFunGuideFragment = HFFunGuideFragment()
             hfFunGuideFragment.listData = list?.get(position)
             return hfFunGuideFragment

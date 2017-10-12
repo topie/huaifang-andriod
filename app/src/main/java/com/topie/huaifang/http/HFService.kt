@@ -42,7 +42,13 @@ interface HFService {
      * 办事指南列表
      */
     @GET("/api/m/actionGuide/list")
-    fun getFunGuideList(@Query("catId") catId: String, @Query("pageNum") pageNum: Int = 0, @Query("pageSize") pageSize: Int = 15): Observable<HFFunGuideListResponseBody>
+    fun getFunGuideList(@Query("catId") catId: String, @Query("pageNum") pageNum: Int = 1, @Query("pageSize") pageSize: Int = 15): Observable<HFFunGuideListResponseBody>
+
+    /**
+     * 办事指南详情
+     */
+    @GET("/api/m/actionGuide/detail")
+    fun getFunGuideDetail(@Query("id") id: Int): Observable<HFFunGuideDetailResponseBody>
 
     /**
      * 居务公开 导航

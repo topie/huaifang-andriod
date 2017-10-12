@@ -18,11 +18,13 @@ import com.topie.huaifang.base.HFBaseRecyclerViewHolder
 import com.topie.huaifang.base.HFViewHolderFactory
 import com.topie.huaifang.extensions.kFindActivity
 import com.topie.huaifang.extensions.kFindViewById
-import com.topie.huaifang.extensions.kToastLong
+import com.topie.huaifang.extensions.kParseUrl
+import com.topie.huaifang.extensions.kStartActivity
 import com.topie.huaifang.http.HFRetrofit
 import com.topie.huaifang.http.bean.function.HFFunGuideListResponseBody
 import com.topie.huaifang.http.bean.function.HFFunGuideMenuResponseBody
-import com.topie.huaifang.http.composeApi
+import com.topie.huaifang.http.subscribeResultOkApi
+import com.topie.huaifang.imageloader.HFImageView
 import com.topie.huaifang.kShowTelDialog
 import io.reactivex.disposables.Disposable
 
@@ -66,20 +68,16 @@ class HFFunGuideFragment : HFBaseFragment() {
         }
     }
 
-    private fun getFunGuideList(pageNum: Int = 0) {
+    private fun getFunGuideList(pageNum: Int = 1) {
         disposable?.takeIf { !it.isDisposed }?.dispose()
-        disposable = HFRetrofit.hfService.getFunGuideList(listData?.id ?: "").composeApi().subscribe({
-            takeIf {
-                pageNum == 0
-            }?.adapter?.list?.removeAll {
-                it !is HFFunGuideMenuResponseBody.ListData
-            }
+        disposable = HFRetrofit.hfService.getFunGuideList(listData?.id ?: "").subscribeResultOkApi({
             it.data?.data?.let {
-                adapter.list.addAll(it)
-                listData?._pageNum = pageNum + 1
+                when (pageNum) {
+                    0, 1 -> adapter.setList(it)
+                    else -> adapter.addList(it)
+                }
+                adapter.notifyDataSetChanged()
             }
-        }, {
-            it.message.kToastLong()
         }, {
             pt2FrameLayout?.complete2()
         })
@@ -93,6 +91,20 @@ class HFFunGuideFragment : HFBaseFragment() {
     val adapter = Adapter()
 
     class Adapter : HFBaseRecyclerAdapter<Any, HFBaseRecyclerViewHolder<Any>>(Factory()) {
+
+        var pageNumber: Int = 1
+            private set
+
+        fun setList(aList: List<HFFunGuideListResponseBody.ListData>) {
+            list.removeAll { it is HFFunGuideListResponseBody.ListData }
+            list.addAll(aList)
+            pageNumber = 2
+        }
+
+        fun addList(aList: List<HFFunGuideListResponseBody.ListData>) {
+            list.addAll(aList)
+            pageNumber++
+        }
 
         override fun getItemViewType(position: Int): Int {
             return when (position) {
@@ -147,12 +159,14 @@ class HFFunGuideFragment : HFBaseFragment() {
         }
     }
 
-    private class ItemViewHolder(itemView: View) : HFBaseRecyclerViewHolder<Any>(itemView) {
+    private class ItemViewHolder(itemView: View) : HFBaseRecyclerViewHolder<Any>(itemView, true) {
+        val imageView: HFImageView = itemView.kFindViewById(R.id.iv_fun_guide_list_item)
         val tvName: TextView = itemView.kFindViewById(R.id.tv_fun_guide_list_item_title)
         val tvTime: TextView = itemView.kFindViewById(R.id.tv_fun_guide_list_item_time)
         val tvRead: TextView = itemView.kFindViewById(R.id.tv_fun_guide_list_item_read)
         override fun onBindData(d: Any) {
             if (d is HFFunGuideListResponseBody.ListData) {
+                imageView.loadImageUri(d.image?.kParseUrl())
                 tvName.text = d.title
                 tvTime.text = d.publishTime
                 tvRead.text = d.readCount
@@ -160,6 +174,15 @@ class HFFunGuideFragment : HFBaseFragment() {
                 tvName.text = null
                 tvTime.text = null
                 tvRead.text = null
+            }
+        }
+
+        override fun onItemClicked(d: Any?) {
+            super.onItemClicked(d)
+            val bundle = Bundle()
+            if (d is HFFunGuideListResponseBody.ListData) {
+                bundle.putInt(HFFunGuideDetailActivity.EXTRA_ID, d.id)
+                itemView.kStartActivity(HFFunGuideDetailActivity::class.java, bundle)
             }
         }
     }

@@ -30,7 +30,8 @@ class HFFunGuideListResponseBody : HFBaseResponseBody() {
         var actionEnd: String? = null           //结束时间
         var actionBegin: String? = null         //开始时间
         var actionNote: String? = null          //办事备注
-        var id: String? = null                  //ID
+        var id: Int = 0                  //ID
         var actionFlow: String? = null          //流程
+        var allContent: String? = null          //所有内容
     }
 }

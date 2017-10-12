@@ -7,34 +7,86 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="20dp"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tv_fun_guide_detail_title"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:text="@string/fun_guide_tel"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/tv_fun_guide_detail_time"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
-            android:textColor="@color/colorBlack"
-            android:textSize="12sp" />
+            android:orientation="vertical"
+            android:padding="10dp">
 
-        <include layout="@layout/function_guide_detail_item" />
 
-        <include layout="@layout/function_guide_detail_item" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
-        <include layout="@layout/function_guide_detail_item" />
+                <TextView
+                    android:id="@+id/tv_fun_guide_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:lines="1"
+                    android:maxLines="1"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="14sp" />
 
-        <include layout="@layout/function_guide_detail_item" />
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/tv_fun_guide_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:lines="1"
+                android:maxLines="1"
+                android:textColor="@color/colorGray"
+                android:textSize="12sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:text="发布者"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_fun_guide_publisher"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
+                    android:maxLines="1"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <include layout="@layout/function_line_item" />
+
+            <TextView
+                android:id="@+id/tv_fun_guide_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/colorDark"
+                android:textSize="14sp" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
