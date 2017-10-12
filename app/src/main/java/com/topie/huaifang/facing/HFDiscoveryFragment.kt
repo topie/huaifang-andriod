@@ -32,9 +32,9 @@ class HFDiscoveryFragment : HFBaseFragment() {
         //create adapter
         val list: ArrayList<Item> = arrayListOf()
         list.add(Item(R.mipmap.ic_facing_discovery_neighborhood, kGetString(R.string.facing_discovery_neighborhood), 0))
-        list.add(Item(R.mipmap.ic_facing_discovery_activity, kGetString(R.string.facing_discovery_activity), 1))
-        list.add(Item(R.mipmap.ic_facing_discovery_forum, kGetString(R.string.facing_discovery_forum), 2))
-        list.add(Item(R.mipmap.ic_facing_discovery_around, kGetString(R.string.facing_discovery_around), 3))
+//        list.add(Item(R.mipmap.ic_facing_discovery_activity, kGetString(R.string.facing_discovery_activity), 1))
+//        list.add(Item(R.mipmap.ic_facing_discovery_forum, kGetString(R.string.facing_discovery_forum), 2))
+//        list.add(Item(R.mipmap.ic_facing_discovery_around, kGetString(R.string.facing_discovery_around), 3))
         recyclerView.adapter = HFBaseRecyclerAdapter(ViewHolder.CREATOR, list)
         return inflate
     }

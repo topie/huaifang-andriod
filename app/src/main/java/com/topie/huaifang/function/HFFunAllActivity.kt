@@ -50,10 +50,10 @@ class HFFunAllActivity : HFBaseTitleActivity() {
         list.add(HFListItem(R.mipmap.ic_facing_index_fun_party, kGetString(R.string.facing_index_fun_party), 4))
         list.add(HFListItem(R.mipmap.ic_facing_index_fun_yellow_book, kGetString(R.string.facing_index_fun_yellow_book), 5))
         list.add(HFListItem(R.mipmap.ic_facing_index_fun_library, kGetString(R.string.facing_index_fun_library), 6))
-        list.add(HFListItem(R.mipmap.ic_facing_index_fun_dispute, kGetString(R.string.facing_index_fun_dispute), 7))
-        list.add(HFListItem(R.mipmap.ic_facing_index_fun_dispute, "发布活动", 8))
-        list.add(HFListItem(R.mipmap.ic_facing_index_fun_dispute, "物业报修", 9))
-        list.add(HFListItem(R.mipmap.ic_facing_index_fun_dispute, kGetString(R.string.facing_index_fun_bazaar), 10))
+//        list.add(HFListItem(R.mipmap.ic_facing_index_fun_dispute, kGetString(R.string.facing_index_fun_dispute), 7))
+//        list.add(HFListItem(R.mipmap.ic_facing_index_fun_dispute, "发布活动", 8))
+//        list.add(HFListItem(R.mipmap.ic_facing_index_fun_dispute, "物业报修", 9))
+//        list.add(HFListItem(R.mipmap.ic_facing_index_fun_dispute, kGetString(R.string.facing_index_fun_bazaar), 10))
         recyclerView.adapter = HFBaseRecyclerAdapter(ViewHolder, list)
     }
 

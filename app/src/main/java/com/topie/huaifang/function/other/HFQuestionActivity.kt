@@ -20,6 +20,7 @@ import com.topie.huaifang.http.HFRetrofit
 import com.topie.huaifang.http.bean.function.HFFunQuestionDetailResponseBody
 import com.topie.huaifang.http.bean.function.HFFunQuestionRequestBody
 import com.topie.huaifang.http.subscribeResultOkApi
+import kotlinx.android.synthetic.main.base_title_layout.*
 
 /**
  * Created by arman on 2017/10/2.
@@ -40,14 +41,15 @@ class HFQuestionActivity : HFBaseTitleActivity() {
         initRequestBody(intent)
         val recyclerView = RecyclerView(this)
         setContentView(recyclerView)
+        setBaseTitleRight("提交")
         recyclerView.layoutManager = LinearLayoutManager(this)
         mAdapter = Adapter(mRequestBody!!)
-        mAdapter!!.onSubmit = {
-            HFRetrofit.hfService.postFunQuestions(it).subscribeResultOkApi {
+        tv_base_title_right.setOnClickListener({
+            HFRetrofit.hfService.postFunQuestions(mRequestBody!!).subscribeResultOkApi {
                 kToastShort("提交成功")
                 finish()
             }
-        }
+        })
         recyclerView.adapter = mAdapter
     }
 
@@ -108,10 +110,10 @@ class HFQuestionActivity : HFBaseTitleActivity() {
                 e.viewType = Item.TYPE_OPTIONS
                 list.add(e)
             }
-            val e = Item()
-            e.viewType = Item.TYPE_SUBMIT
-            list.add(e)
         }
+        val e = Item()
+        e.viewType = Item.TYPE_SUBMIT
+        list.add(e)
         return list
     }
 

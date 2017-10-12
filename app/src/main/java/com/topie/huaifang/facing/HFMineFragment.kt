@@ -39,7 +39,7 @@ class HFMineFragment : HFBaseFragment() {
         val list: ArrayList<HFListItem> = arrayListOf()
         list.add(HFListItem(R.mipmap.ic_facing_mine_friend, context.getString(R.string.facing_mine_friend), 0))
         list.add(HFListItem(R.mipmap.ic_facing_mine_room, context.getString(R.string.facing_mine_room), 1))
-        list.add(HFListItem(R.mipmap.ic_facing_mine_company, context.getString(R.string.facing_mine_company), 2))
+//        list.add(HFListItem(R.mipmap.ic_facing_mine_company, context.getString(R.string.facing_mine_company), 2))
 //        list.add(HFListItem(R.mipmap.ic_facing_mine_party_member, context.getString(R.string.facing_mine_party_member), 3))
 //        list.add(HFListItem(R.mipmap.ic_facing_mine_label, context.getString(R.string.facing_mine_label), 4))
         list.add(HFListItem(R.mipmap.ic_facing_mine_suggestion, context.getString(R.string.facing_mine_suggestion), 5))

@@ -1,5 +1,6 @@
 package com.topie.huaifang.function.communication
 
+import android.app.Activity
 import android.net.Uri
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -8,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import com.topie.huaifang.HFActivityManager
 import com.topie.huaifang.R
 import com.topie.huaifang.base.HFBaseRecyclerAdapter
 import com.topie.huaifang.base.HFBaseRecyclerViewHolder
@@ -19,6 +21,7 @@ import com.topie.huaifang.http.HFRetrofit
 import com.topie.huaifang.http.bean.communication.HFCommUserInfo
 import com.topie.huaifang.http.subscribeApi
 import com.topie.huaifang.imageloader.HFImageView
+import com.topie.huaifang.kShowTelDialog
 
 /**
  * Created by arman on 2017/9/24.
@@ -70,6 +73,17 @@ class HFCommFriendsActivity : HFBaseTitleActivity() {
         override fun onBindData(d: HFCommUserInfo) {
             hfImageView.loadImageUri(d.headImage?.let { Uri.parse(it) })
             textView.text = d.nickname?.takeIf { it.kIsNotEmpty() } ?: d.mobilePhone
+        }
+
+        override fun onItemClicked(d: HFCommUserInfo?) {
+            super.onItemClicked(d)
+            d?.mobilePhone?.let {
+
+                val context = HFActivityManager.resumedActivity?.get()
+                if (context is Activity) {
+                    context.kShowTelDialog(it)
+                }
+            }
         }
 
     }

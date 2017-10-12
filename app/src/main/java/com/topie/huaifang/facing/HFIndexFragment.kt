@@ -14,6 +14,7 @@ import com.topie.huaifang.function.guide.HFFunGuideActivity
 import com.topie.huaifang.function.live.HFFunLiveActivity
 import com.topie.huaifang.function.live.HFFunLiveBazaarActivity
 import com.topie.huaifang.function.notice.HFFunPublicActivity
+import com.topie.huaifang.function.other.HFQuestionActivity
 import com.topie.huaifang.function.party.HFFunPartyActivity
 import com.topie.huaifang.function.yellowpage.HFFunYellowPageActivity
 import com.topie.huaifang.http.HFRetrofit
@@ -109,18 +110,55 @@ class HFIndexFragment : HFBaseFragment() {
             if (!it.resultOk) {
                 return@subscribeApi
             }
-            val list = it.data?.data?.takeIf { it.size >= 3 }
+            val list = it.data?.data
             when (list) {
                 null -> ll_facing_index_questions.visibility = View.GONE
                 else -> {
                     ll_facing_index_questions.visibility = View.VISIBLE
+                    ll_facing_index_question_0.visibility = View.VISIBLE
+                    ll_facing_index_question_1.visibility = View.VISIBLE
+                    ll_facing_index_question_2.visibility = View.VISIBLE
+
+                    ll_facing_index_question_0.setOnClickListener {
+                        val bundle = Bundle()
+                        bundle.putInt(HFQuestionActivity.EXTRA_ID, list.kGet(0)?.id ?: -1)
+                        this@HFIndexFragment.kStartActivity(HFQuestionActivity::class.java,bundle)
+                    }
+                    ll_facing_index_question_1.setOnClickListener {
+                        val bundle = Bundle()
+                        bundle.putInt(HFQuestionActivity.EXTRA_ID, list.kGet(1)?.id ?: -1)
+                        this@HFIndexFragment.kStartActivity(HFQuestionActivity::class.java,bundle)
+                    }
+                    ll_facing_index_question_2.setOnClickListener {
+                        val bundle = Bundle()
+                        bundle.putInt(HFQuestionActivity.EXTRA_ID, list.kGet(2)?.id ?: -1)
+                        this@HFIndexFragment.kStartActivity(HFQuestionActivity::class.java,bundle)
+                    }
+
                     val obj = ({ v: View, str: String? ->
                         val textView: TextView = v.kFindViewById(R.id.tv_facing_question_desc)
                         textView.text = str
                     })
-                    obj(ll_facing_index_question_0, list[0].name)
-                    obj(ll_facing_index_question_1, list[1].name)
-                    obj(ll_facing_index_question_2, list[2].name)
+                    when (list.size) {
+                        0 -> {
+                            ll_facing_index_questions.visibility = View.GONE
+                        }
+                        1 -> {
+                            obj(ll_facing_index_question_0, list[0].name)
+                            ll_facing_index_question_1.visibility = View.GONE
+                            ll_facing_index_question_2.visibility = View.GONE
+                        }
+                        2 -> {
+                            obj(ll_facing_index_question_0, list[0].name)
+                            obj(ll_facing_index_question_1, list[1].name)
+                            ll_facing_index_question_2.visibility = View.GONE
+                        }
+                        3 -> {
+                            obj(ll_facing_index_question_0, list[0].name)
+                            obj(ll_facing_index_question_1, list[1].name)
+                            obj(ll_facing_index_question_2, list[2].name)
+                        }
+                    }
                 }
             }
         }
