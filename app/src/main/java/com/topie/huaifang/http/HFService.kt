@@ -92,7 +92,7 @@ interface HFService {
     @GET("/api/m/party/activity/list")
     fun getFunPartyActList(@Query("pageNum") pageNum: Int = 0, @Query("pageSize") pageSize: Int = 15): Observable<HFFunPartyResponseBody>
 
-    @GET("/api/m/activity/join")
+    @GET("/api/m/party/activity/join")
     fun postFunPartyAct(@Query("id") id: Int): Observable<HFBaseResponseBody>
 
     /**
@@ -100,6 +100,12 @@ interface HFService {
      */
     @GET("/api/m/party/activity/list")
     fun getFunPartyPublicList(): Observable<HFFunPartyPublicResponseBody>
+
+    /**
+     * 党务公开
+     */
+    @GET("/api/m/party/business/detail")
+    fun getFunPartyPublicDetail(@Query("id") id: Int): Observable<HFFunPartyPublicDetailResponseBody>
 
     /**
      * 党员信息公开

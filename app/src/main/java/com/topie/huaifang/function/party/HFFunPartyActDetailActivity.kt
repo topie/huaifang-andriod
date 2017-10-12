@@ -26,7 +26,7 @@ class HFFunPartyActDetailActivity : HFBaseTitleActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.function_party_act_detail_activity)
-        setTitle(R.string.facing_index_fun_party)
+        setBaseTitle(mDetail?.topic)
         mDetail = intent.getSerializableExtra(EXTRA_DETAIL) as HFFunPartyResponseBody.ListData?
         iv_fun_party_detail_img.loadImageUri(mDetail?.image?.kParseUrl())
         tv_fun_party_act_title.text = mDetail?.topic
@@ -34,6 +34,7 @@ class HFFunPartyActDetailActivity : HFBaseTitleActivity() {
         tv_fun_party_act_time.text = mDetail?.beginTime
         tv_fun_party_act_address.text = mDetail?.address
         tv_fun_party_act_publisher.text = mDetail?.publishUser
+        tv_fun_party_act_read.text = mDetail?.total?.toString()?.let { it + "人已参加" }
         tv_fun_party_act_content.text = mDetail?.content
         fl_fun_party_act_join.setOnClickListener {
             HFRetrofit.hfService.postFunPartyAct(mDetail?.id ?: -1).subscribeResultOkApi {

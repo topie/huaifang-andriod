@@ -13,11 +13,11 @@ import com.topie.huaifang.R
 import com.topie.huaifang.base.HFBaseFragment
 import com.topie.huaifang.base.HFBaseRecyclerViewHolder
 import com.topie.huaifang.extensions.*
-import com.topie.huaifang.kShowTelDialog
 import com.topie.huaifang.http.HFRetrofit
 import com.topie.huaifang.http.bean.function.HFFunLiveBazaarResponseBody
 import com.topie.huaifang.http.subscribeResultOkApi
 import com.topie.huaifang.imageloader.HFImageView
+import com.topie.huaifang.kShowTelDialog
 import com.topie.huaifang.util.HFDimensUtils
 
 /**
@@ -53,7 +53,11 @@ class HFFunLiveBazaarFragment : HFBaseFragment() {
 
     override fun onCreateViewSupport(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         inflate = inflater.inflate(R.layout.base_pt2_recycler_layout, container, false) as Pt2FrameLayout
-        inflate!!.setPt2Handler(HFDefaultPt2Handler({ ->
+        inflate!!.setPt2Handler(HFDefaultPt2Handler({
+            HFDefaultPt2Handler.checkCanDoLoad(it)
+        }, {
+            false
+        }, { ->
             getBazaarList(1)
         }, { ->
             getBazaarList(mAdapter.mPageSize)
@@ -72,7 +76,7 @@ class HFFunLiveBazaarFragment : HFBaseFragment() {
     }
 
     private fun getBazaarList(aPageSize: Int) {
-        HFRetrofit.hfService.getFunLiveBazaarList(mType, aPageSize).subscribeResultOkApi({
+        HFRetrofit.hfService.getFunLiveBazaarList(mType, aPageSize, 200).subscribeResultOkApi({
             it.data?.data?.also {
                 when (aPageSize) {
                     0, 1 -> mAdapter.setList(it)

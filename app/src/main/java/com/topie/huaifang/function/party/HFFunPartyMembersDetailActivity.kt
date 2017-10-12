@@ -30,7 +30,7 @@ class HFFunPartyMembersDetailActivity : HFBaseTitleActivity() {
         mData = intent.getSerializableExtra(EXTRA_DATA) as HFFunPartyMemberResponseBody.ListData?
         setContentView(R.layout.function_party_members_detail_activity)
         tv_fun_party_members_detail_name.text = mData?.name
-        tv_fun_party_members_detail_node.text = mData?.nodeName
+        tv_fun_party_members_detail_node.text = mData?.partyNodeName
         tv_fun_party_members_detail_flag.text = mData?.flag
         tv_fun_party_members_detail_time.text = mData?.enterDate
         val inflater = LayoutInflater.from(this)

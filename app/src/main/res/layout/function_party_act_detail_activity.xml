@@ -43,7 +43,6 @@
             android:ellipsize="end"
             android:lines="1"
             android:maxLines="1"
-            android:text="34人已读"
             android:textColor="@color/colorGray"
             android:textSize="12sp" />
 

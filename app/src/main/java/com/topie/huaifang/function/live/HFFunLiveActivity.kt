@@ -1,15 +1,17 @@
 package com.topie.huaifang.function.live
 
 import android.os.Bundle
+import android.support.design.widget.TabLayout
 import android.support.v4.view.PagerAdapter
 import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.topie.huaifang.base.HFBaseTitleActivity
 import com.topie.huaifang.R
+import com.topie.huaifang.base.HFBaseTitleActivity
 import com.topie.huaifang.extensions.kFindViewById
+import com.topie.huaifang.extensions.kInto
 import com.topie.huaifang.http.HFRetrofit
 import com.topie.huaifang.http.bean.function.HFLiveListResponseBody
 import com.topie.huaifang.http.subscribeApi
@@ -24,13 +26,21 @@ class HFFunLiveActivity : HFBaseTitleActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.function_guide_activity)
         setBaseTitle(R.string.facing_index_fun_live)
+    }
+
+    override fun onResume() {
+        super.onResume()
         HFRetrofit.hfService.getFunLiveList().subscribeApi {
             val vpAdapter = VPAdapter()
             vpAdapter.list = it.data?.data
             vp_fun_guide.adapter = vpAdapter
             tl_fun_guide.setupWithViewPager(vp_fun_guide)
+            tl_fun_guide.tabMode = when {
+                vpAdapter.count > 4 -> TabLayout.MODE_SCROLLABLE
+                else -> TabLayout.MODE_FIXED
+            }
             vpAdapter.notifyDataSetChanged()
-        }
+        }.kInto(pauseDisableList)
     }
 
 

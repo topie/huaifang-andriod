@@ -16,7 +16,7 @@ class HFFunPartyMemberResponseBody : HFBaseResponseBody() {
     }
 
     class ListData : Serializable {
-        var nodeName: String? = null    //所属党组织
+        var partyNodeName: String? = null    //所属党组织
         var enterDate: String? = null   //入党时间
         var code: String? = null        //党员编号
         var flag: String? = null        //党员标示

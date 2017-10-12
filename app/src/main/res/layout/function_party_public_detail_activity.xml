@@ -59,7 +59,8 @@
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            android:visibility="gone">
 
             <ImageView
                 android:layout_width="24dp"
@@ -77,8 +78,6 @@
                 android:textSize="14sp"
                 android:textStyle="italic" />
         </LinearLayout>
-
-        <include layout="@layout/function_line_item" />
 
     </LinearLayout>
 

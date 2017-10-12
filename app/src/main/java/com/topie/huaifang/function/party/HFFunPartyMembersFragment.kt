@@ -160,7 +160,7 @@ class HFFunPartyMembersFragment : HFBaseFragment() {
                 list.forEach { item ->
                     groupList.kGetOne(
                             { item.nodeId == it.nodeId },
-                            { Group(item.nodeName, item.nodeId) }
+                            { Group(item.partyNodeName, item.nodeId) }
                     ).list.add(item)
                 }
                 return groupList

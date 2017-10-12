@@ -17,6 +17,7 @@ import com.topie.huaifang.base.HFBaseRecyclerAdapter
 import com.topie.huaifang.base.HFBaseRecyclerViewHolder
 import com.topie.huaifang.base.HFViewHolderFactory
 import com.topie.huaifang.extensions.kFindViewById
+import com.topie.huaifang.extensions.kStartActivity
 import com.topie.huaifang.http.HFRetrofit
 import com.topie.huaifang.http.bean.function.HFFunPartyPublicResponseBody
 import com.topie.huaifang.http.subscribeResultOkApi
@@ -89,6 +90,16 @@ class HFFunPartyPublicFragment : HFBaseFragment() {
             tvTitle.text = d.title
             tvTime.text = d.publishTime
             tvPublisher.text = d.publishUser?.let { "发布者：$it" }
+        }
+
+        override fun onItemClicked(d: HFFunPartyPublicResponseBody.ListData?) {
+            super.onItemClicked(d)
+            if (d == null) {
+                return
+            }
+            val bundle = Bundle()
+            bundle.putSerializable(HFFunPartyPublicDetailActivity.EXTRA_DATA, d)
+            itemView.kStartActivity(HFFunPartyPublicDetailActivity::class.java, bundle)
         }
 
         companion object CREATOR : HFViewHolderFactory<ViewHolder> {

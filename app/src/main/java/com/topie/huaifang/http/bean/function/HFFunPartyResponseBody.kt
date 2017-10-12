@@ -34,5 +34,6 @@ class HFFunPartyResponseBody : HFBaseResponseBody() {
         var endTime: String? = null
         var id: Int = 0
         var status: String? = null //0未上线1上线中2已结束
+        var total: Int = 0//以参加人数
     }
 }
