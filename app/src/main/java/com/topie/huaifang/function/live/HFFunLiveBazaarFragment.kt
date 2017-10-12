@@ -54,7 +54,7 @@ class HFFunLiveBazaarFragment : HFBaseFragment() {
     override fun onCreateViewSupport(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         inflate = inflater.inflate(R.layout.base_pt2_recycler_layout, container, false) as Pt2FrameLayout
         inflate!!.setPt2Handler(HFDefaultPt2Handler({ ->
-            getBazaarList(0)
+            getBazaarList(1)
         }, { ->
             getBazaarList(mAdapter.mPageSize)
         }))
@@ -67,7 +67,7 @@ class HFFunLiveBazaarFragment : HFBaseFragment() {
     override fun onResume() {
         super.onResume()
         if (mAdapter.itemCount == 0) {
-            getBazaarList(0)
+            getBazaarList(1)
         }
     }
 
@@ -75,7 +75,7 @@ class HFFunLiveBazaarFragment : HFBaseFragment() {
         HFRetrofit.hfService.getFunLiveBazaarList(mType, aPageSize).subscribeResultOkApi({
             it.data?.data?.also {
                 when (aPageSize) {
-                    0 -> mAdapter.setList(it)
+                    0, 1 -> mAdapter.setList(it)
                     mAdapter.mPageSize -> {
                         mAdapter.addList(it)
                     }
@@ -91,7 +91,7 @@ class HFFunLiveBazaarFragment : HFBaseFragment() {
 
         private val mList: MutableList<HFFunLiveBazaarResponseBody.ListData> = arrayListOf()
         var mOnCallTel: ((phoneNum: String) -> Unit)? = null
-        var mPageSize = 0
+        var mPageSize = 1
             private set
 
         fun addList(list: List<HFFunLiveBazaarResponseBody.ListData>) {
@@ -102,7 +102,7 @@ class HFFunLiveBazaarFragment : HFBaseFragment() {
         fun setList(list: List<HFFunLiveBazaarResponseBody.ListData>) {
             mList.clear()
             mList.addAll(list)
-            mPageSize = 1
+            mPageSize = 2
         }
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
