@@ -14,13 +14,12 @@ import com.topie.huaifang.base.HFBaseRecyclerViewHolder
 import com.topie.huaifang.base.HFBaseTitleActivity
 import com.topie.huaifang.extensions.kInflate
 import com.topie.huaifang.extensions.kToastShort
-import com.topie.huaifang.extensions.log
 import com.topie.huaifang.http.HFRetrofit
 import com.topie.huaifang.http.bean.function.HFFunIdentityEditRequestBody
-import com.topie.huaifang.http.composeApi
-import com.topie.huaifang.http.subscribeApi
+import com.topie.huaifang.http.bean.function.HFFunIdentityNoteResponseBody
 import com.topie.huaifang.http.subscribeResultOkApi
 import com.topie.huaifang.util.HFDimensUtils
+import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.function_identity_note_dialog.*
 import kotlinx.android.synthetic.main.function_indentity_edit_activity.*
 
@@ -34,17 +33,71 @@ class HFFunIdentityEditActivity : HFBaseTitleActivity() {
     private val mNoteList: SparseArray<Pair<Int, String>?> = SparseArray()
 
     private val mNoteOnClick: ((v: View) -> Unit) = {
-        when (it.id) {
-            R.id.ll_fun_identity_xq -> {
-                HFRetrofit.hfService.getFunIdentityNote().composeApi().subscribe({
-                    it.string().let { log(it) }
-                    val list = (0..10).map { it.to(it.toString()) }
-                    NoteDialog(list, this@HFFunIdentityEditActivity).show()
-                }, {
-                    it.message?.let { log(it) }
-                })
+
+        val index = when (it.id) {
+            R.id.ll_fun_identity_xq -> 0
+            R.id.ll_fun_identity_lh -> 1
+            R.id.ll_fun_identity_dy -> 2
+            R.id.ll_fun_identity_lc -> 3
+            R.id.ll_fun_identity_mp -> 4
+            else -> -1
+        }
+        when (index) {
+            -1 -> kToastShort("unknown index")
+            else -> {
+                val node = when (index) {
+                    0 -> 0.to("")
+                    else -> mNoteList[index - 1]
+                }
+                if (node == null) {
+                    kToastShort("")
+                } else {
+                    toShowNodeList(index, node)
+                }
             }
         }
+    }
+
+    private var showNoteDis: Disposable? = null
+
+    private fun toShowNodeList(index: Int, parent: Pair<Int, String>) {
+        showNoteDis?.takeIf { !it.isDisposed }?.dispose()
+        val onNext: (HFFunIdentityNoteResponseBody) -> Unit = {
+            it.data?.data?.takeIf {
+                it.isNotEmpty().also { isNotEmpty ->
+                    if (!isNotEmpty) {
+                        kToastShort("可选项为空")
+                    }
+                }
+            }?.map {
+                it.id.to(it.name ?: it.roomNumber ?: it.id.toString())
+            }?.takeIf {
+                //activity没有关闭
+                !isFinishing
+            }?.also {
+                NoteDialog(it, this@HFFunIdentityEditActivity).also {
+                    it.mOnItemClick = {
+                        for (i in index..4) {
+                            mNoteList.put(i, null)
+                        }
+                        mNoteList.put(index, it)
+                        initRoomNode()
+                    }
+                }.show()
+            }
+        }
+        showNoteDis = when (index) {
+            4 -> HFRetrofit.hfService.getFunIdentityRoom(parent.first).subscribeResultOkApi(onNext)
+            else -> HFRetrofit.hfService.getFunIdentityNote(parent.first).subscribeResultOkApi(onNext)
+        }
+    }
+
+    private fun initRoomNode() {
+        tv_fun_identity_xq?.text = mNoteList[0]?.second
+        tv_fun_identity_lh?.text = mNoteList[1]?.second
+        tv_fun_identity_dy?.text = mNoteList[2]?.second
+        tv_fun_identity_lc?.text = mNoteList[3]?.second
+        tv_fun_identity_mp?.text = mNoteList[4]?.second
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -73,13 +126,13 @@ class HFFunIdentityEditActivity : HFBaseTitleActivity() {
     @Throws(IllegalStateException::class)
     private fun getEditBody(): HFFunIdentityEditRequestBody {
         return HFFunIdentityEditRequestBody().also {
-            it.name = et_fun_identity_name.text.toString().trim().takeIf { it.isNotEmpty() } ?:
+            it.pName = et_fun_identity_name.text.toString().trim().takeIf { it.isNotEmpty() } ?:
                     throw IllegalStateException("请填写姓名")
-            it.personType = when {
-                rb_fun_identity_sf_zhu.isChecked -> 0
-                else -> 1
+            it.pPersonType = when {
+                rb_fun_identity_sf_zhu.isChecked -> "住户"
+                else -> "租户"
             }
-            it.identifyNumber = et_fun_identity_number.text.toString().trim().takeIf { it.isNotEmpty() } ?:
+            it.pIdentifyNumber = et_fun_identity_number.text.toString().trim().takeIf { it.isNotEmpty() } ?:
                     throw IllegalStateException("请填写身份证号")
             it.houseId = mNoteList[4]?.first?.toString() ?:
                     throw IllegalStateException("请完善房间信息")

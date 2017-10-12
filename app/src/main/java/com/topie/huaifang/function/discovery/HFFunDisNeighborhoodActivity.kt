@@ -69,7 +69,7 @@ class HFFunDisNeighborhoodActivity : HFBaseTitleActivity() {
     private class Adapter : RecyclerView.Adapter<ViewHolder>() {
 
         private val mList: MutableList<HFFunDisNeighborhoodResponseBody.ListData> = arrayListOf()
-        var mPageSize = 0
+        var mPageSize = 1
             private set
 
         fun addList(list: List<HFFunDisNeighborhoodResponseBody.ListData>) {
@@ -80,7 +80,7 @@ class HFFunDisNeighborhoodActivity : HFBaseTitleActivity() {
         fun setList(list: List<HFFunDisNeighborhoodResponseBody.ListData>) {
             mList.clear()
             mList.addAll(list)
-            mPageSize = 1
+            mPageSize = 2
         }
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {

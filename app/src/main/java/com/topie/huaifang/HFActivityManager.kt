@@ -12,7 +12,8 @@ import java.util.*
 object HFActivityManager {
 
     private val activityCollections: LinkedList<WeakReference<Activity>> = LinkedList()
-    private var resumedActivity: WeakReference<Activity>? = null
+    var resumedActivity: WeakReference<Activity>? = null
+        private set
 
     /**
      * 关闭指定的activity

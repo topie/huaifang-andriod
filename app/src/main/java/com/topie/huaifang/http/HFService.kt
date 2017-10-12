@@ -232,7 +232,7 @@ interface HFService {
     fun postFunDisNeighborhood(@Body requestBody: HFFunLiveBazaarApplyRequestBody): Observable<HFBaseResponseBody>
 
     @GET("/api/m/appTimeLine/list")
-    fun getFunDisNeighborhoodList(@Query("pageNum") pageNum: Int = 0, @Query("pageSize") pageSize: Int = 15): Observable<HFFunDisNeighborhoodResponseBody>
+    fun getFunDisNeighborhoodList(@Query("pageNum") pageNum: Int = 1, @Query("pageSize") pageSize: Int = 15): Observable<HFFunDisNeighborhoodResponseBody>
 
     /**
      * 我的信息
@@ -244,10 +244,16 @@ interface HFService {
      * 房间联动信息
      */
     @GET("/api/m/houseInfo/node")
-    fun getFunIdentityNote(@Query("parentId") parentId: Int = -1): Observable<ResponseBody>
+    fun getFunIdentityNote(@Query("parentId") parentId: Int = 0): Observable<HFFunIdentityNoteResponseBody>
 
     /**
-     * 发布邻里圈
+     * 房间联动信息
+     */
+    @GET("/api/m/houseInfo/house")
+    fun getFunIdentityRoom(@Query("nodeId") nodeId: Int): Observable<HFFunIdentityNoteResponseBody>
+
+    /**
+     * 发布信息认证
      */
     @POST("/api/m/appUser/auth")
     fun postFunIdentity(@Body requestBody: HFFunIdentityEditRequestBody): Observable<HFBaseResponseBody>

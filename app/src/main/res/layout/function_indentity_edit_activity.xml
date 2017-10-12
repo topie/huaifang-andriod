@@ -138,6 +138,7 @@
         android:gravity="center_vertical|right">
 
         <TextView
+            android:id="@+id/tv_fun_identity_xq"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="请选择小区"
@@ -165,6 +166,7 @@
         android:gravity="center_vertical|right">
 
         <TextView
+            android:id="@+id/tv_fun_identity_lh"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="请选择楼号"
@@ -191,6 +193,7 @@
         android:gravity="center_vertical|right">
 
         <TextView
+            android:id="@+id/tv_fun_identity_dy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="请选择单元"
@@ -217,6 +220,7 @@
         android:gravity="center_vertical|right">
 
         <TextView
+            android:id="@+id/tv_fun_identity_lc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="请选择楼层"
@@ -243,6 +247,7 @@
         android:gravity="center_vertical|right">
 
         <TextView
+            android:id="@+id/tv_fun_identity_mp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="请选择楼牌"
