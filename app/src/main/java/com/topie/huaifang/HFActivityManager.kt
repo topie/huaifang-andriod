@@ -12,8 +12,18 @@ import java.util.*
 object HFActivityManager {
 
     private val activityCollections: LinkedList<WeakReference<Activity>> = LinkedList()
+
     var resumedActivity: WeakReference<Activity>? = null
         private set
+
+    fun isActivityOnAct(clazz: Class<out Activity>): Boolean {
+        return activityCollections.firstOrNull { it.get()?.javaClass == clazz }?.get().let {
+            when (it) {
+                null -> false
+                else -> !it.isFinishing
+            }
+        }
+    }
 
     /**
      * 关闭指定的activity

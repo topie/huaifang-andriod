@@ -20,43 +20,31 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".facing.HFMainActivity"
-            android:screenOrientation="portrait">
+            android:name=".HFLaunchActivity"
+            android:theme="@style/HFTransparent">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
+        <activity android:name=".facing.HFMainActivity" />
+
         <activity
-            android:name=".account.HFLoginActivity"
+            android:name=".account.login.HFLoginActivity"
             android:launchMode="singleInstance" />
-        <activity
-            android:name=".function.guide.HFFunGuideActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".function.live.HFFunLiveActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".function.notice.HFFunPublicActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.topie.huaifang.function.communication.HFCommFriendsActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".function.party.HFFunPartyActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".function.yellowpage.HFFunYellowPageActivity"
-            android:screenOrientation="portrait" />
+
+        <activity android:name=".function.guide.HFFunGuideActivity" />
+        <activity android:name=".function.live.HFFunLiveActivity" />
+        <activity android:name=".function.notice.HFFunPublicActivity" />
+        <activity android:name="com.topie.huaifang.function.communication.HFCommFriendsActivity" />
+        <activity android:name=".function.party.HFFunPartyActivity" />
+        <activity android:name=".function.yellowpage.HFFunYellowPageActivity" />
         <activity
             android:name=".HFGetFileActivity"
             android:screenOrientation="portrait"
             android:theme="@style/HFTransparent" />
-        <activity
-            android:name=".function.HFFunAllActivity"
-            android:screenOrientation="portrait" />
+        <activity android:name=".function.HFFunAllActivity" />
         <activity android:name=".function.library.HFFunLibraryActivity" />
         <activity android:name=".function.other.HFQuestionActivity" />
         <activity android:name=".function.dispute.HFFunDisputeMediatorActivity" />

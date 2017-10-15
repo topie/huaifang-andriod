@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.topie.huaifang.R
 import com.topie.huaifang.account.HFAccountManager
-import com.topie.huaifang.account.HFLoginActivity
+import com.topie.huaifang.account.login.HFLoginActivity
 import com.topie.huaifang.base.HFBaseFragment
 import com.topie.huaifang.base.HFBaseRecyclerAdapter
 import com.topie.huaifang.base.HFBaseRecyclerViewHolder

@@ -5,16 +5,11 @@ import android.support.v4.app.Fragment
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import com.topie.huaifang.HFActivityManager
 import com.topie.huaifang.R
-import com.topie.huaifang.account.HFAccountManager
 import com.topie.huaifang.base.HFBaseActivity
 import com.topie.huaifang.extensions.kFindViewById
 import com.topie.huaifang.extensions.kGetIdentifier
-import com.topie.huaifang.extensions.kStartActivity
 import com.topie.huaifang.extensions.log
-import com.topie.huaifang.account.HFLoginActivity
-import com.topie.huaifang.view.HFTipDialog
 
 
 class HFMainActivity : HFBaseActivity() {
@@ -31,23 +26,8 @@ class HFMainActivity : HFBaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.facing_main_activity)
+        mContentId = R.id.fl_facing_frag
         initBottomView(savedInstanceState)
-    }
-
-    override fun onResume() {
-        super.onResume()
-        //没有登录的状态下进入登录页面
-        if (!HFAccountManager.isLogin) {
-            HFTipDialog.Builder().also {
-                it.content = "登录后才能继续访问app"
-                it.onOkClicked = {
-                    kStartActivity(HFLoginActivity::class.java)
-                }
-                it.onCancelClicked = {
-                    HFActivityManager.closeAllActivities()
-                }
-            }.show(this@HFMainActivity)
-        }
     }
 
     private fun initBottomView(savedInstanceState: Bundle?) {
@@ -85,37 +65,6 @@ class HFMainActivity : HFBaseActivity() {
             }
         }
         onBottomItemSelected(index)
-    }
-
-    private var curFragment: Fragment? = null
-
-    /**
-     * 推送一个fragment进入堆栈，如果需要推入的fragment已经存在，移除顶部的fragment
-     * 效果类似于activity的SingleTop
-     *
-     * @param pFragmentClass
-     */
-    private fun pushFragment(pFragmentClass: Class<out Fragment>) = try {
-        val name = pFragmentClass.name
-        val manager = supportFragmentManager
-
-        val ft = manager.beginTransaction()
-        curFragment = manager.findFragmentByTag(name)?.also {
-            if (it != curFragment) {
-                ft.attach(it)
-                if (curFragment != null) {
-                    ft.detach(curFragment)
-                }
-            }
-        } ?: pFragmentClass.newInstance().also {
-            ft.add(R.id.fl_facing_frag, it, name)
-            if (curFragment != null) {
-                ft.detach(curFragment)
-            }
-        }
-        ft.commitAllowingStateLoss()
-    } catch (pE: Exception) {
-        log("", pE)
     }
 
     private fun onBottomItemSelected(position: Int) {

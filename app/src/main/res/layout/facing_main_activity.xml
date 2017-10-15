@@ -18,8 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="#f5f5f5"
-        android:orientation="horizontal"
-        android:weightSum="4">
+        android:orientation="horizontal">
 
         <include
             android:id="@+id/ll_facing_bottom_tab_0"

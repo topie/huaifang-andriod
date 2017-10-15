@@ -1,37 +1,47 @@
 package com.topie.huaifang.base
 
-import android.support.v7.app.AppCompatActivity
+import android.os.Bundle
+import android.support.annotation.StringRes
+import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout.LayoutParams
 import android.widget.TextView
 import com.topie.huaifang.R
-import com.topie.huaifang.extensions.kClone
 import com.topie.huaifang.extensions.kFindViewById
+import com.topie.huaifang.extensions.kGetString
 import com.topie.huaifang.extensions.kReleaseSelf
 import com.topie.huaifang.extensions.kRemoveChildsWithout
-import io.reactivex.disposables.Disposable
 
 /**
  * Created by arman on 2017/9/20.
  * 带有标题的activity，和系统一个用法
  */
-abstract class HFBaseTitleActivity : AppCompatActivity() {
+abstract class HFBaseTitleActivity : HFBaseActivity() {
     private var mRootView: ViewGroup? = null
 
-    val pauseDisableList: MutableList<Disposable> = arrayListOf()
+    companion object {
+        const val ARG_TITLE = "HFBaseTitleActivity.title"
+    }
 
-    override fun onPause() {
-        super.onPause()
-        val kClone = pauseDisableList.kClone()
-        pauseDisableList.clear()
-        kClone.forEach {
-            if (!it.isDisposed) {
-                it.dispose()
-            }
+    override fun pushFragment(pFragmentClass: Class<out Fragment>, args: Bundle?) {
+        super.pushFragment(pFragmentClass, args)
+        curFragment?.arguments?.getString(ARG_TITLE)?.let {
+            setBaseTitle(it)
         }
-        kClone.clear()
+    }
+
+    fun createArgsWithTitle(title: String): Bundle {
+        val bundle = Bundle()
+        bundle.putString(ARG_TITLE, title)
+        return bundle
+    }
+
+    fun createArgsWithTitle(@StringRes strId: Int): Bundle {
+        val bundle = Bundle()
+        bundle.putString(ARG_TITLE, kGetString(strId))
+        return bundle
     }
 
     override fun setContentView(layoutResID: Int) {

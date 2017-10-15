@@ -41,4 +41,8 @@ abstract class HFBaseFragment : Fragment() {
         }
         kClone.clear()
     }
+    
+    open fun onBackPressed() {
+
+    }
 }
