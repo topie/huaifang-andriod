@@ -21,6 +21,7 @@ import com.topie.huaifang.http.HFRetrofit
 import com.topie.huaifang.http.bean.communication.HFCommUserInfo
 import com.topie.huaifang.http.subscribeApi
 import com.topie.huaifang.imageloader.HFImageView
+import com.topie.huaifang.view.HFTextViewFlipper
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.facing_index_fragment.*
 
@@ -54,38 +55,32 @@ class HFIndexFragment : HFBaseFragment() {
                 it.convertMessage().kToastShort()
                 return@subscribeApi
             }
-            val list = it.data?.data?.takeIf { it.isNotEmpty() }
-            when (list) {
-                null -> {
-                    mView?.kFindViewById<View>(R.id.tv_facing_similar_friends_title)?.visibility = View.GONE
-                    mView?.kFindViewById<View>(R.id.ll_facing_similar_friends_content)?.visibility = View.GONE
-                }
-                else -> {
-                    mView?.kFindViewById<View>(R.id.tv_facing_similar_friends_title)?.visibility = View.VISIBLE
-                    mView?.kFindViewById<View>(R.id.ll_facing_similar_friends_content)?.let {
-                        it.visibility = View.VISIBLE
-                        var i = 0
-                        it.kForeach { v ->
-                            val userInfo = list.kGet(i++)
-                            when (userInfo) {
-                                null -> {
-                                    v.visibility = View.INVISIBLE
-                                }
-                                else -> {
-                                    v.visibility = View.VISIBLE
-                                    val ivHead: HFImageView = v.findViewById(R.id.iv_facing_friend_head)
-                                    ivHead.loadImageUri(userInfo.headImage?.kParseUrl())
-                                    val tvName: TextView = v.findViewById(R.id.tv_facing_friend_name)
-                                    tvName.text = userInfo.nickname ?: userInfo.mobilePhone
-                                    v.findViewById<View>(R.id.tv_facing_friend_add).setOnClickListener {
-                                        addFriend(userInfo)
-                                    }
-                                }
+            it.data?.data?.takeIf {
+                it.isNotEmpty()
+            }?.also { list ->
+                //数据集合不为空,遍历8个可能认识的人
+                val vContent: View = mView?.kFindViewById(R.id.ll_facing_similar_friends_content) ?: return@subscribeApi
+                vContent.visibility = View.VISIBLE
+                for (i in 0 until 8) {
+                    val layoutId = kGetIdentifier("ll_facing_similar_friends_item$i", "id")
+                    val layout = vContent.findViewById<View>(layoutId)
+                    when {
+                        i > list.size - 1 -> layout.visibility = View.GONE
+                        else -> {
+                            layout.visibility = View.VISIBLE
+                            val ivHead: HFImageView = layout.findViewById(R.id.iv_facing_friend_head)
+                            ivHead.loadImageUri(list[i].headImage?.kParseUrl())
+                            val tvName: TextView = layout.findViewById(R.id.tv_facing_friend_name)
+                            tvName.text = list[i].nickname ?: list[i].mobilePhone
+                            layout.findViewById<View>(R.id.tv_facing_friend_add).setOnClickListener {
+                                addFriend(list[i])
                             }
                         }
                     }
-
                 }
+            } ?: let {
+                //数据集合为空,隐藏可能认识的人区域
+                mView?.kFindViewById<View>(R.id.ll_facing_similar_friends_content)?.visibility = View.GONE
             }
         }
     }
@@ -122,43 +117,26 @@ class HFIndexFragment : HFBaseFragment() {
                     ll_facing_index_question_0.setOnClickListener {
                         val bundle = Bundle()
                         bundle.putInt(HFQuestionActivity.EXTRA_ID, list.kGet(0)?.id ?: -1)
-                        this@HFIndexFragment.kStartActivity(HFQuestionActivity::class.java,bundle)
+                        this@HFIndexFragment.kStartActivity(HFQuestionActivity::class.java, bundle)
                     }
                     ll_facing_index_question_1.setOnClickListener {
                         val bundle = Bundle()
                         bundle.putInt(HFQuestionActivity.EXTRA_ID, list.kGet(1)?.id ?: -1)
-                        this@HFIndexFragment.kStartActivity(HFQuestionActivity::class.java,bundle)
+                        this@HFIndexFragment.kStartActivity(HFQuestionActivity::class.java, bundle)
                     }
                     ll_facing_index_question_2.setOnClickListener {
                         val bundle = Bundle()
                         bundle.putInt(HFQuestionActivity.EXTRA_ID, list.kGet(2)?.id ?: -1)
-                        this@HFIndexFragment.kStartActivity(HFQuestionActivity::class.java,bundle)
+                        this@HFIndexFragment.kStartActivity(HFQuestionActivity::class.java, bundle)
                     }
 
-                    val obj = ({ v: View, str: String? ->
-                        val textView: TextView = v.kFindViewById(R.id.tv_facing_question_desc)
-                        textView.text = str
+                    val obj = ({ v: View, dataList: List<String> ->
+                        val textView: HFTextViewFlipper = v.kFindViewById(R.id.tvf_facing_question_desc)
+                        textView.setDataList2Start(dataList)
                     })
-                    when (list.size) {
-                        0 -> {
-                            ll_facing_index_questions.visibility = View.GONE
-                        }
-                        1 -> {
-                            obj(ll_facing_index_question_0, list[0].name)
-                            ll_facing_index_question_1.visibility = View.GONE
-                            ll_facing_index_question_2.visibility = View.GONE
-                        }
-                        2 -> {
-                            obj(ll_facing_index_question_0, list[0].name)
-                            obj(ll_facing_index_question_1, list[1].name)
-                            ll_facing_index_question_2.visibility = View.GONE
-                        }
-                        3 -> {
-                            obj(ll_facing_index_question_0, list[0].name)
-                            obj(ll_facing_index_question_1, list[1].name)
-                            obj(ll_facing_index_question_2, list[2].name)
-                        }
-                    }
+
+                    obj(ll_facing_index_question_0, list.map { it.name ?: "" })
+                    ll_facing_index_question_0.visibility = View.VISIBLE
                 }
             }
         }

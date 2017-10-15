@@ -26,6 +26,11 @@ class HFLoginRegisterPwdFragment : HFBaseFragment() {
         const val ARGS_PHONE = "args_phone"
     }
 
+    override fun onDetach() {
+        super.onDetach()
+        mEtPwd?.setText("")
+    }
+
     override fun onCreateViewSupport(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val inflate = inflater.inflate(R.layout.login_register_pwd_fragment, container, false)
         mEtPwd = inflate.kFindViewById(R.id.et_login_pwd_input)

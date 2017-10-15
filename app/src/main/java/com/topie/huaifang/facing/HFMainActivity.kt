@@ -6,26 +6,28 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.topie.huaifang.R
-import com.topie.huaifang.base.HFBaseActivity
+import com.topie.huaifang.base.HFBaseTitleActivity
 import com.topie.huaifang.extensions.kFindViewById
 import com.topie.huaifang.extensions.kGetIdentifier
 import com.topie.huaifang.extensions.log
+import kotlinx.android.synthetic.main.base_title_layout.*
 
 
-class HFMainActivity : HFBaseActivity() {
+class HFMainActivity : HFBaseTitleActivity() {
 
     private var currentTabPosition = -1
 
-    private val facingFragments: List<Class<out Fragment>> = arrayListOf(
-            HFIndexFragment::class.java,
-            HFMsgFragment::class.java,
-            HFDiscoveryFragment::class.java,
-            HFMineFragment::class.java
+    private val facingFragments: List<Pair<Class<out Fragment>, String>> = arrayListOf(
+            HFIndexFragment::class.java.to("首页"),
+            HFMsgFragment::class.java.to("消息"),
+            HFDiscoveryFragment::class.java.to("发现"),
+            HFMineFragment::class.java.to("我")
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.facing_main_activity)
+        iv_base_title_back.visibility = View.GONE
         mContentId = R.id.fl_facing_frag
         initBottomView(savedInstanceState)
     }
@@ -69,7 +71,9 @@ class HFMainActivity : HFBaseActivity() {
 
     private fun onBottomItemSelected(position: Int) {
         if (currentTabPosition != position) {
-            pushFragment(facingFragments[position])
+            val pFragmentClass = facingFragments[position].first
+            val args = createArgsWithTitle(facingFragments[position].second)
+            pushFragment(pFragmentClass, args)
             currentTabPosition = position
         }
     }

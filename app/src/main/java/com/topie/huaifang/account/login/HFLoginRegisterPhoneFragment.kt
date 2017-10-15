@@ -32,7 +32,10 @@ class HFLoginRegisterPhoneFragment : HFBaseFragment() {
                 (phone?.length ?: 0) < 11 -> kToastShort("请输入有效的手机号码")
                 else -> {
                     HFRetrofit.hfService.checkPhone(phone!!).subscribeResultOkApi {
-                        activity?.let { it as HFLoginActivity }?.pushRegisterPwdFragment(phone)
+                        when (it.data) {
+                            false -> kToastShort("该手机已注册")
+                            else -> activity?.let { it as HFLoginActivity }?.pushRegisterPwdFragment(phone)
+                        }
                     }
                 }
             }

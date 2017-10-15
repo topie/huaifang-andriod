@@ -12,6 +12,7 @@
     tools:showIn="@layout/facing_index_fragment">
 
     <TextView
+        android:id="@+id/tv_facing_question_pre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
@@ -26,12 +27,8 @@
         android:layout_marginRight="5dp"
         android:background="@color/colorGray" />
 
-    <TextView
-        android:id="@+id/tv_facing_question_desc"
+    <com.topie.huaifang.view.HFTextViewFlipper
+        android:id="@+id/tvf_facing_question_desc"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ellipsize="end"
-        android:gravity="center_vertical"
-        android:lines="1"
-        android:maxLines="1" />
+        android:layout_height="match_parent" />
 </LinearLayout>

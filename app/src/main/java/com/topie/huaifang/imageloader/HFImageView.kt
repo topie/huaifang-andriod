@@ -5,6 +5,7 @@ import android.app.Fragment
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.support.annotation.AttrRes
@@ -23,6 +24,8 @@ class HFImageView @JvmOverloads constructor(context: Context, attrs: AttributeSe
     var mRoundedAsCircle: Boolean = false
     var mRoundedCornerRadius: Int = 0
     var mDefImageRes: Int = 0
+    var mBorderWidth: Int = 0
+    var mBorderColor: Int = 0
 
     private val measure = HFAspectRatioMeasure.create(this, attrs)
 
@@ -35,6 +38,8 @@ class HFImageView @JvmOverloads constructor(context: Context, attrs: AttributeSe
             mRoundedAsCircle = a.getBoolean(R.styleable.HFImageView_roundedAsCircle, false)
             mDefImageRes = a.getResourceId(R.styleable.HFImageView_defImageRes, 0)
             mRoundedCornerRadius = a.getDimensionPixelSize(R.styleable.HFImageView_roundedCornersRadius, 0)
+            mBorderWidth = a.getDimensionPixelSize(R.styleable.HFImageView_borderWidth, 0)
+            mBorderColor = a.getColor(R.styleable.HFImageView_borderColor, Color.TRANSPARENT)
             a.recycle()
         }
     }
@@ -73,16 +78,27 @@ class HFImageView @JvmOverloads constructor(context: Context, attrs: AttributeSe
             val bitmap: Bitmap = HFMemoryCache.get(mDefImageRes) ?: BitmapFactory.decodeResource(resources, mDefImageRes)
             HFMemoryCache.put(mDefImageRes, bitmap)
             if (mRoundedAsCircle || mRoundedCornerRadius > 0) {
-                load.placeholder(HFRoundedBitmapDrawable(this, bitmap))
+                val drawable = HFRoundedBitmapDrawable(this, bitmap)
+                drawable.isCircle = mRoundedAsCircle
+                drawable.setRadius(mRoundedCornerRadius.toFloat())
+                drawable.setBorder(mBorderColor, mBorderWidth.toFloat())
+                load.placeholder(drawable)
             } else {
                 load.placeholder(BitmapDrawable(resources, bitmap))
             }
         }
         if (mRoundedAsCircle || mRoundedCornerRadius > 0) {
             load.into(object : BitmapImageViewTarget(this) {
-                override fun setResource(resource: Bitmap?) {
-                    view?.setImageBitmap(resource)
+                override fun setResource(bitmap: Bitmap?) {
+                    bitmap ?: return
+                    view ?: return
+                    val drawable = HFRoundedBitmapDrawable(view, bitmap)
+                    drawable.isCircle = mRoundedAsCircle
+                    drawable.setRadius(mRoundedCornerRadius.toFloat())
+                    drawable.setBorder(mBorderColor, mBorderWidth.toFloat())
+                    view.setImageDrawable(drawable)
                 }
+
             })
         } else {
             load.into(this)

@@ -8,7 +8,7 @@
         android:id="@+id/fl_base_title_container"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:background="@color/colorPrimary">
+        android:background="@color/colorPrimaryDark">
 
         <ImageView
             android:id="@+id/iv_base_title_back"
@@ -24,8 +24,8 @@
             android:gravity="center"
             android:maxLines="1"
             android:maxWidth="250dp"
-            android:textColor="@color/colorDark"
-            android:textSize="14sp" />
+            android:textColor="@android:color/white"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/tv_base_title_right"
@@ -37,7 +37,7 @@
             android:gravity="center"
             android:maxLines="1"
             android:maxWidth="250dp"
-            android:textColor="@color/colorDark"
+            android:textColor="@color/colorAccent"
             android:textSize="14sp" />
     </FrameLayout>
 

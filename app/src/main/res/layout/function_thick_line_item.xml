@@ -3,5 +3,5 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="10dp"
-    android:background="@color/facing_index_background"
+    android:background="@color/colorLightGray"
     tools:showIn="@layout/function_party_act_publish_activity" />
