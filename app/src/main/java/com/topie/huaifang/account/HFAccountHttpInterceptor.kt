@@ -43,7 +43,7 @@ internal class HFAccountHttpInterceptor : Interceptor {
                     code = jsonObject.optInt("code")
                 } finally {
                     if (code == 401) {
-                        HFAccountManager.setToken(null)
+                        HFAccountManager.resetToGuest()
                     }
                 }
             }

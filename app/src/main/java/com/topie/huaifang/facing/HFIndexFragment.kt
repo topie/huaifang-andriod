@@ -20,7 +20,7 @@ import com.topie.huaifang.function.other.HFQuestionActivity
 import com.topie.huaifang.function.party.HFFunPartyActivity
 import com.topie.huaifang.function.yellowpage.HFFunYellowPageActivity
 import com.topie.huaifang.http.HFRetrofit
-import com.topie.huaifang.http.bean.communication.HFCommUserInfo
+import com.topie.huaifang.http.bean.account.HFUserInfo
 import com.topie.huaifang.http.bean.index.HFIndexNewsResponseBody
 import com.topie.huaifang.http.subscribeApi
 import com.topie.huaifang.imageloader.HFImageView
@@ -96,7 +96,7 @@ class HFIndexFragment : HFBaseFragment() {
     /**
      *  添加好友
      */
-    private fun addFriend(userInfo: HFCommUserInfo) {
+    private fun addFriend(userInfo: HFUserInfo) {
         HFRetrofit.hfService.addCommFriend(userInfo.id).subscribeApi {
             when {
                 it.resultOk -> getCommSimilarFriendList()

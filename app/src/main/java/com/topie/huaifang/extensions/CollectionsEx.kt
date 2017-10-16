@@ -47,7 +47,7 @@ fun <T> MutableList<T>.kGetOne(collect: ((t: T) -> Boolean), oneCreator: () -> T
 }
 
 fun <T> List<T>.kGetFirstOrNull(collect: ((t: T) -> Boolean)): T? {
-    val first = first(collect)
+    val first = firstOrNull(collect)
     if (first.kIsNotNull()) {
         return first
     }

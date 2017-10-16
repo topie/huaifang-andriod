@@ -1,4 +1,4 @@
-package com.topie.huaifang.http.bean.login
+package com.topie.huaifang.http.bean.account
 
 import com.topie.huaifang.http.bean.HFBaseResponseBody
 

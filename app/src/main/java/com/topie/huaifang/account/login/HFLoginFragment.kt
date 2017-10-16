@@ -44,7 +44,8 @@ class HFLoginFragment : HFBaseFragment() {
                 (pwd?.length ?: 0) < 6 -> kToastShort("请输入至少6位数密码")
                 else -> {
                     HFRetrofit.hfService.login(phone!!, pwd!!).subscribeResultOkApi {
-                        HFAccountManager.setToken(it.token)
+                        HFAccountManager.setUserInfo(it.token, null, null)
+                        HFAccountManager.refreshAccountData()
                         activity?.let { it as HFLoginActivity }?.toApp()
                     }
                 }

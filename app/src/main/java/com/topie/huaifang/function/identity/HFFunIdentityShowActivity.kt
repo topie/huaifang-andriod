@@ -7,7 +7,7 @@ import com.topie.huaifang.extensions.kInto
 import com.topie.huaifang.extensions.kStartActivity
 import com.topie.huaifang.extensions.kToastShort
 import com.topie.huaifang.http.HFRetrofit
-import com.topie.huaifang.http.bean.function.HFFunIdentityResponseBody
+import com.topie.huaifang.http.bean.account.HFRoomInfo
 import com.topie.huaifang.http.subscribeApi
 import com.topie.huaifang.view.HFTipDialog
 import kotlinx.android.synthetic.main.function_indentity_show_activity.*
@@ -37,7 +37,7 @@ class HFFunIdentityShowActivity : HFBaseTitleActivity() {
         }.kInto(pauseDisableList)
     }
 
-    private fun initData(data: HFFunIdentityResponseBody.BodyData) {
+    private fun initData(data: HFRoomInfo) {
         if (isFinishing) {
             return
         }

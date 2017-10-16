@@ -13,9 +13,7 @@ import com.topie.huaifang.R
 import com.topie.huaifang.base.HFBaseRecyclerViewHolder
 import com.topie.huaifang.base.HFBaseTitleActivity
 import com.topie.huaifang.base.HFEmptyRecyclerViewHolder
-import com.topie.huaifang.extensions.kFindViewById
-import com.topie.huaifang.extensions.kInto
-import com.topie.huaifang.extensions.kToastShort
+import com.topie.huaifang.extensions.*
 import com.topie.huaifang.http.HFRetrofit
 import com.topie.huaifang.http.bean.function.HFFunQuestionDetailResponseBody
 import com.topie.huaifang.http.bean.function.HFFunQuestionRequestBody
@@ -28,7 +26,7 @@ import kotlinx.android.synthetic.main.base_title_layout.*
  */
 class HFQuestionActivity : HFBaseTitleActivity() {
 
-    private var mRequestBody: HFFunQuestionRequestBody? = null
+    private val mRequestBody: HFFunQuestionRequestBody = HFFunQuestionRequestBody(-1)
     private var mAdapter: Adapter? = null
 
     companion object {
@@ -43,13 +41,18 @@ class HFQuestionActivity : HFBaseTitleActivity() {
         setContentView(recyclerView)
         setBaseTitleRight("提交")
         recyclerView.layoutManager = LinearLayoutManager(this)
-        mAdapter = Adapter(mRequestBody!!)
         tv_base_title_right.setOnClickListener({
-            HFRetrofit.hfService.postFunQuestions(mRequestBody!!).subscribeResultOkApi {
+            val item = mRequestBody.items.kGetFirstOrNull { it.selectOptionId == -1 }
+            if (item != null) {
+                kToastShort(item.content?:"还不能提交，问题没有回答完")
+                return@setOnClickListener
+            }
+            HFRetrofit.hfService.postFunQuestions(mRequestBody).subscribeResultOkApi {
                 kToastShort("提交成功")
                 finish()
             }
         })
+        mAdapter = Adapter(mRequestBody)
         recyclerView.adapter = mAdapter
     }
 
@@ -62,15 +65,12 @@ class HFQuestionActivity : HFBaseTitleActivity() {
     override fun onResume() {
         super.onResume()
         if (mAdapter?.mList?.isNotEmpty() != true) {
-            HFRetrofit.hfService.getFunQuestionDetail(mRequestBody?.infoId ?: -1).subscribeResultOkApi {
+            HFRetrofit.hfService.getFunQuestionDetail(mRequestBody.infoId).subscribeResultOkApi {
                 it.data?.data?.takeIf { it.isNotEmpty() }?.also {
-                    val requestBody = convertList2RequestBody(it)
+                    val items = it.map { HFFunQuestionRequestBody.Item(it.questionId,-1,it.question) }
+                    mRequestBody.items.kReset(items)
                     val itemList = convertList2ItemList(it)
-                    mRequestBody = requestBody
-                    mAdapter?.mList?.apply {
-                        clear()
-                        addAll(itemList)
-                    }
+                    mAdapter?.mList?.kReset(itemList)
                     mAdapter?.notifyDataSetChanged()
                 }
             }.kInto(pauseDisableList)
@@ -78,16 +78,7 @@ class HFQuestionActivity : HFBaseTitleActivity() {
     }
 
     private fun initRequestBody(intent: Intent?) {
-        val id = intent?.getIntExtra(EXTRA_ID, 0) ?: 0
-        mRequestBody = HFFunQuestionRequestBody(id)
-    }
-
-    private fun convertList2RequestBody(aList: List<HFFunQuestionDetailResponseBody.ListData>): HFFunQuestionRequestBody {
-        val list = arrayListOf<HFFunQuestionRequestBody.Item>()
-        aList.forEach {
-            list.add(HFFunQuestionRequestBody.Item(it.questionId))
-        }
-        return HFFunQuestionRequestBody(mRequestBody?.infoId ?: -1)
+        mRequestBody.infoId = intent?.getIntExtra(EXTRA_ID, 0) ?: 0
     }
 
     private fun convertList2ItemList(aList: List<HFFunQuestionDetailResponseBody.ListData>): List<Item> {
@@ -111,9 +102,6 @@ class HFQuestionActivity : HFBaseTitleActivity() {
                 list.add(e)
             }
         }
-        val e = Item()
-        e.viewType = Item.TYPE_SUBMIT
-        list.add(e)
         return list
     }
 
@@ -140,8 +128,13 @@ class HFQuestionActivity : HFBaseTitleActivity() {
     }
 
     private class OptionViewHolder(val requestBody: HFFunQuestionRequestBody, itemView: View) : HFBaseRecyclerViewHolder<Item>(itemView) {
+        val tvPosition: TextView = itemView.kFindViewById(R.id.tv_question_list_item_position)
         val tvTitle: TextView = itemView.kFindViewById(R.id.tv_question_list_item_title)
         val radioButton: RadioButton = itemView.kFindViewById(R.id.rb_question_list_item)
+
+        init {
+            tvPosition.visibility = View.INVISIBLE
+        }
 
         override fun onBindData(d: Item) {
             tvTitle.text = d.optionText
@@ -150,6 +143,8 @@ class HFQuestionActivity : HFBaseTitleActivity() {
             }?.takeIf {
                 it.selectOptionId == d.optionId
             }?.let { true } ?: false
+            val text = "${d.questionIndex}. "
+            tvPosition.text = text
         }
 
         override fun onItemClicked(d: Item?) {
@@ -167,7 +162,7 @@ class HFQuestionActivity : HFBaseTitleActivity() {
         val tvTitle: TextView = itemView.kFindViewById(R.id.tv_question_list_item_title)
 
         override fun onBindData(d: Item) {
-            val text = "${d.questionIndex}."
+            val text = "${d.questionIndex}. "
             tvPosition.text = text
             tvTitle.text = d.question
         }
@@ -180,7 +175,7 @@ class HFQuestionActivity : HFBaseTitleActivity() {
         }
     }
 
-    private class Adapter(val requestBody: HFFunQuestionRequestBody) : RecyclerView.Adapter<HFBaseRecyclerViewHolder<Item>>() {
+    private class Adapter(var requestBody: HFFunQuestionRequestBody) : RecyclerView.Adapter<HFBaseRecyclerViewHolder<Item>>() {
 
         val mList: MutableList<Item> = arrayListOf()
         var onSubmit: ((requestBody: HFFunQuestionRequestBody) -> Unit)? = null

@@ -1,9 +1,9 @@
-package com.topie.huaifang.http.bean.communication
+package com.topie.huaifang.http.bean.account
 
 /**
  *  用户信息
  */
-class HFCommUserInfo {
+class HFUserInfo {
     companion object {
         /**
          * 激活

@@ -76,7 +76,7 @@ class HFMineFragment : HFBaseFragment() {
                     if (!it.resultOk) {
                         it.convertMessage().kToastShort()
                     } else {
-                        HFAccountManager.setToken(null)
+                        HFAccountManager.resetToGuest()
                         itemView.kStartActivity(HFLoginActivity::class.java)
                     }
                 }

@@ -18,7 +18,7 @@ import com.topie.huaifang.base.HFViewHolderFactory
 import com.topie.huaifang.extensions.kFindViewById
 import com.topie.huaifang.extensions.kIsNotEmpty
 import com.topie.huaifang.http.HFRetrofit
-import com.topie.huaifang.http.bean.communication.HFCommUserInfo
+import com.topie.huaifang.http.bean.account.HFUserInfo
 import com.topie.huaifang.http.subscribeApi
 import com.topie.huaifang.imageloader.HFImageView
 import com.topie.huaifang.kShowTelDialog
@@ -59,7 +59,7 @@ class HFCommFriendsActivity : HFBaseTitleActivity() {
         }
     }
 
-    class ViewHolder(itemView: View) : HFBaseRecyclerViewHolder<HFCommUserInfo>(itemView, true) {
+    class ViewHolder(itemView: View) : HFBaseRecyclerViewHolder<HFUserInfo>(itemView, true) {
         private val hfImageView: HFImageView = itemView.kFindViewById(R.id.iv_facing_list_icon)
         private val textView: TextView = itemView.kFindViewById(R.id.tv_facing_list_name)
 
@@ -70,12 +70,12 @@ class HFCommFriendsActivity : HFBaseTitleActivity() {
             }
         }
 
-        override fun onBindData(d: HFCommUserInfo) {
+        override fun onBindData(d: HFUserInfo) {
             hfImageView.loadImageUri(d.headImage?.let { Uri.parse(it) })
             textView.text = d.nickname?.takeIf { it.kIsNotEmpty() } ?: d.mobilePhone
         }
 
-        override fun onItemClicked(d: HFCommUserInfo?) {
+        override fun onItemClicked(d: HFUserInfo?) {
             super.onItemClicked(d)
             d?.mobilePhone?.let {
 

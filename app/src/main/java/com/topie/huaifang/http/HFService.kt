@@ -1,12 +1,13 @@
 package com.topie.huaifang.http
 
 import com.topie.huaifang.http.bean.HFBaseResponseBody
+import com.topie.huaifang.http.bean.account.HFAccountResponseBody
+import com.topie.huaifang.http.bean.account.HFCheckPhoneResponseBody
+import com.topie.huaifang.http.bean.account.HFLoginResponseBody
 import com.topie.huaifang.http.bean.communication.HFCommFriendsResponseBody
 import com.topie.huaifang.http.bean.communication.HFCommMsgListResponseBody
 import com.topie.huaifang.http.bean.function.*
 import com.topie.huaifang.http.bean.index.HFIndexNewsResponseBody
-import com.topie.huaifang.http.bean.login.HFCheckPhoneResponseBody
-import com.topie.huaifang.http.bean.login.HFLoginResponseBody
 import com.topie.huaifang.util.HFDimensUtils
 import io.reactivex.Observable
 import okhttp3.MultipartBody
@@ -269,5 +270,11 @@ interface HFService {
      */
     @GET("/api/m/index/news")
     fun getIndexNews(): Observable<HFIndexNewsResponseBody>
+
+    /**
+     * 账户信息
+     */
+    @GET("/api/m/index/userInfo")
+    fun getAccountInfo(): Observable<HFAccountResponseBody>
 
 }
