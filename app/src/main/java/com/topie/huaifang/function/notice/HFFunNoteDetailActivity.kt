@@ -43,7 +43,7 @@ class HFFunNoteDetailActivity : HFBaseTitleActivity() {
     override fun onResume() {
         super.onResume()
         if (mData == null) {
-            HFRetrofit.hfService.getFunPublicDetail(mData?.id ?: -1).subscribeResultOkApi {
+            HFRetrofit.hfService.getFunPublicDetail(mId).subscribeResultOkApi {
                 mData = it.data
                 initData(mData)
             }.kInto(pauseDisableList)
