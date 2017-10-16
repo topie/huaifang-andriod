@@ -42,9 +42,9 @@ object HFAccountManager {
     }
 
     fun setUserInfo(token: String?, userInfo: HFUserInfo?, roomInfo: HFRoomInfo?) {
-        accountModel.token = null
-        accountModel.userInfo = null
-        accountModel.roomInfo = null
+        accountModel.token = token
+        accountModel.userInfo = userInfo
+        accountModel.roomInfo = roomInfo
         saveData()
     }
 
