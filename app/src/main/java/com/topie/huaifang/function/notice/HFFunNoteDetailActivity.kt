@@ -5,7 +5,6 @@ import android.text.Html
 import com.topie.huaifang.R
 import com.topie.huaifang.base.HFBaseTitleActivity
 import com.topie.huaifang.extensions.kInto
-import com.topie.huaifang.extensions.kIsEmpty
 import com.topie.huaifang.http.HFRetrofit
 import com.topie.huaifang.http.bean.function.HFFunPublicResponseBody
 import com.topie.huaifang.http.subscribeResultOkApi
@@ -18,20 +17,23 @@ import kotlinx.android.synthetic.main.function_live_note_detail_activity.*
 class HFFunNoteDetailActivity : HFBaseTitleActivity() {
 
     private var mData: HFFunPublicResponseBody.ListData? = null
+    private var mId: Int = 0
 
     companion object {
         const val EXTRA_DATA = "extra_data"
+        const val EXTRA_ID = "extra_id"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mData = intent.getSerializableExtra(EXTRA_DATA) as HFFunPublicResponseBody.ListData?
+        val data = intent.getSerializableExtra(EXTRA_DATA) as HFFunPublicResponseBody.ListData?
+        mId = intent.getIntExtra(EXTRA_ID, data?.id ?: 0)
         setContentView(R.layout.function_live_note_detail_activity)
-        setBaseTitle(mData?.title)
-        initData(mData)
+        initData(data)
     }
 
     private fun initData(aData: HFFunPublicResponseBody.ListData?) {
+        setBaseTitle(mData?.title)
         tv_fun_live_public_title.text = aData?.title
         tv_fun_live_public_time.text = aData?.cTime
         tv_fun_live_public_publisher.text = aData?.cUser
@@ -40,7 +42,7 @@ class HFFunNoteDetailActivity : HFBaseTitleActivity() {
 
     override fun onResume() {
         super.onResume()
-        if (mData?.content.kIsEmpty()) {
+        if (mData == null) {
             HFRetrofit.hfService.getFunPublicDetail(mData?.id ?: -1).subscribeResultOkApi {
                 mData = it.data
                 initData(mData)

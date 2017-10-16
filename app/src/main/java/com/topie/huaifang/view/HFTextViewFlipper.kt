@@ -41,10 +41,13 @@ class HFTextViewFlipper : ViewFlipper {
      *
      * @param dataList
      */
-    fun setDataList2Start(dataList: List<String>, textSize: Float = 14.toFloat(), textColor: Int = kGetColor(R.color.colorDark),
-                          onItemClicked: ((index: Int, s: String) -> Unit)? = null) {
+    fun setDataList2Start(dataList: List<String>?, onItemClicked: ((index: Int, s: String) -> Unit)? = null,
+                          textSize: Float = 14.toFloat(), textColor: Int = kGetColor(R.color.colorGray)) {
         stopFlipping()
         removeAllViews()
+        if (dataList == null || dataList.isEmpty()) {
+            return
+        }
         dataList.forEachIndexed { index, s ->
             val textView = TextView(context)
             val lp = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import com.topie.huaifang.R
 import com.topie.huaifang.base.HFBaseFragment
@@ -13,17 +14,18 @@ import com.topie.huaifang.function.HFFunAllActivity
 import com.topie.huaifang.function.guide.HFFunGuideActivity
 import com.topie.huaifang.function.live.HFFunLiveActivity
 import com.topie.huaifang.function.live.HFFunLiveBazaarActivity
+import com.topie.huaifang.function.notice.HFFunNoteDetailActivity
 import com.topie.huaifang.function.notice.HFFunPublicActivity
 import com.topie.huaifang.function.other.HFQuestionActivity
 import com.topie.huaifang.function.party.HFFunPartyActivity
 import com.topie.huaifang.function.yellowpage.HFFunYellowPageActivity
 import com.topie.huaifang.http.HFRetrofit
 import com.topie.huaifang.http.bean.communication.HFCommUserInfo
+import com.topie.huaifang.http.bean.index.HFIndexNewsResponseBody
 import com.topie.huaifang.http.subscribeApi
 import com.topie.huaifang.imageloader.HFImageView
 import com.topie.huaifang.view.HFTextViewFlipper
 import io.reactivex.disposables.Disposable
-import kotlinx.android.synthetic.main.facing_index_fragment.*
 
 /**
  * Created by arman on 2017/9/16.
@@ -34,8 +36,14 @@ class HFIndexFragment : HFBaseFragment() {
     private var quesDisposable: Disposable? = null
     private var simFriendDisposable: Disposable? = null
 
+    private var mLlQuestion0: LinearLayout? = null
+    private var mLlQuestion1: LinearLayout? = null
+    private var mLlQuestion2: LinearLayout? = null
     override fun onCreateViewSupport(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val inflate = inflater.inflate(R.layout.facing_index_fragment, container, false)
+        mLlQuestion0 = inflate.kFindViewById(R.id.ll_facing_index_question_0)
+        mLlQuestion1 = inflate.kFindViewById(R.id.ll_facing_index_question_1)
+        mLlQuestion2 = inflate.kFindViewById(R.id.ll_facing_index_question_2)
         initFunctions(inflate, savedInstanceState)
         return inflate
     }
@@ -101,42 +109,51 @@ class HFIndexFragment : HFBaseFragment() {
      * 调查问卷
      */
     private fun getFunQuestionList() {
-        quesDisposable = HFRetrofit.hfService.getFunQuestionList().subscribeApi {
+        quesDisposable = HFRetrofit.hfService.getIndexNews().subscribeApi {
             if (!it.resultOk) {
                 return@subscribeApi
             }
-            val list = it.data?.data
-            when (list) {
-                null -> ll_facing_index_questions.visibility = View.GONE
-                else -> {
-                    ll_facing_index_questions.visibility = View.VISIBLE
-                    ll_facing_index_question_0.visibility = View.VISIBLE
-                    ll_facing_index_question_1.visibility = View.VISIBLE
-                    ll_facing_index_question_2.visibility = View.VISIBLE
 
-                    ll_facing_index_question_0.setOnClickListener {
-                        val bundle = Bundle()
-                        bundle.putInt(HFQuestionActivity.EXTRA_ID, list.kGet(0)?.id ?: -1)
-                        this@HFIndexFragment.kStartActivity(HFQuestionActivity::class.java, bundle)
+            val obj = ({ v: View?, data: HFIndexNewsResponseBody.BodyData? ->
+                val textView: HFTextViewFlipper? = v?.kFindViewById(R.id.tvf_facing_question_desc)
+                //数据集合映射成字符串集合，填充视图
+                textView?.setDataList2Start(data?.list?.map { it.title ?: "" }, { index, _ ->
+                    when (data?.type) {
+                        HFIndexNewsResponseBody.BodyData.TYPE_QUESTION -> { //调查问卷
+                            v.kStartActivity(HFQuestionActivity::class.java, Bundle().also {
+                                val id = data.list!![index].id
+                                it.putInt(HFQuestionActivity.EXTRA_ID, id)
+                            })
+                        }
+                        HFIndexNewsResponseBody.BodyData.TYPE_WU_YE_NOTICE,     //物业公告（通知公告）
+                        HFIndexNewsResponseBody.BodyData.TYPE_LIVE_NOTICE -> {  //社区公告（通知公告）
+                            v.kStartActivity(HFFunNoteDetailActivity::class.java, Bundle().also {
+                                val id = data.list!![index].id
+                                it.putInt(HFFunNoteDetailActivity.EXTRA_ID, id)
+                            })
+                        }
+                        else -> log("unknown type [${data?.type}]")
                     }
-                    ll_facing_index_question_1.setOnClickListener {
-                        val bundle = Bundle()
-                        bundle.putInt(HFQuestionActivity.EXTRA_ID, list.kGet(1)?.id ?: -1)
-                        this@HFIndexFragment.kStartActivity(HFQuestionActivity::class.java, bundle)
-                    }
-                    ll_facing_index_question_2.setOnClickListener {
-                        val bundle = Bundle()
-                        bundle.putInt(HFQuestionActivity.EXTRA_ID, list.kGet(2)?.id ?: -1)
-                        this@HFIndexFragment.kStartActivity(HFQuestionActivity::class.java, bundle)
-                    }
+                })
+            })
 
-                    val obj = ({ v: View, dataList: List<String> ->
-                        val textView: HFTextViewFlipper = v.kFindViewById(R.id.tvf_facing_question_desc)
-                        textView.setDataList2Start(dataList)
-                    })
-
-                    obj(ll_facing_index_question_0, list.map { it.name ?: "" })
-                    ll_facing_index_question_0.visibility = View.VISIBLE
+            it.data.also {
+                it?.kGetFirstOrNull {
+                    it.type == HFIndexNewsResponseBody.BodyData.TYPE_QUESTION
+                }.let {
+                    obj.invoke(mLlQuestion0, it)
+                }
+            }.also {
+                it?.kGetFirstOrNull {
+                    it.type == HFIndexNewsResponseBody.BodyData.TYPE_LIVE_NOTICE
+                }.let {
+                    obj.invoke(mLlQuestion1, it)
+                }
+            }.also {
+                it?.kGetFirstOrNull {
+                    it.type == HFIndexNewsResponseBody.BodyData.TYPE_WU_YE_NOTICE
+                }.let {
+                    obj.invoke(mLlQuestion2, it)
                 }
             }
         }

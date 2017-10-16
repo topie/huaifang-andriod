@@ -4,6 +4,7 @@ import com.topie.huaifang.http.bean.HFBaseResponseBody
 import com.topie.huaifang.http.bean.communication.HFCommFriendsResponseBody
 import com.topie.huaifang.http.bean.communication.HFCommMsgListResponseBody
 import com.topie.huaifang.http.bean.function.*
+import com.topie.huaifang.http.bean.index.HFIndexNewsResponseBody
 import com.topie.huaifang.http.bean.login.HFCheckPhoneResponseBody
 import com.topie.huaifang.http.bean.login.HFLoginResponseBody
 import com.topie.huaifang.util.HFDimensUtils
@@ -138,13 +139,6 @@ interface HFService {
     fun getFunYellowPage(): Observable<HFFunYellowPageResponseBody>
 
     /**
-     * 调查问卷列表
-     */
-    @GET("/api/m/question/list")
-    fun getFunQuestionList(): Observable<HFFunQuestionResponseBody>
-
-
-    /**
      * 可能认识的人
      */
     @GET("/api/m/appUser/maybeKnown")
@@ -269,5 +263,11 @@ interface HFService {
      */
     @POST("/api/m/appUser/auth")
     fun postFunIdentity(@Body requestBody: HFFunIdentityEditRequestBody): Observable<HFBaseResponseBody>
+
+    /**
+     * 首页消息列表
+     */
+    @GET("/api/m/index/news")
+    fun getIndexNews(): Observable<HFIndexNewsResponseBody>
 
 }

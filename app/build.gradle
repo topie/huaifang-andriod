@@ -7,19 +7,33 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
+    signingConfigs {
+        realease {
+            keyAlias 'hf'
+            keyPassword 'hf123456'
+            storeFile file('/Users/arman/huaifang')
+            storePassword 'hf123456'
+        }
+    }
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
     defaultConfig {
         applicationId "com.topie.huaifang"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        versionCode 101
+        versionName "1.1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
+            //不显示LOG
+            buildConfigField "boolean", "LOG_DEBUG", "false"
+            //开启混淆 false 是关闭, true是开启
             minifyEnabled false
+            //Zipalign优化
+            zipAlignEnabled true
+            signingConfig signingConfigs.realease
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
