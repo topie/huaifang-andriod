@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="@color/colorLightGray" />
+        <!--系统通知-->
+        <include
+            android:id="@+id/ll_fun_all_common"
+            layout="@layout/function_all_title" />
+
+        <!--系统通知，功能列表顶部的线-->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/colorGray" />
+
+        <!--系统通知，第一横排-->
+        <com.topie.huaifang.view.HFAspectLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="4"
+            app:aspectRatio="4">
+
+            <include
+                android:id="@+id/ll_fun_all_common_0"
+                layout="@layout/facing_index_fun_item" />
+
+            <View
+                android:layout_width="0.5dp"
+                android:layout_height="match_parent"
+                android:background="@color/colorGray" />
+
+            <include
+                android:id="@+id/ll_fun_all_common_1"
+                layout="@layout/facing_index_fun_item" />
+
+            <View
+                android:layout_width="0.5dp"
+                android:layout_height="match_parent"
+                android:background="@color/colorGray" />
+
+            <include
+                android:id="@+id/ll_fun_all_common_2"
+                layout="@layout/facing_index_fun_item" />
+
+            <View
+                android:layout_width="0.5dp"
+                android:layout_height="match_parent"
+                android:background="@color/colorGray" />
+
+            <include
+                android:id="@+id/ll_fun_all_common_3"
+                layout="@layout/facing_index_fun_item" />
+        </com.topie.huaifang.view.HFAspectLinearLayout>
+
+        <!--系统通知，第二横排-->
+        <com.topie.huaifang.view.HFAspectLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:weightSum="4"
+            app:aspectRatio="4">
+
+            <include
+                android:id="@+id/ll_fun_all_common_4"
+                layout="@layout/facing_index_fun_item" />
+
+            <View
+                android:layout_width="0.5dp"
+                android:layout_height="match_parent"
+                android:background="@color/colorGray" />
+
+        </com.topie.huaifang.view.HFAspectLinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="@color/colorLightGray" />
+
+        <!--社区党建-->
+        <include
+            android:id="@+id/ll_fun_all_party"
+            layout="@layout/function_all_title" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="4">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0.5dp"
+                android:layout_weight="3"
+                android:background="@color/colorGray" />
+        </LinearLayout>
+
+        <com.topie.huaifang.view.HFAspectLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:weightSum="4"
+            app:aspectRatio="4">
+
+            <include
+                android:id="@+id/ll_fun_all_party_0"
+                layout="@layout/facing_index_fun_item" />
+
+            <View
+                android:layout_width="0.5dp"
+                android:layout_height="match_parent"
+                android:background="@color/colorGray" />
+
+            <include
+                android:id="@+id/ll_fun_all_party_1"
+                layout="@layout/facing_index_fun_item" />
+
+            <View
+                android:layout_width="0.5dp"
+                android:layout_height="match_parent"
+                android:background="@color/colorGray" />
+
+            <include
+                android:id="@+id/ll_fun_all_party_2"
+                layout="@layout/facing_index_fun_item" />
+
+            <View
+                android:layout_width="0.5dp"
+                android:layout_height="match_parent"
+                android:background="@color/colorGray" />
+
+        </com.topie.huaifang.view.HFAspectLinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="@color/colorLightGray" />
+
+        <!--特色服务-->
+        <include
+            android:id="@+id/ll_fun_all_service"
+            layout="@layout/function_all_title" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="4">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0.5dp"
+                android:layout_weight="2"
+                android:background="@color/colorGray" />
+        </LinearLayout>
+
+        <com.topie.huaifang.view.HFAspectLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:weightSum="4"
+            app:aspectRatio="4">
+
+            <include
+                android:id="@+id/ll_fun_all_service_0"
+                layout="@layout/facing_index_fun_item" />
+
+            <View
+                android:layout_width="0.5dp"
+                android:layout_height="match_parent"
+                android:background="@color/colorGray" />
+
+            <include
+                android:id="@+id/ll_fun_all_service_1"
+                layout="@layout/facing_index_fun_item" />
+
+            <View
+                android:layout_width="0.5dp"
+                android:layout_height="match_parent"
+                android:background="@color/colorGray" />
+
+        </com.topie.huaifang.view.HFAspectLinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="@color/colorLightGray" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/colorLightGray" />
+
+    </LinearLayout>
+
+</ScrollView>

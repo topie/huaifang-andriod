@@ -1,34 +1,21 @@
 package com.topie.huaifang.function
 
 import android.os.Bundle
-import android.support.annotation.DrawableRes
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import com.topie.huaifang.R
-import com.topie.huaifang.base.HFBaseRecyclerAdapter
-import com.topie.huaifang.base.HFBaseRecyclerViewHolder
 import com.topie.huaifang.base.HFBaseTitleActivity
-import com.topie.huaifang.base.HFViewHolderFactory
-import com.topie.huaifang.extensions.kFindViewById
-import com.topie.huaifang.extensions.kGetString
 import com.topie.huaifang.extensions.kStartActivity
-import com.topie.huaifang.extensions.log
-import com.topie.huaifang.function.communication.HFCommFriendsActivity
 import com.topie.huaifang.function.dispute.HFFunDisputeMediatorActivity
 import com.topie.huaifang.function.guide.HFFunGuideActivity
 import com.topie.huaifang.function.library.HFFunLibraryActivity
 import com.topie.huaifang.function.live.HFFunLiveActivity
 import com.topie.huaifang.function.live.HFFunLiveBazaarActivity
-import com.topie.huaifang.function.live.HFFunLiveRepairsListActivity
 import com.topie.huaifang.function.notice.HFFunPublicActivity
-import com.topie.huaifang.function.party.HFFunPartyActPublishActivity
 import com.topie.huaifang.function.party.HFFunPartyActivity
 import com.topie.huaifang.function.yellowpage.HFFunYellowPageActivity
-import com.topie.huaifang.imageloader.HFImageView
+import kotlinx.android.synthetic.main.function_all_activity.*
 
 /**
  * Created by arman on 2017/10/2.
@@ -38,63 +25,76 @@ class HFFunAllActivity : HFBaseTitleActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.facing_list)
+        setContentView(R.layout.function_all_activity)
         setBaseTitle("全部应用")
-        val recyclerView: RecyclerView = kFindViewById(R.id.rv_facing_list)
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        val list: ArrayList<HFListItem> = arrayListOf()
-        list.add(HFListItem(R.mipmap.ic_facing_index_fun_announcement, kGetString(R.string.facing_index_fun_announcement), 0))
-        list.add(HFListItem(R.mipmap.ic_facing_index_fun_guide, kGetString(R.string.facing_index_fun_guide), 1))
-        list.add(HFListItem(R.mipmap.ic_facing_index_fun_bazaar, kGetString(R.string.facing_index_fun_bazaar), 2))
-        list.add(HFListItem(R.mipmap.ic_facing_index_fun_live, kGetString(R.string.facing_index_fun_live), 3))
-        list.add(HFListItem(R.mipmap.ic_facing_index_fun_party, kGetString(R.string.facing_index_fun_party), 4))
-        list.add(HFListItem(R.mipmap.ic_facing_index_fun_yellow_book, kGetString(R.string.facing_index_fun_yellow_book), 5))
-        list.add(HFListItem(R.mipmap.ic_facing_index_fun_library, kGetString(R.string.facing_index_fun_library), 6))
-//        list.add(HFListItem(R.mipmap.ic_facing_index_fun_dispute, kGetString(R.string.facing_index_fun_dispute), 7))
-//        list.add(HFListItem(R.mipmap.ic_facing_index_fun_dispute, "发布活动", 8))
-//        list.add(HFListItem(R.mipmap.ic_facing_index_fun_dispute, "物业报修", 9))
-//        list.add(HFListItem(R.mipmap.ic_facing_index_fun_dispute, kGetString(R.string.facing_index_fun_bazaar), 10))
-        recyclerView.adapter = HFBaseRecyclerAdapter(ViewHolder, list)
-    }
 
-    class ViewHolder(itemView: View) : HFBaseRecyclerViewHolder<HFListItem>(itemView, true) {
+        initTitle(ll_fun_all_common, R.mipmap.ic_fun_all_common, R.string.facing_index_functions)
+        initTitle(ll_fun_all_party, R.mipmap.ic_fun_all_party, R.string.facing_index_fun_party)
+        initTitle(ll_fun_all_service, R.mipmap.ic_fun_all_service, "特色服务")
 
-        private val ivIcon: HFImageView = itemView.kFindViewById(R.id.iv_facing_list_icon)
-        private val tvName: TextView = itemView.kFindViewById(R.id.tv_facing_list_name)
+        //常用功能
+        initFun(ll_fun_all_common_0, R.mipmap.ic_facing_index_fun_announcement, R.string.facing_index_fun_announcement, {
+            this@HFFunAllActivity.kStartActivity(HFFunPublicActivity::class.java)
+        })
+        initFun(ll_fun_all_common_1, R.mipmap.ic_facing_index_fun_guide, R.string.facing_index_fun_guide, {
+            this@HFFunAllActivity.kStartActivity(HFFunGuideActivity::class.java)
+        })
+        initFun(ll_fun_all_common_2, R.mipmap.ic_facing_index_fun_bazaar, R.string.facing_index_fun_bazaar, {
+            this@HFFunAllActivity.kStartActivity(HFFunLiveBazaarActivity::class.java)
+        })
+        initFun(ll_fun_all_common_3, R.mipmap.ic_facing_index_fun_live, R.string.facing_index_fun_live, {
+            this@HFFunAllActivity.kStartActivity(HFFunLiveActivity::class.java)
+        })
+        initFun(ll_fun_all_common_4, R.mipmap.ic_facing_index_fun_yellow_book, R.string.facing_index_fun_yellow_book, {
+            this@HFFunAllActivity.kStartActivity(HFFunYellowPageActivity::class.java)
+        })
+        //社区党建
+        initFun(ll_fun_all_party_0, R.mipmap.ic_fun_all_party_pub, "党务公开", {
+            val bundle = Bundle()
+            bundle.putInt(HFFunPartyActivity.EXTRA_POSITION, HFFunPartyActivity.POSITION_PUB)
+            this@HFFunAllActivity.kStartActivity(HFFunPartyActivity::class.java, bundle)
+        })
+        initFun(ll_fun_all_party_1, R.mipmap.ic_fun_all_party_act, "党支部活动", {
+            val bundle = Bundle()
+            bundle.putInt(HFFunPartyActivity.EXTRA_POSITION, HFFunPartyActivity.POSITION_ZHIBU)
+            this@HFFunAllActivity.kStartActivity(HFFunPartyActivity::class.java, bundle)
+        })
+        initFun(ll_fun_all_party_2, R.mipmap.ic_fun_all_party_members, "党员信息", {
+            val bundle = Bundle()
+            bundle.putInt(HFFunPartyActivity.EXTRA_POSITION, HFFunPartyActivity.POSITION_MEMBERS)
+            this@HFFunAllActivity.kStartActivity(HFFunPartyActivity::class.java, bundle)
+        })
 
-        companion object CREATOR : HFViewHolderFactory<ViewHolder> {
-            override fun create(parent: ViewGroup, viewType: Int): ViewHolder {
-                val from = LayoutInflater.from(parent.context)
-                val itemView = from.inflate(R.layout.facing_list_item, parent, false)
-                return ViewHolder(itemView)
-            }
-        }
+        //特色服务
+        initFun(ll_fun_all_service_0, R.mipmap.ic_fun_all_service_dispute, "纠纷调解", {
+            this@HFFunAllActivity.kStartActivity(HFFunDisputeMediatorActivity::class.java)
+        })
+        initFun(ll_fun_all_service_1, R.mipmap.ic_fun_all_service_library, "社区图书馆", {
+            this@HFFunAllActivity.kStartActivity(HFFunLibraryActivity::class.java)
+        })
 
-        override fun onBindData(d: HFListItem) {
-            ivIcon.setImageResource(d.iconId)
-            tvName.text = d.name
-        }
-
-        override fun onItemClicked(d: HFListItem?) {
-            super.onItemClicked(d)
-            when (d?.itemType ?: -1) {
-                0 -> itemView.kStartActivity(HFFunPublicActivity::class.java)
-                1 -> itemView.kStartActivity(HFFunGuideActivity::class.java)
-                2 -> itemView.kStartActivity(HFCommFriendsActivity::class.java)
-                3 -> itemView.kStartActivity(HFFunLiveActivity::class.java)
-                4 -> itemView.kStartActivity(HFFunPartyActivity::class.java)
-                5 -> itemView.kStartActivity(HFFunYellowPageActivity::class.java)
-                6 -> itemView.kStartActivity(HFFunLibraryActivity::class.java)
-                7 -> itemView.kStartActivity(HFFunDisputeMediatorActivity::class.java)
-                8 -> itemView.kStartActivity(HFFunPartyActPublishActivity::class.java)
-                9 -> itemView.kStartActivity(HFFunLiveRepairsListActivity::class.java)
-                10 -> itemView.kStartActivity(HFFunLiveBazaarActivity::class.java)
-                else -> log("itemType = ${d?.itemType}")
-            }
-        }
 
     }
 
+    private fun initFun(v: View, id: Int, strId: Int, onClick: ((v: View) -> Unit)) {
+        v.setOnClickListener(onClick)
+        v.findViewById<TextView>(R.id.tv_facing_index_fun).setText(strId)
+        v.findViewById<ImageView>(R.id.iv_facing_index_fun).setImageResource(id)
+    }
 
-    class HFListItem(@DrawableRes val iconId: Int, val name: String?, val itemType: Int)
+    private fun initFun(v: View, id: Int, str: String, onClick: ((v: View) -> Unit)) {
+        v.setOnClickListener(onClick)
+        v.findViewById<TextView>(R.id.tv_facing_index_fun).text = str
+        v.findViewById<ImageView>(R.id.iv_facing_index_fun).setImageResource(id)
+    }
+
+    private fun initTitle(v: View, id: Int, strId: Int) {
+        v.findViewById<TextView>(R.id.tv_fun_all_title).setText(strId)
+        v.findViewById<ImageView>(R.id.iv_fun_all_title).setImageResource(id)
+    }
+
+    private fun initTitle(v: View, id: Int, str: String) {
+        v.findViewById<TextView>(R.id.tv_fun_all_title).text = str
+        v.findViewById<ImageView>(R.id.iv_fun_all_title).setImageResource(id)
+    }
 }
