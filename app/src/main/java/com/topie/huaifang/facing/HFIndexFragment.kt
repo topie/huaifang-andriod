@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.davdian.ptr.Pt2FrameLayout
 import com.topie.huaifang.R
 import com.topie.huaifang.base.HFBaseFragment
 import com.topie.huaifang.extensions.*
@@ -23,9 +24,9 @@ import com.topie.huaifang.http.HFRetrofit
 import com.topie.huaifang.http.bean.account.HFUserInfo
 import com.topie.huaifang.http.bean.index.HFIndexNewsResponseBody
 import com.topie.huaifang.http.subscribeApi
+import com.topie.huaifang.http.subscribeResultOkApi
 import com.topie.huaifang.imageloader.HFImageView
 import com.topie.huaifang.view.HFTextViewFlipper
-import io.reactivex.disposables.Disposable
 
 /**
  * Created by arman on 2017/9/16.
@@ -33,41 +34,56 @@ import io.reactivex.disposables.Disposable
  */
 class HFIndexFragment : HFBaseFragment() {
 
-    private var quesDisposable: Disposable? = null
-    private var simFriendDisposable: Disposable? = null
-
     private var mLlQuestion0: LinearLayout? = null
     private var mLlQuestion1: LinearLayout? = null
     private var mLlQuestion2: LinearLayout? = null
+    private var mIvTop: HFImageView? = null
     override fun onCreateViewSupport(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        val inflate = inflater.inflate(R.layout.facing_index_fragment, container, false)
+        val inflate = inflater.inflate(R.layout.facing_index_fragment, container, false) as Pt2FrameLayout
         mLlQuestion0 = inflate.kFindViewById(R.id.ll_facing_index_question_0)
         mLlQuestion1 = inflate.kFindViewById(R.id.ll_facing_index_question_1)
         mLlQuestion2 = inflate.kFindViewById(R.id.ll_facing_index_question_2)
+        mIvTop = inflate.kFindViewById(R.id.iv_facing_index_top)
         initFunctions(inflate, savedInstanceState)
+        inflate.setPt2Handler(HFDefaultPt2Handler {
+            pullDataAtAll()
+            inflate.postDelayed({
+                inflate.complete2()
+            }, 1000.toLong())
+        })
         return inflate
     }
 
     override fun onResume() {
         super.onResume()
+        pullDataAtAll()
+    }
+
+    private fun pullDataAtAll() {
         getFunQuestionList()
         getCommSimilarFriendList()
+        getTopImage()
+    }
+
+    /**
+     * 首页头图
+     */
+    private fun getTopImage() {
+        HFRetrofit.hfService.getIndexTopImage().subscribeResultOkApi {
+            mIvTop?.loadImageUri(it.data?.head?.kParseUrl())
+        }.kInto(pauseDisableList)
     }
 
     /**
      * 可能认识的人
      */
     private fun getCommSimilarFriendList() {
-        simFriendDisposable = HFRetrofit.hfService.getCommSimilarFriend().subscribeApi {
-            if (!it.resultOk) {
-                it.convertMessage().kToastShort()
-                return@subscribeApi
-            }
+        HFRetrofit.hfService.getCommSimilarFriend().subscribeResultOkApi {
             it.data?.data?.takeIf {
                 it.isNotEmpty()
             }?.also { list ->
                 //数据集合不为空,遍历8个可能认识的人
-                val vContent: View = mView?.kFindViewById(R.id.ll_facing_similar_friends_content) ?: return@subscribeApi
+                val vContent: View = mView?.kFindViewById(R.id.ll_facing_similar_friends_content) ?: return@subscribeResultOkApi
                 vContent.visibility = View.VISIBLE
                 for (i in 0 until 8) {
                     val layoutId = kGetIdentifier("ll_facing_similar_friends_item$i", "id")
@@ -90,7 +106,7 @@ class HFIndexFragment : HFBaseFragment() {
                 //数据集合为空,隐藏可能认识的人区域
                 mView?.kFindViewById<View>(R.id.ll_facing_similar_friends_content)?.visibility = View.GONE
             }
-        }
+        }.kInto(pauseDisableList)
     }
 
     /**
@@ -109,16 +125,45 @@ class HFIndexFragment : HFBaseFragment() {
      * 调查问卷
      */
     private fun getFunQuestionList() {
-        quesDisposable = HFRetrofit.hfService.getIndexNews().subscribeApi {
+        HFRetrofit.hfService.getIndexNews().subscribeApi {
             if (!it.resultOk) {
                 return@subscribeApi
             }
 
-            val obj = ({ v: View?, data: HFIndexNewsResponseBody.BodyData? ->
-                val textView: HFTextViewFlipper? = v?.kFindViewById(R.id.tvf_facing_question_desc)
+            loop@ for (i in 0 until 3) {
+                val v: View? = when (i) {
+                    0 -> mLlQuestion0
+                    1 -> mLlQuestion1
+                    2 -> mLlQuestion2
+                    else -> null
+                }
+                val data = it.data?.kGet(i)
+                val invalidTye = when (data?.type) {
+                    HFIndexNewsResponseBody.BodyData.TYPE_QUESTION,
+                    HFIndexNewsResponseBody.BodyData.TYPE_LIVE_NOTICE,
+                    HFIndexNewsResponseBody.BodyData.TYPE_WU_YE_NOTICE -> data.type
+                    else -> null
+                }
+                if (data == null || invalidTye == null) {
+                    //隐藏条目
+                    v?.visibility = View.GONE
+                    continue
+                }
+                //显示条目
+                v?.visibility = View.VISIBLE
+                //条目前缀
+                val textView: TextView? = v?.kFindViewById(R.id.tv_facing_question_pre)
+                textView?.text = when (data.type) {
+                    HFIndexNewsResponseBody.BodyData.TYPE_QUESTION -> "调查问卷"
+                    HFIndexNewsResponseBody.BodyData.TYPE_LIVE_NOTICE -> "社区公告"
+                    HFIndexNewsResponseBody.BodyData.TYPE_WU_YE_NOTICE -> "物业公告"
+                    else -> null
+                }
+                //条目轮播
+                val viewFlipper: HFTextViewFlipper? = v?.kFindViewById(R.id.tvf_facing_question_desc)
                 //数据集合映射成字符串集合，填充视图
-                textView?.setDataList2Start(data?.list?.map { it.title ?: "" }, { index, _ ->
-                    when (data?.type) {
+                viewFlipper?.setDataList2Start(data.list?.map { it.title ?: "" }, { index, _ ->
+                    when (data.type) {
                         HFIndexNewsResponseBody.BodyData.TYPE_QUESTION -> { //调查问卷
                             v.kStartActivity(HFQuestionActivity::class.java, Bundle().also {
                                 val id = data.list!![index].id
@@ -132,37 +177,11 @@ class HFIndexFragment : HFBaseFragment() {
                                 it.putInt(HFFunNoteDetailActivity.EXTRA_ID, id)
                             })
                         }
-                        else -> log("unknown type [${data?.type}]")
+                        else -> log("unknown type [${data.type}]")
                     }
                 })
-            })
-
-            it.data.also {
-                it?.kGetFirstOrNull {
-                    it.type == HFIndexNewsResponseBody.BodyData.TYPE_QUESTION
-                }.let {
-                    obj.invoke(mLlQuestion0, it)
-                }
-            }.also {
-                it?.kGetFirstOrNull {
-                    it.type == HFIndexNewsResponseBody.BodyData.TYPE_LIVE_NOTICE
-                }.let {
-                    obj.invoke(mLlQuestion1, it)
-                }
-            }.also {
-                it?.kGetFirstOrNull {
-                    it.type == HFIndexNewsResponseBody.BodyData.TYPE_WU_YE_NOTICE
-                }.let {
-                    obj.invoke(mLlQuestion2, it)
-                }
             }
-        }
-    }
-
-    override fun onPause() {
-        super.onPause()
-        quesDisposable?.takeIf { !it.isDisposed }?.dispose()
-        simFriendDisposable?.takeIf { !it.isDisposed }?.dispose()
+        }.kInto(pauseDisableList)
     }
 
     private fun initFunctions(view: View, @Suppress("UNUSED_PARAMETER") savedInstanceState: Bundle?) {

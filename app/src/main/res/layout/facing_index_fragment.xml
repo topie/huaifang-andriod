@@ -1,199 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.davdian.ptr.Pt2FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
-    android:fillViewport="true"
-    android:orientation="vertical">
+    android:background="@android:color/white">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:fillViewport="true"
         android:orientation="vertical">
-        <!--头图-->
-        <RelativeLayout
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/white">
-
-            <com.topie.huaifang.imageloader.HFImageView
-                android:id="@+id/iv_facing_index_top"
+            android:orientation="vertical">
+            <!--头图-->
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:scaleType="centerCrop"
-                android:src="@mipmap/img_facing_index_top"
-                app:aspectRatio="2.6666"
-                app:defImageRes="@mipmap/img_facing_index_top" />
-        </RelativeLayout>
+                android:background="@android:color/white">
 
-        <!--调查问卷-->
-        <LinearLayout
-            android:id="@+id/ll_facing_index_questions"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/white"
-            android:orientation="vertical"
-            android:visibility="visible">
-
-            <include layout="@layout/function_thick_line_item" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:background="@color/colorPrimary"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:src="@mipmap/ic_facing_index_msg" />
-
-                <TextView
+                <com.topie.huaifang.imageloader.HFImageView
+                    android:id="@+id/iv_facing_index_top"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/facing_index_questionnaire"
-                    android:textColor="@color/colorDark"
-                    android:textSize="14sp"
-                    android:visibility="gone" />
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/img_facing_index_top"
+                    app:aspectRatio="2.6666"
+                    app:defImageRes="@mipmap/img_facing_index_top" />
+            </RelativeLayout>
 
+            <!--调查问卷-->
+            <LinearLayout
+                android:id="@+id/ll_facing_index_questions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <include layout="@layout/function_thick_line_item" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:background="@color/colorPrimary"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:src="@mipmap/ic_facing_index_msg" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/facing_index_questionnaire"
+                        android:textColor="@color/colorDark"
+                        android:textSize="14sp"
+                        android:visibility="gone" />
+
+                </LinearLayout>
+
+                <include
+                    android:id="@+id/ll_facing_index_question_0"
+                    layout="@layout/facing_index_questionnaire_item" />
+
+                <include
+                    android:id="@+id/ll_facing_index_question_1"
+                    layout="@layout/facing_index_questionnaire_item" />
+
+                <include
+                    android:id="@+id/ll_facing_index_question_2"
+                    layout="@layout/facing_index_questionnaire_item" />
             </LinearLayout>
 
-            <include
-                android:id="@+id/ll_facing_index_question_0"
-                layout="@layout/facing_index_questionnaire_item" />
-
-            <include
-                android:id="@+id/ll_facing_index_question_1"
-                layout="@layout/facing_index_questionnaire_item" />
-
-            <include
-                android:id="@+id/ll_facing_index_question_2"
-                layout="@layout/facing_index_questionnaire_item" />
-        </LinearLayout>
-
-        <include layout="@layout/function_thick_line_item" />
-
-        <!--常用功能-->
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:background="@color/colorPrimary"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:src="@mipmap/ic_facing_index_fun" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/facing_index_functions"
-                android:textColor="@color/colorWhite"
-                android:textSize="14sp"
-                android:visibility="visible" />
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/colorGray" />
-
-        <com.topie.huaifang.view.HFAspectLinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="4"
-            app:aspectRatio="4">
-
-            <include
-                android:id="@+id/ll_facing_fun_0"
-                layout="@layout/facing_index_fun_item" />
-
-            <View
-                android:layout_width="0.5dp"
-                android:layout_height="match_parent"
-                android:background="@color/colorGray" />
-
-            <include
-                android:id="@+id/ll_facing_fun_1"
-                layout="@layout/facing_index_fun_item" />
-
-            <View
-                android:layout_width="0.5dp"
-                android:layout_height="match_parent"
-                android:background="@color/colorGray" />
-
-            <include
-                android:id="@+id/ll_facing_fun_2"
-                layout="@layout/facing_index_fun_item" />
-
-            <View
-                android:layout_width="0.5dp"
-                android:layout_height="match_parent"
-                android:background="@color/colorGray" />
-
-            <include
-                android:id="@+id/ll_facing_fun_3"
-                layout="@layout/facing_index_fun_item" />
-
-        </com.topie.huaifang.view.HFAspectLinearLayout>
-
-        <com.topie.huaifang.view.HFAspectLinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="4"
-            app:aspectRatio="4">
-
-            <include
-                android:id="@+id/ll_facing_fun_4"
-                layout="@layout/facing_index_fun_item" />
-
-            <View
-                android:layout_width="0.5dp"
-                android:layout_height="match_parent"
-                android:background="@color/colorGray" />
-
-            <include
-                android:id="@+id/ll_facing_fun_5"
-                layout="@layout/facing_index_fun_item" />
-
-            <View
-                android:layout_width="0.5dp"
-                android:layout_height="match_parent"
-                android:background="@color/colorGray" />
-
-            <include
-                android:id="@+id/ll_facing_fun_6"
-                layout="@layout/facing_index_fun_item" />
-
-            <View
-                android:layout_width="0.5dp"
-                android:layout_height="match_parent"
-                android:background="@color/colorGray" />
-
-        </com.topie.huaifang.view.HFAspectLinearLayout>
-
-        <!--可能认识的人-->
-        <LinearLayout
-            android:id="@+id/ll_facing_similar_friends_content"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingBottom="10dp"
-            android:visibility="gone">
-
             <include layout="@layout/function_thick_line_item" />
+
+            <!--常用功能-->
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -207,84 +96,202 @@
                     android:layout_height="20dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:src="@mipmap/ic_facing_index_user" />
+                    android:src="@mipmap/ic_facing_index_fun" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/facing_index_friend"
+                    android:text="@string/facing_index_functions"
                     android:textColor="@color/colorWhite"
                     android:textSize="14sp"
                     android:visibility="visible" />
 
             </LinearLayout>
 
-            <LinearLayout
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/colorGray" />
+
+            <com.topie.huaifang.view.HFAspectLinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="10dp"
                 android:orientation="horizontal"
-                android:weightSum="4">
+                android:weightSum="4"
+                app:aspectRatio="4">
 
                 <include
-                    android:id="@+id/ll_facing_similar_friends_item0"
-                    layout="@layout/facing_index_friend_item" />
+                    android:id="@+id/ll_facing_fun_0"
+                    layout="@layout/facing_index_fun_item" />
+
+                <View
+                    android:layout_width="0.5dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorGray" />
 
                 <include
-                    android:id="@+id/ll_facing_similar_friends_item1"
-                    layout="@layout/facing_index_friend_item" />
+                    android:id="@+id/ll_facing_fun_1"
+                    layout="@layout/facing_index_fun_item" />
+
+                <View
+                    android:layout_width="0.5dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorGray" />
 
                 <include
-                    android:id="@+id/ll_facing_similar_friends_item2"
-                    layout="@layout/facing_index_friend_item" />
+                    android:id="@+id/ll_facing_fun_2"
+                    layout="@layout/facing_index_fun_item" />
+
+                <View
+                    android:layout_width="0.5dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorGray" />
 
                 <include
-                    android:id="@+id/ll_facing_similar_friends_item3"
-                    layout="@layout/facing_index_friend_item" />
-            </LinearLayout>
+                    android:id="@+id/ll_facing_fun_3"
+                    layout="@layout/facing_index_fun_item" />
 
-            <LinearLayout
+            </com.topie.huaifang.view.HFAspectLinearLayout>
+
+            <com.topie.huaifang.view.HFAspectLinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="10dp"
                 android:orientation="horizontal"
-                android:weightSum="4">
+                android:weightSum="4"
+                app:aspectRatio="4">
 
                 <include
-                    android:id="@+id/ll_facing_similar_friends_item4"
-                    layout="@layout/facing_index_friend_item" />
+                    android:id="@+id/ll_facing_fun_4"
+                    layout="@layout/facing_index_fun_item" />
+
+                <View
+                    android:layout_width="0.5dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorGray" />
 
                 <include
-                    android:id="@+id/ll_facing_similar_friends_item5"
-                    layout="@layout/facing_index_friend_item" />
+                    android:id="@+id/ll_facing_fun_5"
+                    layout="@layout/facing_index_fun_item" />
+
+                <View
+                    android:layout_width="0.5dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorGray" />
 
                 <include
-                    android:id="@+id/ll_facing_similar_friends_item6"
-                    layout="@layout/facing_index_friend_item" />
+                    android:id="@+id/ll_facing_fun_6"
+                    layout="@layout/facing_index_fun_item" />
 
-                <include
-                    android:id="@+id/ll_facing_similar_friends_item7"
-                    layout="@layout/facing_index_friend_item" />
+                <View
+                    android:layout_width="0.5dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorGray" />
+
+            </com.topie.huaifang.view.HFAspectLinearLayout>
+
+            <!--可能认识的人-->
+            <LinearLayout
+                android:id="@+id/ll_facing_similar_friends_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="10dp"
+                android:visibility="gone">
+
+                <include layout="@layout/function_thick_line_item" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:background="@color/colorPrimary"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:src="@mipmap/ic_facing_index_user" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/facing_index_friend"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="14sp"
+                        android:visibility="visible" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal"
+                    android:weightSum="4">
+
+                    <include
+                        android:id="@+id/ll_facing_similar_friends_item0"
+                        layout="@layout/facing_index_friend_item" />
+
+                    <include
+                        android:id="@+id/ll_facing_similar_friends_item1"
+                        layout="@layout/facing_index_friend_item" />
+
+                    <include
+                        android:id="@+id/ll_facing_similar_friends_item2"
+                        layout="@layout/facing_index_friend_item" />
+
+                    <include
+                        android:id="@+id/ll_facing_similar_friends_item3"
+                        layout="@layout/facing_index_friend_item" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal"
+                    android:weightSum="4">
+
+                    <include
+                        android:id="@+id/ll_facing_similar_friends_item4"
+                        layout="@layout/facing_index_friend_item" />
+
+                    <include
+                        android:id="@+id/ll_facing_similar_friends_item5"
+                        layout="@layout/facing_index_friend_item" />
+
+                    <include
+                        android:id="@+id/ll_facing_similar_friends_item6"
+                        layout="@layout/facing_index_friend_item" />
+
+                    <include
+                        android:id="@+id/ll_facing_similar_friends_item7"
+                        layout="@layout/facing_index_friend_item" />
+                </LinearLayout>
+
             </LinearLayout>
+
+            <!--底部距离底边分割线-->
+            <include
+                layout="@layout/function_thick_line_item"
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
+            <include
+                layout="@layout/function_thick_line_item"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
 
         </LinearLayout>
 
-        <!--底部距离底边分割线-->
-        <include
-            layout="@layout/function_thick_line_item"
-            android:layout_width="match_parent"
-            android:layout_height="20dp" />
+    </ScrollView>
 
-        <include
-            layout="@layout/function_thick_line_item"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
-
-    </LinearLayout>
-
-</ScrollView>
+</com.davdian.ptr.Pt2FrameLayout>

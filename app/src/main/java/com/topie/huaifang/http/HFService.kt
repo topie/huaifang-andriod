@@ -8,6 +8,7 @@ import com.topie.huaifang.http.bean.communication.HFCommFriendsResponseBody
 import com.topie.huaifang.http.bean.communication.HFCommMsgListResponseBody
 import com.topie.huaifang.http.bean.function.*
 import com.topie.huaifang.http.bean.index.HFIndexNewsResponseBody
+import com.topie.huaifang.http.bean.index.HFIndexTopImgResponseBody
 import com.topie.huaifang.util.HFDimensUtils
 import io.reactivex.Observable
 import okhttp3.MultipartBody
@@ -270,6 +271,12 @@ interface HFService {
      */
     @GET("/api/m/index/news")
     fun getIndexNews(): Observable<HFIndexNewsResponseBody>
+
+    /**
+     * 首页头图
+     */
+    @GET("/api/m/index/head")
+    fun getIndexTopImage(): Observable<HFIndexTopImgResponseBody>
 
     /**
      * 账户信息
