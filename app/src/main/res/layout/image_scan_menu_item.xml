@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -12,12 +11,18 @@
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
-        <com.topie.huaifang.imageloader.HFImageView
-            android:id="@+id/iv_menu_item"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            app:borderColor="@color/colorGray"
-            app:borderWidth="1dp" />
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_local_image_scan_border"
+            android:padding="1dp">
+
+            <com.topie.huaifang.imageloader.HFImageView
+                android:id="@+id/iv_menu_item"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:scaleType="centerCrop" />
+        </FrameLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -31,7 +36,9 @@
                 android:paddingBottom="5dp"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
-                android:paddingTop="5dp" />
+                android:paddingTop="5dp"
+                android:textColor="@color/colorDark"
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/tv_menu_item_count"
@@ -40,7 +47,9 @@
                 android:paddingBottom="5dp"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
-                android:paddingTop="5dp" />
+                android:paddingTop="5dp"
+                android:textColor="@color/colorGray"
+                android:textSize="12sp" />
         </LinearLayout>
 
     </LinearLayout>

@@ -19,6 +19,7 @@ import android.view.WindowManager
 import com.topie.huaifang.extensions.kGetCachePictureDir
 import com.topie.huaifang.extensions.kStartActivity
 import com.topie.huaifang.extensions.kToastShort
+import com.topie.huaifang.imageloader.ImageScanActivity
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -47,11 +48,18 @@ class HFGetFileActivity : AppCompatActivity() {
             TYPE_TAKE_PIC -> {
                 dispatchTakePictureIntent()
             }
+            TYPE_GET_IMG -> {
+                dispatchGetImageIntent()
+            }
             else -> {
                 onCancel(mId)
                 finish()
             }
         }
+    }
+
+    private fun dispatchGetImageIntent() {
+        kStartActivity(ImageScanActivity::class.java)
     }
 
     private fun dispatchTakePictureIntent() {
@@ -111,6 +119,7 @@ class HFGetFileActivity : AppCompatActivity() {
         private const val EXTRA_TYPE = "EXTRA_TYPE"
         private const val TYPE_GET_FILE = 1
         private const val TYPE_TAKE_PIC = 2
+        private const val TYPE_GET_IMG = 3
         private const val REQUEST_IMAGE_CAPTURE = 100
         private const val REQUEST_GET_FILE = 200
 
@@ -131,6 +140,10 @@ class HFGetFileActivity : AppCompatActivity() {
 
         fun getFileFromProvider(onResult: ((list: List<String>) -> Unit)) {
             getFile(TYPE_GET_FILE, ListenerImpl(onResult))
+        }
+
+        fun getImage(onResult: ((list: List<String>) -> Unit)) {
+            getFile(TYPE_GET_IMG, ListenerImpl(onResult))
         }
 
         private fun getFile(type: Int, listener: Listener) {

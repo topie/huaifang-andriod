@@ -87,21 +87,16 @@ open class HFImageView @JvmOverloads constructor(context: Context, attrs: Attrib
                 load.placeholder(BitmapDrawable(resources, bitmap))
             }
         }
-        if (mRoundedAsCircle || mRoundedCornerRadius > 0) {
-            load.into(object : BitmapImageViewTarget(this) {
-                override fun setResource(bitmap: Bitmap?) {
-                    bitmap ?: return
-                    view ?: return
-                    val drawable = HFRoundedBitmapDrawable(view, bitmap)
-                    drawable.isCircle = mRoundedAsCircle
-                    drawable.setRadius(mRoundedCornerRadius.toFloat())
-                    drawable.setBorder(mBorderColor, mBorderWidth.toFloat())
-                    view.setImageDrawable(drawable)
-                }
-
-            })
-        } else {
-            load.into(this)
-        }
+        load.into(object : BitmapImageViewTarget(this) {
+            override fun setResource(bitmap: Bitmap?) {
+                bitmap ?: return
+                view ?: return
+                val drawable = HFRoundedBitmapDrawable(view, bitmap)
+                drawable.isCircle = mRoundedAsCircle
+                drawable.setRadius(mRoundedCornerRadius.toFloat())
+                drawable.setBorder(mBorderColor, mBorderWidth.toFloat())
+                view.setImageDrawable(drawable)
+            }
+        })
     }
 }

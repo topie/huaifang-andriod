@@ -19,4 +19,9 @@
     <style name="function_guide_tab_title">
         <item name="android:textSize">12sp</item>
     </style>
+
+    <style name="toolbar_title">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/colorDark</item>
+    </style>
 </resources>

@@ -12,6 +12,7 @@ import com.topie.huaifang.function.guide.HFFunGuideActivity
 import com.topie.huaifang.function.library.HFFunLibraryActivity
 import com.topie.huaifang.function.live.HFFunLiveActivity
 import com.topie.huaifang.function.live.HFFunLiveBazaarActivity
+import com.topie.huaifang.function.live.HFFunLiveRepairsListActivity
 import com.topie.huaifang.function.notice.HFFunPublicActivity
 import com.topie.huaifang.function.party.HFFunPartyActivity
 import com.topie.huaifang.function.yellowpage.HFFunYellowPageActivity
@@ -71,6 +72,10 @@ class HFFunAllActivity : HFBaseTitleActivity() {
         })
         initFun(ll_fun_all_service_1, R.mipmap.ic_fun_all_service_library, "社区图书馆", {
             this@HFFunAllActivity.kStartActivity(HFFunLibraryActivity::class.java)
+        })
+
+        initFun(ll_fun_all_service_2, R.mipmap.ic_fun_all_service_repair, "物业报修", {
+            this@HFFunAllActivity.kStartActivity(HFFunLiveRepairsListActivity::class.java)
         })
 
 

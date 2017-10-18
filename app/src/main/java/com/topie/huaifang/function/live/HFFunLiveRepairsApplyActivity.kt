@@ -68,7 +68,7 @@ class HFFunLiveRepairsApplyActivity : HFBaseTitleActivity() {
             }
         }
         ll_fun_live_repairs_apply_select_img.setOnClickListener {
-            HFGetFileActivity.takePicture {
+            HFGetFileActivity.getImage {
                 it.firstOrNull()?.let {
                     val value = repairsImages[it] ?: ""
                     repairsImages.put(it, value)
