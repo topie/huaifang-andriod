@@ -19,7 +19,7 @@ import com.topie.huaifang.view.HFAspectRatioMeasure
 /**
  * Created by arman on 2017/9/14.
  */
-class HFImageView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, @AttrRes defStyleAttr: Int = 0) : ImageView(context, attrs, defStyleAttr) {
+open class HFImageView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, @AttrRes defStyleAttr: Int = 0) : ImageView(context, attrs, defStyleAttr) {
 
     var mRoundedAsCircle: Boolean = false
     var mRoundedCornerRadius: Int = 0
