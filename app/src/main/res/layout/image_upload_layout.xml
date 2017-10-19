@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.topie.huaifang.view.HFAspectLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="4">
+
+        <com.topie.huaifang.imageloader.HFImageView
+            android:id="@+id/iv_image_upload0"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:aspectRatio="1" />
+
+        <View
+            android:layout_width="10dp"
+            android:layout_height="1px" />
+
+        <com.topie.huaifang.imageloader.HFImageView
+            android:id="@+id/iv_image_upload1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:aspectRatio="1" />
+
+        <View
+            android:layout_width="10dp"
+            android:layout_height="1px" />
+
+        <com.topie.huaifang.imageloader.HFImageView
+            android:id="@+id/iv_image_upload2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:aspectRatio="1" />
+
+        <View
+            android:layout_width="10dp"
+            android:layout_height="1px" />
+
+        <com.topie.huaifang.imageloader.HFImageView
+            android:id="@+id/iv_image_upload3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:aspectRatio="1" />
+    </com.topie.huaifang.view.HFAspectLinearLayout>
+
+    <com.topie.huaifang.view.HFAspectLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="4">
+
+        <com.topie.huaifang.imageloader.HFImageView
+            android:id="@+id/iv_image_upload4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:aspectRatio="1" />
+
+        <View
+            android:layout_width="10dp"
+            android:layout_height="1px" />
+
+        <com.topie.huaifang.imageloader.HFImageView
+            android:id="@+id/iv_image_upload5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:aspectRatio="1" />
+
+        <View
+            android:layout_width="10dp"
+            android:layout_height="1px" />
+
+        <com.topie.huaifang.imageloader.HFImageView
+            android:id="@+id/iv_image_upload6"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:aspectRatio="1" />
+
+        <View
+            android:layout_width="10dp"
+            android:layout_height="1px" />
+
+        <com.topie.huaifang.imageloader.HFImageView
+            android:id="@+id/iv_image_upload7"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:aspectRatio="1" />
+    </com.topie.huaifang.view.HFAspectLinearLayout>
+</LinearLayout>
