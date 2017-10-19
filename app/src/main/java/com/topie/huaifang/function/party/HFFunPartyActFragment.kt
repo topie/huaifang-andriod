@@ -62,7 +62,7 @@ class HFFunPartyActFragment : HFBaseFragment() {
     override fun onResume() {
         super.onResume()
         if (adapter.list.isEmpty()) {
-            getFunPartyActList(adapter.pageSize)
+            getFunPartyActList(1)
         }
     }
 
@@ -70,12 +70,16 @@ class HFFunPartyActFragment : HFBaseFragment() {
         disposable?.takeIf { it.isDisposed.not() }?.dispose()
         disposable = HFRetrofit.hfService.getFunPartyActList(pageSize).subscribeResultOkApi({
             it.data?.data?.takeIf { it.isNotEmpty() }?.let {
-                if (pageSize == 0) {
+                if (pageSize == 0 || pageSize == 1) {
                     adapter.list.clear()
+                    adapter.list.addAll(it)
+                    adapter.pageSize = 1
+                    adapter.notifyDataSetChanged()
+                } else if (pageSize == adapter.pageSize) {
+                    adapter.list.addAll(it)
+                    adapter.pageSize = pageSize + 1
+                    adapter.notifyDataSetChanged()
                 }
-                adapter.list.addAll(it)
-                adapter.pageSize = pageSize + 1
-                adapter.notifyDataSetChanged()
             }
         }, {
             pt2FrameLayout.complete2()
@@ -87,7 +91,7 @@ class HFFunPartyActFragment : HFBaseFragment() {
         disposable?.takeIf { it.isDisposed.not() }?.dispose()
     }
 
-    private class Adapter(var pageSize: Int = 0)
+    private class Adapter(var pageSize: Int = 1)
         : HFBaseRecyclerAdapter<HFFunPartyResponseBody.ListData, ViewHolder>(ViewHolder.CREATOR)
 
     private class ViewHolder(itemView: View) : HFBaseRecyclerViewHolder<HFFunPartyResponseBody.ListData>(itemView, true) {
@@ -111,6 +115,7 @@ class HFFunPartyActFragment : HFBaseFragment() {
                 }
             }
             tvPublisher.text = d.publishUser?.let { "发布者：$it" }
+            tvApply.text = d.total.toString()
         }
 
         override fun onItemClicked(d: HFFunPartyResponseBody.ListData?) {
