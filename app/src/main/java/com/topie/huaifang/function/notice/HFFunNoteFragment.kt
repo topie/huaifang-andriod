@@ -121,7 +121,7 @@ class HFFunNoteFragment : HFBaseFragment() {
             tvTitle.text = d.title
             tvTime.text = d.cTime
             tvPublisher.text = d.cUser
-            val read = "${d.readCount}阅读"
+            val read = "${d.readCount}人阅读"
             tvRead.text = read
         }
     }

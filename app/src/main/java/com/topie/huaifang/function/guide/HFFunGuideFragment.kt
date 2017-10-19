@@ -13,9 +13,7 @@ import com.davdian.ptr.Pt2FrameLayout
 import com.davdian.ptr.ptl.PtlFrameLayout
 import com.topie.huaifang.R
 import com.topie.huaifang.base.HFBaseFragment
-import com.topie.huaifang.base.HFBaseRecyclerAdapter
 import com.topie.huaifang.base.HFBaseRecyclerViewHolder
-import com.topie.huaifang.base.HFViewHolderFactory
 import com.topie.huaifang.extensions.kFindActivity
 import com.topie.huaifang.extensions.kFindViewById
 import com.topie.huaifang.extensions.kParseUrl
@@ -34,9 +32,18 @@ import io.reactivex.disposables.Disposable
  */
 class HFFunGuideFragment : HFBaseFragment() {
 
-    var listData: HFFunGuideMenuResponseBody.ListData? = null
+    private var listData: HFFunGuideMenuResponseBody.ListData? = null
     private var disposable: Disposable? = null
     private var pt2FrameLayout: Pt2FrameLayout? = null
+    private val adapter = Adapter()
+
+    companion object {
+        fun newInstance(aData: HFFunGuideMenuResponseBody.ListData?): HFFunGuideFragment {
+            val fragment = HFFunGuideFragment()
+            fragment.listData = aData
+            return fragment
+        }
+    }
 
     override fun onCreateViewSupport(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         pt2FrameLayout = inflater.inflate(R.layout.base_pt2_recycler_layout, container, false) as Pt2FrameLayout
@@ -46,7 +53,7 @@ class HFFunGuideFragment : HFBaseFragment() {
             }
 
             override fun onLoadMoreBegin(frame: PtlFrameLayout?) {
-                getFunGuideList(listData?._pageNum ?: 0)
+                getFunGuideList(adapter.pageNumber)
             }
 
             override fun onRefreshBegin(frame: PtrFrameLayout?) {
@@ -88,12 +95,15 @@ class HFFunGuideFragment : HFBaseFragment() {
         disposable?.takeIf { !it.isDisposed }?.dispose()
     }
 
-    val adapter = Adapter()
-
-    class Adapter : HFBaseRecyclerAdapter<Any, HFBaseRecyclerViewHolder<Any>>(Factory()) {
+    class Adapter(val list: MutableList<Any> = arrayListOf()) : RecyclerView.Adapter<HFBaseRecyclerViewHolder<Any>>() {
 
         var pageNumber: Int = 1
             private set
+
+        companion object {
+            const val TYPE_TOP = 0
+            const val TYPE_NORMAL = 1
+        }
 
         fun setList(aList: List<HFFunGuideListResponseBody.ListData>) {
             list.removeAll { it is HFFunGuideListResponseBody.ListData }
@@ -106,25 +116,30 @@ class HFFunGuideFragment : HFBaseFragment() {
             pageNumber++
         }
 
-        override fun getItemViewType(position: Int): Int {
-            return when (position) {
-                0 -> 0
-                else -> 1
-            }
+        override fun getItemCount(): Int {
+            return list.size
         }
-    }
 
-    class Factory : HFViewHolderFactory<HFBaseRecyclerViewHolder<Any>> {
+        override fun onBindViewHolder(holder: HFBaseRecyclerViewHolder<Any>?, position: Int) {
+            holder?.bindData(list[position])
+        }
 
-        override fun create(parent: ViewGroup, viewType: Int): HFBaseRecyclerViewHolder<Any> {
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HFBaseRecyclerViewHolder<Any> {
             val from = LayoutInflater.from(parent.context)
             return when (viewType) {
-                0 -> {
+                TYPE_TOP -> {
                     TopViewHolder(from.inflate(R.layout.function_guide_list_top, parent, false))
                 }
                 else -> {
                     ItemViewHolder(from.inflate(R.layout.function_guide_list_item, parent, false))
                 }
+            }
+        }
+
+        override fun getItemViewType(position: Int): Int {
+            return when (position) {
+                0 -> TYPE_TOP
+                else -> TYPE_NORMAL
             }
         }
     }
@@ -169,7 +184,8 @@ class HFFunGuideFragment : HFBaseFragment() {
                 imageView.loadImageUri(d.image?.kParseUrl())
                 tvName.text = d.title
                 tvTime.text = d.publishTime
-                tvRead.text = d.readCount
+                val text = "${d.readCount}人阅读"
+                tvRead.text = text
             } else {
                 tvName.text = null
                 tvTime.text = null

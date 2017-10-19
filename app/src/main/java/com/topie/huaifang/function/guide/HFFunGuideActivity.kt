@@ -7,10 +7,9 @@ import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import com.topie.huaifang.base.HFBaseTitleActivity
 import com.topie.huaifang.R
-import com.topie.huaifang.extensions.log
+import com.topie.huaifang.extensions.kInto
 import com.topie.huaifang.http.HFRetrofit
 import com.topie.huaifang.http.bean.function.HFFunGuideMenuResponseBody
-import com.topie.huaifang.http.composeApi
 import com.topie.huaifang.http.subscribeResultOkApi
 import kotlinx.android.synthetic.main.function_guide_activity.*
 
@@ -19,21 +18,28 @@ import kotlinx.android.synthetic.main.function_guide_activity.*
  * 办事指南
  */
 class HFFunGuideActivity : HFBaseTitleActivity() {
+
+    private var vpAdapter: VPAdapter? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.function_guide_activity)
         setBaseTitle(R.string.facing_index_fun_guide)
+        vpAdapter = VPAdapter(supportFragmentManager)
+        vp_fun_guide.adapter = vpAdapter
+        tl_fun_guide.setupWithViewPager(vp_fun_guide)
+    }
+
+    override fun onResume() {
+        super.onResume()
         HFRetrofit.hfService.getFunGuideMenu().subscribeResultOkApi {
-            val vpAdapter = VPAdapter(supportFragmentManager)
-            vpAdapter.list = it.data?.data
-            vp_fun_guide.adapter = vpAdapter
-            tl_fun_guide.setupWithViewPager(vp_fun_guide)
+            vpAdapter?.list = it.data?.data
             tl_fun_guide.tabMode = when {
-                vpAdapter.count > 3 -> TabLayout.MODE_SCROLLABLE
+                vpAdapter?.count ?: 0 > 3 -> TabLayout.MODE_SCROLLABLE
                 else -> TabLayout.MODE_FIXED
             }
-            vpAdapter.notifyDataSetChanged()
-        }
+            vpAdapter?.notifyDataSetChanged()
+        }.kInto(pauseDisableList)
     }
 
 
@@ -42,9 +48,7 @@ class HFFunGuideActivity : HFBaseTitleActivity() {
         var list: List<HFFunGuideMenuResponseBody.ListData>? = null
 
         override fun getItem(position: Int): Fragment {
-            val hfFunGuideFragment = HFFunGuideFragment()
-            hfFunGuideFragment.listData = list?.get(position)
-            return hfFunGuideFragment
+            return HFFunGuideFragment.newInstance(list?.get(position))
         }
 
         override fun getCount(): Int {
