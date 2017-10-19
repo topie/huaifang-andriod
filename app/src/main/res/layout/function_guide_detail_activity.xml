@@ -78,13 +78,11 @@
 
             <include layout="@layout/function_line_item" />
 
-            <TextView
-                android:id="@+id/tv_fun_guide_content"
+            <LinearLayout
+                android:id="@+id/ll_fun_guide_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:textColor="@color/colorDark"
-                android:textSize="14sp" />
+                android:orientation="vertical" />
 
         </LinearLayout>
 
