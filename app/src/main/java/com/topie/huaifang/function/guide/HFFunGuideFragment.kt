@@ -77,7 +77,7 @@ class HFFunGuideFragment : HFBaseFragment() {
 
     private fun getFunGuideList(pageNum: Int = 1) {
         disposable?.takeIf { !it.isDisposed }?.dispose()
-        disposable = HFRetrofit.hfService.getFunGuideList(listData?.id ?: "").subscribeResultOkApi({
+        disposable = HFRetrofit.hfService.getFunGuideList(listData?.id ?: "", pageNum).subscribeResultOkApi({
             it.data?.data?.let {
                 when (pageNum) {
                     0, 1 -> adapter.setList(it)
