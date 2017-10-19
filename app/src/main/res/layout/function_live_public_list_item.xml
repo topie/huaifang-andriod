@@ -5,7 +5,6 @@
     android:layout_marginLeft="10dp"
     android:layout_marginRight="10dp"
     android:layout_marginTop="10dp"
-    android:background="@drawable/shape_fun_guide_border"
     android:minHeight="75dp"
     android:orientation="vertical"
     android:padding="10dp">
@@ -28,6 +27,16 @@
             android:textColor="@color/colorBlack"
             android:textSize="14sp" />
 
+        <TextView
+            android:id="@+id/tv_fun_live_public_read"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:lines="1"
+            android:maxLines="1"
+            android:textColor="@color/colorBlack"
+            android:textSize="14sp" />
+
     </LinearLayout>
 
 
@@ -44,6 +53,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -51,20 +61,34 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:maxLines="1"
-            android:text="发布者"
+            android:text="发布者:"
             android:textColor="@color/colorBlack"
             android:textSize="12sp" />
 
         <TextView
             android:id="@+id/tv_fun_live_public_publisher"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:layout_marginStart="5dp"
+            android:layout_weight="1"
             android:maxLines="1"
             android:textColor="@color/colorBlack"
             android:textSize="12sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:text="查看详情"
+            android:textColor="@color/colorLightBlue"
+            android:textSize="12sp" />
     </LinearLayout>
 
+    <include
+        layout="@layout/function_line_item"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="10dp" />
 
 </LinearLayout>
