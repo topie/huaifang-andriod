@@ -17,7 +17,7 @@ import com.topie.huaifang.R
 /**
  * A utility class that performs measuring based on the desired aspect ratio.
  */
-internal class HFAspectRatioMeasure(private val view: View, var mAspectRatio: Float) {
+internal class HFAspectRatioMeasure(var mAspectRatio: Float) {
 
     private val spec: Spec = Spec()
 
@@ -29,7 +29,7 @@ internal class HFAspectRatioMeasure(private val view: View, var mAspectRatio: Fl
                 typedArray.recycle()
                 return@let ratio
             } ?: 0.toFloat()
-            return HFAspectRatioMeasure(view, ratio)
+            return HFAspectRatioMeasure(ratio)
         }
     }
 
@@ -58,14 +58,12 @@ internal class HFAspectRatioMeasure(private val view: View, var mAspectRatio: Fl
      * if the parent has specified mode `EXACTLY`, and it doesn't exceed measure size if parent
      * has specified mode `AT_MOST`.
      */
-    fun updateMeasureSpec(widthMeasureSpec: Int, heightMeasureSpec: Int): Spec {
+    fun updateMeasureSpec(widthMeasureSpec: Int, heightMeasureSpec: Int, layoutParams: ViewGroup.LayoutParams, widthPadding: Int, heightPadding: Int): Spec {
         spec.width = widthMeasureSpec
         spec.height = heightMeasureSpec
-        val widthPadding = view.paddingLeft + view.paddingRight
-        val heightPadding = view.paddingTop + view.paddingBottom
         val aspectRatio = mAspectRatio
-        val width = view.layoutParams.width
-        if (shouldAdjust(view.layoutParams.height)) {
+        val width = layoutParams.width
+        if (shouldAdjust(layoutParams.height)) {
             val widthSpecSize = View.MeasureSpec.getSize(widthMeasureSpec)
             val desiredHeight = ((widthSpecSize - widthPadding) / aspectRatio + heightPadding).toInt()
             val resolvedHeight = View.resolveSize(desiredHeight, heightMeasureSpec)

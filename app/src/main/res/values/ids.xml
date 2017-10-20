@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <item name="id_facing_bottom_index" type="id" />
+    <item name="id_image_tag" type="id" />
 </resources>

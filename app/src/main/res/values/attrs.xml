@@ -16,6 +16,8 @@
 
     <declare-styleable name="HFAspectLinearLayout">
         <attr name="aspectRatio" />
+        <attr name="aspectHorizontalPadding" format="dimension" />
+        <attr name="aspectVerticalPadding" format="dimension" />
     </declare-styleable>
 
     <declare-styleable name="HFAspectRelativeLayout">

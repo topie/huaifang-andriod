@@ -44,7 +44,9 @@ open class HFImageView @JvmOverloads constructor(context: Context, attrs: Attrib
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        val spec = measure.updateMeasureSpec(widthMeasureSpec, heightMeasureSpec)
+        val widthPadding = paddingLeft + paddingRight
+        val heightPadding = paddingTop + paddingBottom
+        val spec = measure.updateMeasureSpec(widthMeasureSpec, heightMeasureSpec, layoutParams, widthPadding, heightPadding)
         super.onMeasure(spec.width, spec.height)
     }
 

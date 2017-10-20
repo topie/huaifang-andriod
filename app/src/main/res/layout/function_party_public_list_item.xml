@@ -26,14 +26,6 @@
             android:textColor="@color/colorBlack"
             android:textSize="14sp" />
 
-        <ImageView
-            android:layout_width="22dp"
-            android:layout_height="22dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:src="@mipmap/ic_function_party_enclosure" />
-
     </RelativeLayout>
 
     <RelativeLayout
@@ -71,7 +63,7 @@
             android:layout_marginLeft="5dp"
             android:layout_marginStart="5dp"
             android:text="查看详情"
-            android:textColor="@color/colorBlack"
+            android:textColor="@color/colorPrimary"
             android:textSize="12sp" />
 
     </LinearLayout>

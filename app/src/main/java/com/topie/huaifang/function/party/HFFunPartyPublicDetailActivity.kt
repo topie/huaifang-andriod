@@ -1,6 +1,7 @@
 package com.topie.huaifang.function.party
 
 import android.os.Bundle
+import android.text.Html
 import com.topie.huaifang.R
 import com.topie.huaifang.base.HFBaseTitleActivity
 import com.topie.huaifang.extensions.kInto
@@ -36,22 +37,8 @@ class HFFunPartyPublicDetailActivity : HFBaseTitleActivity() {
         tv_fun_party_public_detail_title.text = aData?.title
         tv_fun_party_public_detail_time.text = aData?.publishTime
         tv_fun_party_public_detail_publisher.text = aData?.publishUser
-        tv_fun_party_public_detail_content.text = aData?.content
-//        tv_fun_party_public_detail_enclosure.setOnClickListener {
-//            val dir = kGetExtraFilesDir()
-//            val fileUrl = this.mData?.file
-//            if (dir == null || fileUrl.kIsEmpty()) {
-//                kToastShort("下载失败")
-//                return@setOnClickListener
-//            }
-//            HFRetrofit.hfService.downloadFile(fileUrl!!, dir.absolutePath, {
-//
-//            }, {
-//                kToastShort("下载成功")
-//            }, {
-//                kToastShort("下载失败")
-//            })
-//        }
+        tv_fun_party_public_detail_content.text = aData?.content?.let { Html.fromHtml(it) }
+        tv_fun_party_public_detail_read.text = aData?.total?.toString() ?: "0"
     }
 
     override fun onResume() {

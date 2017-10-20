@@ -50,25 +50,6 @@ class HFFunPartyActivity : HFBaseTitleActivity() {
         tl_fun_guide.tabMode = TabLayout.MODE_FIXED
         vpAdapter.notifyDataSetChanged()
         vp_fun_guide.setCurrentItem(intent?.getIntExtra(EXTRA_POSITION, POSITION_ZHIBU) ?: POSITION_ZHIBU, false)
-        vp_fun_guide.addOnPageChangeListener(mListener)
-        tv_base_title_right.setOnClickListener {
-            when (vp_fun_guide?.currentItem) {
-                0 -> this@HFFunPartyActivity.kStartActivity(HFFunPartyActPublishActivity::class.java)
-                else -> log("not support position [${vp_fun_guide?.currentItem}]")
-            }
-        }
-        mListener.onPageSelected(vp_fun_guide.currentItem)
-    }
-
-    private val mListener = object : SimpleOnPageChangeListener() {
-        override fun onPageSelected(position: Int) {
-            super.onPageSelected(position)
-            tv_base_title_right.text = when (position) {
-                0 -> "发布"
-                else -> null
-            }
-
-        }
     }
 
 
