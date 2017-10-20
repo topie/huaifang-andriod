@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AbsListView
 import android.widget.BaseAdapter
+import android.widget.ImageView
 import android.widget.RelativeLayout
 import com.topie.huaifang.R
 import com.topie.huaifang.extensions.kReset
@@ -80,6 +81,7 @@ class HFImagesUploadLayout @JvmOverloads constructor(context: Context?, attrs: A
                 hfImageView.layoutParams = AbsListView.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, getItemViewType(position))
                 hfImageView.setBackgroundColor(Color.WHITE)
                 hfImageView.setAspectRatio(1.toFloat())
+                hfImageView.scaleType = ImageView.ScaleType.CENTER_CROP
                 if (getItemViewType(position) == TYPE_ADD) {
                     hfImageView.setImageResource(R.mipmap.ic_image_upload_add)
                     hfImageView.mDefImageRes = R.mipmap.ic_image_upload_add
@@ -122,7 +124,7 @@ class HFImagesUploadLayout @JvmOverloads constructor(context: Context?, attrs: A
         }
 
         override fun getCount(): Int {
-            return list.size.coerceAtLeast(1).coerceAtMost(8)
+            return (list.size + 1).coerceAtMost(8)
         }
     }
 }

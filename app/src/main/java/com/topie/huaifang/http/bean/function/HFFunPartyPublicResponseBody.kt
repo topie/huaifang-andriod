@@ -24,6 +24,6 @@ class HFFunPartyPublicResponseBody : HFBaseResponseBody() {
         var title: String? = null
         var type: String? = null
         var content: String? = null
-        var total: Int = 0//参加人数
+        var readCount: Int = 0
     }
 }

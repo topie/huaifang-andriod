@@ -3,6 +3,7 @@
 package com.topie.huaifang
 
 import android.app.Activity
+import android.app.Dialog
 import android.content.ContentUris
 import android.content.Context
 import android.content.Intent
@@ -15,6 +16,7 @@ import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.support.v4.content.FileProvider
 import android.support.v7.app.AppCompatActivity
+import android.view.View
 import android.view.WindowManager
 import com.topie.huaifang.extensions.kGetCachePictureDir
 import com.topie.huaifang.extensions.kStartActivity
@@ -49,13 +51,30 @@ class HFGetFileActivity : AppCompatActivity() {
                 dispatchTakePictureIntent()
             }
             TYPE_GET_IMG -> {
-                dispatchGetImageIntent()
+                showSelect()
             }
             else -> {
                 onCancel(mId)
                 finish()
             }
         }
+    }
+
+    private fun showSelect() {
+        object : Dialog(this) {
+            override fun onCreate(savedInstanceState: Bundle?) {
+                super.onCreate(savedInstanceState)
+                setContentView(R.layout.image_select_layout)
+                findViewById<View>(R.id.tv_image_select_camera).setOnClickListener {
+                    dispatchTakePictureIntent()
+                    dismiss()
+                }
+                findViewById<View>(R.id.tv_image_select_pictures).setOnClickListener {
+                    dispatchGetImageIntent()
+                    dismiss()
+                }
+            }
+        }.show()
     }
 
     private fun dispatchGetImageIntent() {
@@ -190,7 +209,6 @@ class HFGetFileActivity : AppCompatActivity() {
         override fun onCancel() {
             mOnCancel()
         }
-
     }
 
     private object Util {

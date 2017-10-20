@@ -38,7 +38,7 @@ class HFFunPartyPublicDetailActivity : HFBaseTitleActivity() {
         tv_fun_party_public_detail_time.text = aData?.publishTime
         tv_fun_party_public_detail_publisher.text = aData?.publishUser
         tv_fun_party_public_detail_content.text = aData?.content?.let { Html.fromHtml(it) }
-        tv_fun_party_public_detail_read.text = aData?.total?.toString() ?: "0"
+        tv_fun_party_public_detail_read.text = aData?.readCount?.toString() ?: "0"
     }
 
     override fun onResume() {
