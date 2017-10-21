@@ -106,7 +106,7 @@ class ImageScanActivity : AppCompatActivity() {
                 v.isSelected = false
                 selectList.removeAll { it == path }
             } else {
-                if (limit < selectList.size) {
+                if (limit > selectList.size) {
                     v.isSelected = true
                     selectList.add(path)
                 } else {

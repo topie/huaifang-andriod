@@ -57,7 +57,7 @@ class HFFunDisNeighborhoodApplyActivity : HFBaseTitleActivity() {
         setContentView(R.layout.function_dis_neighborhood_apply_activity)
         setBaseTitle("发话题")
         ll_fun_dis_neighborhood_apply_select_img.setOnClickListener {
-            HFGetFileActivity.takePicture {
+            HFGetFileActivity.getImage {
                 it.firstOrNull()?.let {
                     val value = repairsImages[it] ?: ""
                     repairsImages.put(it, value)
