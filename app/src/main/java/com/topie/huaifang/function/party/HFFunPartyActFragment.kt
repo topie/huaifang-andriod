@@ -17,6 +17,7 @@ import com.topie.huaifang.base.HFBaseRecyclerAdapter
 import com.topie.huaifang.base.HFBaseRecyclerViewHolder
 import com.topie.huaifang.base.HFViewHolderFactory
 import com.topie.huaifang.extensions.kFindViewById
+import com.topie.huaifang.extensions.kInto
 import com.topie.huaifang.extensions.kParseUrl
 import com.topie.huaifang.extensions.kStartActivity
 import com.topie.huaifang.http.HFRetrofit
@@ -33,7 +34,6 @@ class HFFunPartyActFragment : HFBaseFragment() {
 
     private lateinit var pt2FrameLayout: Pt2FrameLayout
     private val adapter = Adapter()
-    private var disposable: Disposable? = null
 
     private val handler: AbsPt2Handler = object : AbsPt2Handler() {
 
@@ -46,7 +46,7 @@ class HFFunPartyActFragment : HFBaseFragment() {
         }
 
         override fun onRefreshBegin(frame: PtrFrameLayout?) {
-            getFunPartyActList(0)
+            getFunPartyActList(1)
         }
     }
 
@@ -62,32 +62,30 @@ class HFFunPartyActFragment : HFBaseFragment() {
     override fun onResume() {
         super.onResume()
         if (adapter.list.isEmpty()) {
-            getFunPartyActList(adapter.pageSize)
+            getFunPartyActList(1)
         }
     }
 
     private fun getFunPartyActList(pageSize: Int) {
-        disposable?.takeIf { it.isDisposed.not() }?.dispose()
-        disposable = HFRetrofit.hfService.getFunPartyActList(pageSize).subscribeResultOkApi({
+        HFRetrofit.hfService.getFunPartyActList(pageSize).subscribeResultOkApi({
             it.data?.data?.takeIf { it.isNotEmpty() }?.let {
-                if (pageSize == 0) {
+                if (pageSize == 0 || pageSize == 1) {
                     adapter.list.clear()
+                    adapter.list.addAll(it)
+                    adapter.pageSize = 1
+                    adapter.notifyDataSetChanged()
+                } else if (pageSize == adapter.pageSize) {
+                    adapter.list.addAll(it)
+                    adapter.pageSize = pageSize + 1
+                    adapter.notifyDataSetChanged()
                 }
-                adapter.list.addAll(it)
-                adapter.pageSize = pageSize + 1
-                adapter.notifyDataSetChanged()
             }
         }, {
             pt2FrameLayout.complete2()
-        })
+        }).kInto(pauseDisableList)
     }
 
-    override fun onPause() {
-        super.onPause()
-        disposable?.takeIf { it.isDisposed.not() }?.dispose()
-    }
-
-    private class Adapter(var pageSize: Int = 0)
+    private class Adapter(var pageSize: Int = 1)
         : HFBaseRecyclerAdapter<HFFunPartyResponseBody.ListData, ViewHolder>(ViewHolder.CREATOR)
 
     private class ViewHolder(itemView: View) : HFBaseRecyclerViewHolder<HFFunPartyResponseBody.ListData>(itemView, true) {
@@ -111,6 +109,7 @@ class HFFunPartyActFragment : HFBaseFragment() {
                 }
             }
             tvPublisher.text = d.publishUser?.let { "发布者：$it" }
+            tvApply.text = d.total.toString()
         }
 
         override fun onItemClicked(d: HFFunPartyResponseBody.ListData?) {

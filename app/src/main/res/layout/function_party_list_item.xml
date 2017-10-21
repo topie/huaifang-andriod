@@ -49,10 +49,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:paddingBottom="5dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:paddingTop="5dp" />
+                android:layout_centerVertical="true" />
         </RelativeLayout>
 
         <LinearLayout
@@ -81,7 +78,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_marginStart="5dp"
-                android:text="已报名"
+                android:text="人已报名"
                 android:textColor="@color/colorBlack"
                 android:textSize="12sp" />
 

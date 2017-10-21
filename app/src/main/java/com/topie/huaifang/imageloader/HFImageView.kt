@@ -6,7 +6,6 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
-import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.support.annotation.AttrRes
 import android.util.AttributeSet
@@ -45,7 +44,9 @@ open class HFImageView @JvmOverloads constructor(context: Context, attrs: Attrib
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        val spec = measure.updateMeasureSpec(widthMeasureSpec, heightMeasureSpec)
+        val widthPadding = paddingLeft + paddingRight
+        val heightPadding = paddingTop + paddingBottom
+        val spec = measure.updateMeasureSpec(widthMeasureSpec, heightMeasureSpec, layoutParams, widthPadding, heightPadding)
         super.onMeasure(spec.width, spec.height)
     }
 
@@ -75,17 +76,16 @@ open class HFImageView @JvmOverloads constructor(context: Context, attrs: Attrib
 
     private fun loadImage(load: GlideRequest<Bitmap>) {
         if (mDefImageRes != 0) {
-            val bitmap: Bitmap = HFMemoryCache.get(mDefImageRes) ?: BitmapFactory.decodeResource(resources, mDefImageRes)
-            HFMemoryCache.put(mDefImageRes, bitmap)
-            if (mRoundedAsCircle || mRoundedCornerRadius > 0) {
-                val drawable = HFRoundedBitmapDrawable(this, bitmap)
-                drawable.isCircle = mRoundedAsCircle
-                drawable.setRadius(mRoundedCornerRadius.toFloat())
-                drawable.setBorder(mBorderColor, mBorderWidth.toFloat())
-                load.placeholder(drawable)
-            } else {
-                load.placeholder(BitmapDrawable(resources, bitmap))
+            val bitmap: Bitmap = HFMemoryCache.get(mDefImageRes)?.takeIf {
+                !it.isRecycled
+            } ?: BitmapFactory.decodeResource(resources, mDefImageRes).also {
+                HFMemoryCache.put(mDefImageRes, it)
             }
+            val drawable = HFRoundedBitmapDrawable(this, bitmap)
+            drawable.isCircle = mRoundedAsCircle
+            drawable.setRadius(mRoundedCornerRadius.toFloat())
+            drawable.setBorder(mBorderColor, mBorderWidth.toFloat())
+            load.placeholder(drawable)
         }
         load.into(object : BitmapImageViewTarget(this) {
             override fun setResource(bitmap: Bitmap?) {

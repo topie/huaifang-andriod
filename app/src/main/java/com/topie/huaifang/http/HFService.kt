@@ -101,7 +101,7 @@ interface HFService {
     /**
      * 党务公开
      */
-    @GET("/api/m/party/activity/list")
+    @GET("/api/m/party/business/list")
     fun getFunPartyPublicList(): Observable<HFFunPartyPublicResponseBody>
 
     /**

@@ -105,6 +105,7 @@ class HFFunNoteFragment : HFBaseFragment() {
     private class ViewHolder(itemView: View) : HFBaseRecyclerViewHolder<HFFunPublicResponseBody.ListData>(itemView, true) {
 
         val tvTitle: TextView = itemView.kFindViewById(R.id.tv_fun_live_public_title)
+        val tvRead: TextView = itemView.kFindViewById(R.id.tv_fun_live_public_read)
         val tvTime: TextView = itemView.kFindViewById(R.id.tv_fun_live_public_time)
         val tvPublisher: TextView = itemView.kFindViewById(R.id.tv_fun_live_public_publisher)
 
@@ -120,6 +121,8 @@ class HFFunNoteFragment : HFBaseFragment() {
             tvTitle.text = d.title
             tvTime.text = d.cTime
             tvPublisher.text = d.cUser
+            val read = "${d.readCount}人阅读"
+            tvRead.text = read
         }
     }
 

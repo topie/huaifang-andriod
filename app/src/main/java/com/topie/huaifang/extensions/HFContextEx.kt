@@ -7,12 +7,13 @@ import android.content.ContextWrapper
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.support.annotation.AnyRes
 import android.support.annotation.ColorRes
 import android.support.annotation.StringRes
 import android.view.View
 import android.widget.Toast
-import java.io.File
 import java.lang.ref.WeakReference
 
 
@@ -67,14 +68,28 @@ fun kGetResourceEntryName(@AnyRes resId: Int): String? {
 }
 
 fun kToastLong(msg: String) {
-    appContext?.let {
-        HFToast.showToast(it, msg, Toast.LENGTH_LONG)
+    if (Looper.getMainLooper() == Looper.myLooper()) {
+        appContext?.let {
+            HFToast.showToast(it, msg, Toast.LENGTH_LONG)
+        }
+    } else {
+        handler.post {
+            kToastLong(msg)
+        }
     }
 }
 
+private val handler = Handler(Looper.getMainLooper())
+
 fun kToastShort(msg: String) {
-    appContext?.let {
-        HFToast.showToast(it, msg, Toast.LENGTH_SHORT)
+    if (Looper.getMainLooper() == Looper.myLooper()) {
+        appContext?.let {
+            HFToast.showToast(it, msg, Toast.LENGTH_SHORT)
+        }
+    } else {
+        handler.post {
+            kToastShort(msg)
+        }
     }
 }
 

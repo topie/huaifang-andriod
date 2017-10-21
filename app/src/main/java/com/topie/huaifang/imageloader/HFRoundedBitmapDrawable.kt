@@ -209,6 +209,9 @@ class HFRoundedBitmapDrawable(res: Resources, bitmap: Bitmap) : BitmapDrawable(r
     }
 
     override fun draw(canvas: Canvas) {
+        if (bitmap.isRecycled) {
+            return
+        }
         if (!shouldRound()) {
             super.draw(canvas)
             return

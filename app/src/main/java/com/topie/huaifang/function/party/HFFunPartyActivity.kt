@@ -5,8 +5,12 @@ import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
+import android.support.v4.view.ViewPager.SimpleOnPageChangeListener
 import com.topie.huaifang.R
 import com.topie.huaifang.base.HFBaseTitleActivity
+import com.topie.huaifang.extensions.kStartActivity
+import com.topie.huaifang.extensions.log
+import kotlinx.android.synthetic.main.base_title_layout.*
 import kotlinx.android.synthetic.main.function_guide_activity.*
 
 /**

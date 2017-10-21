@@ -6,27 +6,13 @@
     android:layout_marginRight="10dp"
     android:layout_marginTop="10dp"
     android:background="@drawable/shape_fun_guide_border"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="10dp">
 
     <TextView
         android:id="@+id/tv_fun_guide_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="20dp"
-        android:lines="1"
-        android:maxLines="1"
-        android:textColor="@color/colorBlack"
-        android:textSize="14sp" />
-
-    <TextView
-        android:id="@+id/tv_fun_guide_address"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
         android:lines="1"
         android:maxLines="1"
         android:textColor="@color/colorBlack"
@@ -35,63 +21,50 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal">
 
-        <LinearLayout
-            android:id="@+id/ll_fun_communicate"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:lines="1"
+            android:maxLines="1"
+            android:text="地点:  "
+            android:textColor="@color/colorBlack"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tv_fun_guide_address"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center"
-            android:visibility="gone">
+            android:lines="1"
+            android:maxLines="1"
+            android:textColor="@color/colorBlack"
+            android:textSize="14sp" />
+    </LinearLayout>
 
-            <ImageView
-                android:layout_width="25dp"
-                android:layout_height="22.5dp"
-                android:src="@mipmap/ic_function_guide_communicate" />
+    <LinearLayout
+        android:id="@+id/ll_fun_tel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/tv_fun_guide_communicate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginStart="10dp"
-                android:text="@string/fun_guide_communicate"
-                android:textSize="14sp" />
-        </LinearLayout>
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:src="@mipmap/ic_function_guide_tel" />
 
-        <View
-            android:layout_width="0.5dp"
-            android:layout_height="match_parent"
-            android:background="@color/colorGray"
-            android:visibility="gone" />
-
-        <LinearLayout
-            android:id="@+id/ll_fun_tel"
-            android:layout_width="0dp"
+        <TextView
+            android:id="@+id/tv_fun_guide_tel"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center">
-
-            <ImageView
-                android:layout_width="25dp"
-                android:layout_height="22.5dp"
-                android:src="@mipmap/ic_function_guide_tel" />
-
-            <TextView
-                android:id="@+id/tv_fun_guide_tel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginStart="10dp"
-                android:text="@string/fun_guide_tel"
-                android:textSize="14sp" />
-        </LinearLayout>
-
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:text="@string/fun_guide_tel"
+            android:textColor="@color/colorBlack"
+            android:textSize="12sp" />
     </LinearLayout>
 
 </LinearLayout>

@@ -1,10 +1,11 @@
 package com.topie.huaifang.function.live
 
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.HandlerThread
 import android.os.Message
-import android.view.ViewGroup.MarginLayoutParams
+import android.support.v4.util.ArrayMap
 import com.topie.huaifang.HFGetFileActivity
 import com.topie.huaifang.R
 import com.topie.huaifang.base.HFBaseTitleActivity
@@ -12,9 +13,8 @@ import com.topie.huaifang.extensions.*
 import com.topie.huaifang.http.HFRetrofit
 import com.topie.huaifang.http.bean.function.HFFunLiveRepairsApplyRequestBody
 import com.topie.huaifang.http.subscribeResultOkApi
-import com.topie.huaifang.imageloader.HFImageView
-import com.topie.huaifang.util.HFDimensUtils
 import com.topie.huaifang.view.HFDateDialog
+import com.topie.huaifang.view.HFImagesUploadLayout
 import kotlinx.android.synthetic.main.function_live_repairs_apply_activity.*
 import java.io.File
 import java.util.*
@@ -27,7 +27,7 @@ import java.util.*
 class HFFunLiveRepairsApplyActivity : HFBaseTitleActivity() {
 
     private var repairsTime: Date? = null
-    private val repairsImages: MutableMap<String, String> = hashMapOf()
+    private val repairsImages: MutableMap<String, String> = ArrayMap()
 
     private val backgroundThread = HandlerThread("updateImage").also { it.start() }
     private val handler = object : Handler(backgroundThread.looper) {
@@ -67,16 +67,23 @@ class HFFunLiveRepairsApplyActivity : HFBaseTitleActivity() {
                 show()
             }
         }
-        ll_fun_live_repairs_apply_select_img.setOnClickListener {
-            HFGetFileActivity.getImage {
-                it.firstOrNull()?.let {
-                    val value = repairsImages[it] ?: ""
-                    repairsImages.put(it, value)
-                    handler.sendEmptyMessage(100)
-                    refreshView()
+        ul_fun_live_repairs_apply_select_img.setOnItemClickListener(object : HFImagesUploadLayout.OnItemClickListener {
+            override fun onAdd() {
+                HFGetFileActivity.getImage {
+                    it.firstOrNull()?.let {
+                        val value = repairsImages[it] ?: ""
+                        repairsImages.put(it, value)
+                        handler.sendEmptyMessage(100)
+                        refreshView()
+                    }
                 }
             }
-        }
+
+            override fun onImageClicked(uri: Uri?, position: Int) {
+
+            }
+
+        })
         tv_fun_live_repairs_apply_submit.setOnClickListener {
             try {
                 tv_fun_live_repairs_apply_submit?.isEnabled = false
@@ -95,16 +102,8 @@ class HFFunLiveRepairsApplyActivity : HFBaseTitleActivity() {
 
     private fun refreshView() {
         tv_fun_live_repairs_apply_time.text = repairsTime?.kToSimpleFormat() ?: ""
-        ll_fun_live_repairs_apply_images.removeAllViews()
-        repairsImages.forEach {
-            val hfImageView = HFImageView(this)
-            val lp = MarginLayoutParams(MarginLayoutParams.MATCH_PARENT, MarginLayoutParams.WRAP_CONTENT)
-            lp.topMargin = HFDimensUtils.dp2px(5.toFloat())
-            hfImageView.layoutParams = lp
-            hfImageView.setAspectRatio(1.toFloat())
-            hfImageView.loadImageUri(it.key.kParseFileUri())
-            ll_fun_live_repairs_apply_images.addView(hfImageView)
-        }
+        val uriList = repairsImages.keys.map { it.kParseFileUri() }
+        ul_fun_live_repairs_apply_select_img?.setUriList(uriList)
     }
 
     @Throws(IllegalArgumentException::class)

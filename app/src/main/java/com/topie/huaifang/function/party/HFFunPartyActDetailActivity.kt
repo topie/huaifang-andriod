@@ -1,6 +1,7 @@
 package com.topie.huaifang.function.party
 
 import android.os.Bundle
+import android.text.Html
 import com.topie.huaifang.R
 import com.topie.huaifang.base.HFBaseTitleActivity
 import com.topie.huaifang.extensions.kInto
@@ -26,8 +27,8 @@ class HFFunPartyActDetailActivity : HFBaseTitleActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.function_party_act_detail_activity)
-        setBaseTitle(mDetail?.topic)
         mDetail = intent.getSerializableExtra(EXTRA_DETAIL) as HFFunPartyResponseBody.ListData?
+        setBaseTitle(mDetail?.topic)
         iv_fun_party_detail_img.loadImageUri(mDetail?.image?.kParseUrl())
         tv_fun_party_act_title.text = mDetail?.topic
         tv_fun_party_act_organ.text = ""
@@ -35,12 +36,13 @@ class HFFunPartyActDetailActivity : HFBaseTitleActivity() {
         tv_fun_party_act_address.text = mDetail?.address
         tv_fun_party_act_publisher.text = mDetail?.publishUser
         tv_fun_party_act_read.text = mDetail?.total?.toString()?.let { it + "人已参加" }
-        tv_fun_party_act_content.text = mDetail?.content
+        tv_fun_party_act_content.text = mDetail?.content?.let { Html.fromHtml(it) }
         fl_fun_party_act_join.setOnClickListener {
             HFRetrofit.hfService.postFunPartyAct(mDetail?.id ?: -1).subscribeResultOkApi {
                 kToastShort("报名成功")
                 finish()
             }.kInto(pauseDisableList)
         }
+        fl_fun_party_act_join.isEnabled = (mDetail?.status?.equals(HFFunPartyResponseBody.ListData.STATUS_GOING) ?: false)
     }
 }

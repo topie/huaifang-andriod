@@ -17,8 +17,6 @@ class HFFunGuideMenuResponseBody : HFBaseResponseBody() {
 
     class ListData {
 
-        @Transient
-        var _pageNum = 0
         /**
          *  ...
          */

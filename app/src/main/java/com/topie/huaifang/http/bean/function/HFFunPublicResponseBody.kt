@@ -25,5 +25,6 @@ class HFFunPublicResponseBody : HFBaseResponseBody() {
         var cUser: String? = null
         var id: Int = 0
         var position: Int = 0
+        var readCount: Int = 0
     }
 }

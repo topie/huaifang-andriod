@@ -38,6 +38,8 @@ class HFFunNoteDetailActivity : HFBaseTitleActivity() {
         tv_fun_live_public_time.text = aData?.cTime
         tv_fun_live_public_publisher.text = aData?.cUser
         tv_fun_live_public_content.text = aData?.content?.let { Html.fromHtml(it) }
+        val text = "${aData?.readCount}人阅读"
+        tv_fun_live_public_read.text = text
     }
 
     override fun onResume() {
