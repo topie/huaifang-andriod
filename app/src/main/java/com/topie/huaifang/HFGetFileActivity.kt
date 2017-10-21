@@ -59,7 +59,7 @@ class HFGetFileActivity : AppCompatActivity() {
     }
 
     private fun dispatchGetImageIntent() {
-        kStartActivity(ImageScanActivity::class.java)
+        ImageScanActivity.openImageScanActivity(this, REQUEST_GET_IMG, 8, null)
     }
 
     private fun dispatchTakePictureIntent() {
@@ -110,6 +110,13 @@ class HFGetFileActivity : AppCompatActivity() {
                     onCancel(mId)
                 }
             }
+            REQUEST_GET_IMG -> {
+                if (resultCode == Activity.RESULT_OK) {
+                    onResult(mId, data?.getStringArrayListExtra(ImageScanActivity.EXTRA_SELECT_LIST) ?: arrayListOf())
+                } else {
+                    onCancel(mId)
+                }
+            }
         }
         finish()
     }
@@ -122,6 +129,7 @@ class HFGetFileActivity : AppCompatActivity() {
         private const val TYPE_GET_IMG = 3
         private const val REQUEST_IMAGE_CAPTURE = 100
         private const val REQUEST_GET_FILE = 200
+        private const val REQUEST_GET_IMG = 300
 
         private var listener: Listener? = null
         private var id: Int = 0
