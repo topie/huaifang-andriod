@@ -21,10 +21,9 @@ import com.topie.huaifang.extensions.kInto
 import com.topie.huaifang.extensions.kParseUrl
 import com.topie.huaifang.extensions.kStartActivity
 import com.topie.huaifang.http.HFRetrofit
-import com.topie.huaifang.http.bean.function.HFFunPartyResponseBody
+import com.topie.huaifang.http.bean.function.HFFunPartyActResponseBody
 import com.topie.huaifang.http.subscribeResultOkApi
 import com.topie.huaifang.imageloader.HFImageView
-import io.reactivex.disposables.Disposable
 
 /**
  * Created by arman on 2017/9/24.
@@ -86,9 +85,9 @@ class HFFunPartyActFragment : HFBaseFragment() {
     }
 
     private class Adapter(var pageSize: Int = 1)
-        : HFBaseRecyclerAdapter<HFFunPartyResponseBody.ListData, ViewHolder>(ViewHolder.CREATOR)
+        : HFBaseRecyclerAdapter<HFFunPartyActResponseBody.ListData, ViewHolder>(ViewHolder.CREATOR)
 
-    private class ViewHolder(itemView: View) : HFBaseRecyclerViewHolder<HFFunPartyResponseBody.ListData>(itemView, true) {
+    private class ViewHolder(itemView: View) : HFBaseRecyclerViewHolder<HFFunPartyActResponseBody.ListData>(itemView, true) {
         val imageView: HFImageView = itemView.kFindViewById(R.id.iv_fun_party_list_item)
         val tvTitle: TextView = itemView.kFindViewById(R.id.tv_fun_party_list_item_title)
         val tvTime: TextView = itemView.kFindViewById(R.id.tv_fun_party_list_item_time)
@@ -96,15 +95,15 @@ class HFFunPartyActFragment : HFBaseFragment() {
         val tvPublisher: TextView = itemView.kFindViewById(R.id.tv_fun_party_list_item_publisher)
         val tvApply: TextView = itemView.kFindViewById(R.id.tv_fun_party_list_item_apply)
 
-        override fun onBindData(d: HFFunPartyResponseBody.ListData) {
+        override fun onBindData(d: HFFunPartyActResponseBody.ListData) {
             imageView.loadImageUri(d.image.kParseUrl())
             tvTitle.text = d.topic
             tvTime.text = d.beginTime
             tvStatus.text = d.status?.let {
                 when (it) {
-                    HFFunPartyResponseBody.ListData.STATUS_WAIT -> "未开始"
-                    HFFunPartyResponseBody.ListData.STATUS_GOING -> "进行中"
-                    HFFunPartyResponseBody.ListData.STATUS_FINISH -> "已结束"
+                    HFFunPartyActResponseBody.ListData.STATUS_WAIT -> "未开始"
+                    HFFunPartyActResponseBody.ListData.STATUS_GOING -> "进行中"
+                    HFFunPartyActResponseBody.ListData.STATUS_FINISH -> "已结束"
                     else -> "未开始"
                 }
             }
@@ -112,7 +111,7 @@ class HFFunPartyActFragment : HFBaseFragment() {
             tvApply.text = d.total.toString()
         }
 
-        override fun onItemClicked(d: HFFunPartyResponseBody.ListData?) {
+        override fun onItemClicked(d: HFFunPartyActResponseBody.ListData?) {
             super.onItemClicked(d)
             if (d != null) {
                 val bundle = Bundle()

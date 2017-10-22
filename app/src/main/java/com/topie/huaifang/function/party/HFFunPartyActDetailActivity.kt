@@ -5,10 +5,11 @@ import android.text.Html
 import com.topie.huaifang.R
 import com.topie.huaifang.base.HFBaseTitleActivity
 import com.topie.huaifang.extensions.kInto
+import com.topie.huaifang.extensions.kIsNotNull
 import com.topie.huaifang.extensions.kParseUrl
 import com.topie.huaifang.extensions.kToastShort
 import com.topie.huaifang.http.HFRetrofit
-import com.topie.huaifang.http.bean.function.HFFunPartyResponseBody
+import com.topie.huaifang.http.bean.function.HFFunPartyActResponseBody
 import com.topie.huaifang.http.subscribeResultOkApi
 import kotlinx.android.synthetic.main.function_party_act_detail_activity.*
 
@@ -18,7 +19,7 @@ import kotlinx.android.synthetic.main.function_party_act_detail_activity.*
  */
 class HFFunPartyActDetailActivity : HFBaseTitleActivity() {
 
-    private var mDetail: HFFunPartyResponseBody.ListData? = null
+    private var mDetail: HFFunPartyActResponseBody.ListData? = null
 
     companion object {
         const val EXTRA_DETAIL = "extra_detail"
@@ -27,22 +28,36 @@ class HFFunPartyActDetailActivity : HFBaseTitleActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.function_party_act_detail_activity)
-        mDetail = intent.getSerializableExtra(EXTRA_DETAIL) as HFFunPartyResponseBody.ListData?
-        setBaseTitle(mDetail?.topic)
-        iv_fun_party_detail_img.loadImageUri(mDetail?.image?.kParseUrl())
-        tv_fun_party_act_title.text = mDetail?.topic
+        mDetail = intent.getSerializableExtra(EXTRA_DETAIL) as HFFunPartyActResponseBody.ListData?
+        initData(mDetail)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        HFRetrofit.hfService.getFunPartyActDetail(mDetail?.id ?: -1).subscribeResultOkApi {
+            initData(it.data)
+        }.kInto(pauseDisableList)
+    }
+
+    private fun initData(detail: HFFunPartyActResponseBody.ListData?) {
+        setBaseTitle(detail?.topic)
+        iv_fun_party_detail_img.loadImageUri(detail?.image?.kParseUrl())
+        tv_fun_party_act_title.text = detail?.topic
         tv_fun_party_act_organ.text = ""
-        tv_fun_party_act_time.text = mDetail?.beginTime
-        tv_fun_party_act_address.text = mDetail?.address
-        tv_fun_party_act_publisher.text = mDetail?.publishUser
-        tv_fun_party_act_read.text = mDetail?.total?.toString()?.let { it + "人已参加" }
-        tv_fun_party_act_content.text = mDetail?.content?.let { Html.fromHtml(it) }
+        tv_fun_party_act_time.text = detail?.beginTime
+        tv_fun_party_act_address.text = detail?.address
+        tv_fun_party_act_publisher.text = detail?.publishUser
+        tv_fun_party_act_read.text = detail?.total?.toString()?.let { it + "人已参加" }
+        tv_fun_party_act_content.text = detail?.content?.let { Html.fromHtml(it) }
         fl_fun_party_act_join.setOnClickListener {
-            HFRetrofit.hfService.postFunPartyAct(mDetail?.id ?: -1).subscribeResultOkApi {
+            HFRetrofit.hfService.postFunPartyAct(detail?.id ?: -1).subscribeResultOkApi {
                 kToastShort("报名成功")
                 finish()
             }.kInto(pauseDisableList)
         }
-        fl_fun_party_act_join.isEnabled = (mDetail?.status?.equals(HFFunPartyResponseBody.ListData.STATUS_GOING) ?: false)
+        fl_fun_party_act_join.isEnabled = detail
+                ?.takeIf { HFFunPartyActResponseBody.ListData.STATUS_GOING == it.status }//活动进行中
+                ?.takeIf { !it.hasJoin }//还没有报名参加
+                .kIsNotNull()
     }
 }

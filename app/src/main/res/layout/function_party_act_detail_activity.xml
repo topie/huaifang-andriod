@@ -52,12 +52,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp">
+            android:layout_marginRight="10dp"
+            android:background="@drawable/shape_fun_party_act_detail_join">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/shape_fun_party_act_detail_join"
                 android:gravity="center"
                 android:padding="5dp"
                 android:text="@string/function_party_act_join"

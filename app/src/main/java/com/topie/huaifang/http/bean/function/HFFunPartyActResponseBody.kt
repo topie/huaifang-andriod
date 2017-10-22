@@ -7,7 +7,7 @@ import java.io.Serializable
  * Created by arman on 2017/9/24.
  * 党建活动
  */
-class HFFunPartyResponseBody : HFBaseResponseBody() {
+class HFFunPartyActResponseBody : HFBaseResponseBody() {
     var data: BodyData? = null
 
     class BodyData {
@@ -35,5 +35,6 @@ class HFFunPartyResponseBody : HFBaseResponseBody() {
         var id: Int = 0
         var status: String? = null //0未上线1上线中2已结束
         var total: Int = 0//以参加人数
+        var hasJoin: Boolean = false//是否已经报名
     }
 }
