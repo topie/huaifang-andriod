@@ -7,10 +7,7 @@ import android.widget.TextView
 import com.topie.huaifang.ImageBrowserActivity
 import com.topie.huaifang.R
 import com.topie.huaifang.base.HFBaseTitleActivity
-import com.topie.huaifang.extensions.kFindViewById
-import com.topie.huaifang.extensions.kInflate
-import com.topie.huaifang.extensions.kInto
-import com.topie.huaifang.extensions.kIsEmpty
+import com.topie.huaifang.extensions.*
 import com.topie.huaifang.http.HFRetrofit
 import com.topie.huaifang.http.bean.function.HFFunLiveRepairsListResponseBody
 import com.topie.huaifang.http.bean.function.HFFunLiveRepairsProgressResponseBody
@@ -47,10 +44,11 @@ class HFFunLiveRepairsDetailActivity : HFBaseTitleActivity() {
         tv_fun_live_repairs_time.text = mData?.reportTime
         tv_fun_live_repairs_apply_content.text = "保修内容：${mData?.reportContent ?: ""}"
 
-        val list = mData?.images?.split(",")?.map {
-            //判断url是否相对地址，如果是添加baseUrl
-            HFRetrofit.parseUrlToBase(it.trim())
-        }
+        val list = mData?.images
+                ?.split(",")
+                ?.map { it.trim() }
+                ?.filter { it.kIsNotEmpty() }
+                ?.map { Uri.parse(HFRetrofit.parseUrlToBase(it)) }
         if (list == null || list.isEmpty()) {
             ll_fun_live_repairs_apply_select_img.visibility = View.GONE
         } else {

@@ -87,7 +87,7 @@ class HFImagesUploadLayout @JvmOverloads constructor(context: Context?, attrs: A
         this.onItemClickListener.base = onItemClickListener
     }
 
-    class OnItemClickListenerImpl : OnItemClickListener {
+    private class OnItemClickListenerImpl : OnItemClickListener {
 
         var base: OnItemClickListener? = null
 

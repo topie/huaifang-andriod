@@ -57,12 +57,12 @@ object HFRetrofit {
         hfService = HFServiceDerived(retrofit.create(HFService::class.java))
     }
 
-    fun parseUrlToBase(url: String): Uri {
+    fun parseUrlToBase(url: String): String {
         return url.takeIf {
             it.length > 1 && it[0] == '/'
         }?.let {
-            Uri.parse(HFRetrofit.baseUrl + it.substring(1))
-        } ?: Uri.parse(url)
+            HFRetrofit.baseUrl + it.substring(1)
+        } ?: url
     }
 }
 

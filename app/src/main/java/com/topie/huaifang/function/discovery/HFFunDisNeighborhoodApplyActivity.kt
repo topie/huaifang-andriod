@@ -1,25 +1,21 @@
 package com.topie.huaifang.function.discovery
 
+import android.app.Activity
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import android.os.Handler
-import android.os.HandlerThread
-import android.os.Message
-import android.support.v4.util.ArrayMap
-import android.view.ViewGroup
 import com.topie.huaifang.HFGetFileActivity
+import com.topie.huaifang.ImageBrowserActivity
 import com.topie.huaifang.R
 import com.topie.huaifang.base.HFBaseTitleActivity
 import com.topie.huaifang.extensions.kIsEmpty
-import com.topie.huaifang.extensions.kParseFileUri
 import com.topie.huaifang.extensions.kToastShort
-import com.topie.huaifang.extensions.log
+import com.topie.huaifang.global.RequestCode
 import com.topie.huaifang.http.HFRetrofit
 import com.topie.huaifang.http.bean.function.HFFunLiveBazaarApplyRequestBody
 import com.topie.huaifang.http.subscribeResultOkApi
-import com.topie.huaifang.imageloader.HFImageView
-import com.topie.huaifang.util.HFDimensUtils
+import com.topie.huaifang.view.HFImagesUploadLayout
 import kotlinx.android.synthetic.main.function_dis_neighborhood_apply_activity.*
-import java.io.File
 
 /**
  * Created by arman on 2017/10/7.
@@ -27,53 +23,30 @@ import java.io.File
  */
 class HFFunDisNeighborhoodApplyActivity : HFBaseTitleActivity() {
 
-    private val repairsImages: MutableMap<String, String> = ArrayMap()
-    private val backgroundThread = HandlerThread("updateImage").also { it.start() }
-
-    private val handler = object : Handler(backgroundThread.looper) {
-        override fun handleMessage(msg: Message?) {
-            super.handleMessage(msg)
-            for (key in repairsImages.keys) {
-                repairsImages[key]?.takeIf { it.isNotEmpty() } ?: let {
-                    HFRetrofit.hfService.uploadImage(File(key)).subscribe({
-                        if (it.resultOk) {
-                            it.data?.attachmentUrl?.also {
-                                if (repairsImages.keys.contains(key)) {
-                                    log("put [$key] to [$it]")
-                                    repairsImages.put(key, it)
-                                }
-                            } ?: log("unknown reason, json = ${it.json}")
-                        } else {
-                            it.convertMessage().kToastShort()
-                        }
-                    }, {
-                        "图片上传失败请重试".kToastShort()
-                        log("uploadImage", it)
-                    })
-                }
-            }
-        }
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.function_dis_neighborhood_apply_activity)
         setBaseTitle("发话题")
-        ll_fun_dis_neighborhood_apply_select_img.setOnClickListener {
-            HFGetFileActivity.getImage({
-                it.forEach {
-                    val value = repairsImages[it] ?: ""
-                    repairsImages.put(it, value)
-                }
-                handler.sendEmptyMessage(100)
-                refreshView()
-            }, 8)
-        }
+        ul_fun_dis_neighborhood_apply_select_img.setOnItemClickListener(object : HFImagesUploadLayout.OnItemClickListener {
+            override fun onAdd() {
+                HFGetFileActivity.getImage({
+                    it.forEach {
+                        ul_fun_dis_neighborhood_apply_select_img?.addPath(it)
+                    }
+                }, 8 - ul_fun_dis_neighborhood_apply_select_img.getImageSize())
+            }
+
+            override fun onImageClicked(uri: Uri?, position: Int) {
+                val arrayList = ul_fun_dis_neighborhood_apply_select_img.getResultPairs().map { it.first }
+                ImageBrowserActivity.openImageBrowserActivity(this@HFFunDisNeighborhoodApplyActivity, RequestCode.IMAGE_BROWSER, arrayList.size, arrayList, arrayList, position)
+            }
+        })
 
         tv_fun_dis_neighborhood_apply_submit.setOnClickListener {
             try {
+                val requestBody = getBazaar()
                 tv_fun_dis_neighborhood_apply_submit?.isEnabled = false
-                HFRetrofit.hfService.postFunDisNeighborhood(getBazaar()).subscribeResultOkApi({
+                HFRetrofit.hfService.postFunDisNeighborhood(requestBody).subscribeResultOkApi({
                     kToastShort("提交成功")
                     finish()
                 }, {
@@ -86,20 +59,6 @@ class HFFunDisNeighborhoodApplyActivity : HFBaseTitleActivity() {
         }
     }
 
-    private fun refreshView() {
-        val llImages = ll_fun_dis_neighborhood_apply_images ?: return
-        llImages.removeAllViews()
-        repairsImages.forEach {
-            val hfImageView = HFImageView(this)
-            val lp = ViewGroup.MarginLayoutParams(ViewGroup.MarginLayoutParams.MATCH_PARENT, ViewGroup.MarginLayoutParams.WRAP_CONTENT)
-            lp.topMargin = HFDimensUtils.dp2px(5.toFloat())
-            hfImageView.layoutParams = lp
-            hfImageView.setAspectRatio(1.toFloat())
-            hfImageView.loadImageUri(it.key.kParseFileUri())
-            llImages.addView(hfImageView)
-        }
-    }
-
     @Throws(IllegalArgumentException::class)
     private fun getBazaar(): HFFunLiveBazaarApplyRequestBody {
         return HFFunLiveBazaarApplyRequestBody().apply {
@@ -109,13 +68,21 @@ class HFFunDisNeighborhoodApplyActivity : HFBaseTitleActivity() {
             } ?: throw IllegalArgumentException("请填写内容")
         }.also {
             //检查图片
-            repairsImages.forEach {
-                if (it.value.kIsEmpty()) {
+            ul_fun_dis_neighborhood_apply_select_img.getResultPairs().forEach {
+                if (it.second.kIsEmpty()) {
                     throw IllegalArgumentException("图片正在上传中，请稍后提交")
                 }
             }
         }.apply {
-            images = repairsImages.values.joinToString()
+            images = ul_fun_dis_neighborhood_apply_select_img.getResultPairs().map { it.second }.joinToString()
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == RequestCode.IMAGE_BROWSER && resultCode == Activity.RESULT_OK) {
+            val arrayList = data?.getStringArrayListExtra(ImageBrowserActivity.EXTRA_SELECT_LIST)
+            ul_fun_dis_neighborhood_apply_select_img.setPathList(arrayList)
         }
     }
 }

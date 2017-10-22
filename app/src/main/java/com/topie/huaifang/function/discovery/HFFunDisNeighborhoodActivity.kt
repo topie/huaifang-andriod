@@ -9,14 +9,15 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.LinearLayout.LayoutParams.WRAP_CONTENT
 import android.widget.TextView
+import com.topie.huaifang.ImageBrowserActivity
 import com.topie.huaifang.R
 import com.topie.huaifang.base.HFBaseRecyclerViewHolder
 import com.topie.huaifang.base.HFBaseTitleActivity
 import com.topie.huaifang.extensions.*
+import com.topie.huaifang.global.RequestCode
 import com.topie.huaifang.http.HFRetrofit
 import com.topie.huaifang.http.bean.function.HFFunDisNeighborhoodResponseBody
 import com.topie.huaifang.http.subscribeResultOkApi
-import com.topie.huaifang.imageloader.HFImageView
 import com.topie.huaifang.util.HFDimensUtils
 import com.topie.huaifang.view.HFImagesLayout
 import kotlinx.android.synthetic.main.base_pt2_recycler_layout.*
@@ -111,6 +112,21 @@ class HFFunDisNeighborhoodActivity : HFBaseTitleActivity() {
         private val mLLLikeList: LinearLayout = itemView.findViewById(R.id.ll_fun_dis_neighborhood_like_list)
         //评论列表
         private val mLLCommList: LinearLayout = itemView.findViewById(R.id.ll_fun_dis_neighborhood_comm_list)
+        var imageList: List<String>? = null
+
+        init {
+            hfImagesLayout.setOnItemClickListener(object : HFImagesLayout.OnItemClickListener {
+                override fun onAdd() {
+
+                }
+
+                override fun onImageClicked(uri: Uri?, position: Int) {
+                    val context = mItemView.context.kFindActivity() ?: mItemView.context
+                    val list = imageList ?: arrayListOf()
+                    ImageBrowserActivity.openImageBrowserActivity(context, RequestCode.IMAGE_BROWSER, -1, list, null, position)
+                }
+            })
+        }
 
         override fun onBindData(d: HFFunDisNeighborhoodResponseBody.ListData) {
             bindImages(d.images)
@@ -174,11 +190,12 @@ class HFFunDisNeighborhoodActivity : HFBaseTitleActivity() {
 
         private fun bindImages(images: String?) {
             //获取新数据
-            val list = images
+            imageList = images
                     ?.split(",")
                     ?.map { it.trim() }
-                    ?.filterIndexed { index, s -> s.isNotEmpty() && index < 4 }
-                    ?.map { it.kParseUrl() ?: Uri.EMPTY }
+                    ?.filter { it.isNotEmpty() }
+                    ?.map { HFRetrofit.parseUrlToBase(it) }
+            val list = imageList?.filterIndexed { index, _ -> index < 4 }?.map { Uri.parse(it) }
             if (list.kIsEmpty()) {
                 hfImagesLayout.visibility = View.GONE
             } else {
