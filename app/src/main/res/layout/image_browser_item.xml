@@ -11,6 +11,7 @@
         android:scaleType="centerCrop" />
 
     <RelativeLayout
+        android:id="@+id/rl_content_select"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#33E1E1E1"

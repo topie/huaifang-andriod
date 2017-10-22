@@ -2,23 +2,20 @@ package com.topie.huaifang.function.live
 
 import android.net.Uri
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.View
-import android.view.ViewGroup
 import android.widget.TextView
+import com.topie.huaifang.ImageBrowserActivity
 import com.topie.huaifang.R
-import com.topie.huaifang.base.HFBaseRecyclerAdapter
-import com.topie.huaifang.base.HFBaseRecyclerViewHolder
 import com.topie.huaifang.base.HFBaseTitleActivity
-import com.topie.huaifang.base.HFViewHolderFactory
-import com.topie.huaifang.extensions.*
+import com.topie.huaifang.extensions.kFindViewById
+import com.topie.huaifang.extensions.kInflate
+import com.topie.huaifang.extensions.kInto
+import com.topie.huaifang.extensions.kIsEmpty
 import com.topie.huaifang.http.HFRetrofit
 import com.topie.huaifang.http.bean.function.HFFunLiveRepairsListResponseBody
 import com.topie.huaifang.http.bean.function.HFFunLiveRepairsProgressResponseBody
 import com.topie.huaifang.http.subscribeResultOkApi
-import com.topie.huaifang.imageloader.HFImageView
-import com.topie.huaifang.util.HFDimensUtils
+import com.topie.huaifang.view.HFImagesLayout
 import kotlinx.android.synthetic.main.function_live_repairs_detail.*
 
 /**
@@ -50,13 +47,27 @@ class HFFunLiveRepairsDetailActivity : HFBaseTitleActivity() {
         tv_fun_live_repairs_time.text = mData?.reportTime
         tv_fun_live_repairs_apply_content.text = "保修内容：${mData?.reportContent ?: ""}"
 
-        rv_fun_live_repairs_images.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        HFBaseRecyclerAdapter(ImagesViewHolder.CREATOR).also {
-            rv_fun_live_repairs_images.adapter = it
-        }.also {
-            mData?.images?.split(",")?.map { it.trim().kParseUrl() ?: Uri.EMPTY }?.kInsteadTo(it.list)
-            it.notifyDataSetChanged()
+        val list = mData?.images?.split(",")?.map {
+            //判断url是否相对地址，如果是添加baseUrl
+            HFRetrofit.parseUrlToBase(it.trim())
         }
+        if (list == null || list.isEmpty()) {
+            ll_fun_live_repairs_apply_select_img.visibility = View.GONE
+        } else {
+            ll_fun_live_repairs_apply_select_img.visibility = View.VISIBLE
+            il_fun_live_repairs_images.setPathList(list)
+        }
+        il_fun_live_repairs_images.setOnItemClickListener(object : HFImagesLayout.OnItemClickListener {
+
+            override fun onAdd() {
+
+            }
+
+            override fun onImageClicked(uri: Uri?, position: Int) {
+                ImageBrowserActivity.openImageBrowserActivity(this@HFFunLiveRepairsDetailActivity, 0, -1, list!!.map { it.toString() }, null, position)
+            }
+
+        })
     }
 
     override fun onResume() {
@@ -88,27 +99,6 @@ class HFFunLiveRepairsDetailActivity : HFBaseTitleActivity() {
                     mProgressDataList = it
                 }
             }.kInto(pauseDisableList)
-        }
-    }
-
-
-    private class ImagesViewHolder(itemView: View) : HFBaseRecyclerViewHolder<Uri>(itemView, true) {
-        val imageView: HFImageView = itemView as HFImageView
-        override fun onBindData(d: Uri) {
-            imageView.loadImageUri(d)
-        }
-
-        companion object CREATOR : HFViewHolderFactory<ImagesViewHolder> {
-
-            override fun create(parent: ViewGroup, viewType: Int): ImagesViewHolder {
-                val hfImageView = HFImageView(parent.context)
-                val dp80 = HFDimensUtils.dp2px(80.toFloat())
-                hfImageView.layoutParams = RecyclerView.LayoutParams(dp80, dp80).also {
-                    it.rightMargin = HFDimensUtils.dp2px(10.toFloat())
-                }
-                hfImageView.setAspectRatio(1.toFloat())
-                return ImagesViewHolder(hfImageView)
-            }
         }
     }
 }

@@ -4,9 +4,6 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.Animatable
 import android.net.Uri
-import android.os.Handler
-import android.os.HandlerThread
-import android.os.Message
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
@@ -16,23 +13,17 @@ import android.widget.ImageView
 import android.widget.RelativeLayout
 import com.topie.huaifang.R
 import com.topie.huaifang.extensions.kClone
-import com.topie.huaifang.extensions.kParseFileUri
-import com.topie.huaifang.extensions.kToastShort
-import com.topie.huaifang.extensions.log
-import com.topie.huaifang.http.HFRetrofit
 import com.topie.huaifang.imageloader.HFImageView
 import com.topie.huaifang.util.HFDimensUtils
-import java.io.File
-import java.lang.ref.WeakReference
 
 /**
  * Created by arman on 2017/10/20.
  * 上传图片的视图UI
  */
-class HFImagesUploadLayout @JvmOverloads constructor(context: Context?, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : RelativeLayout(context, attrs, defStyleAttr) {
+class HFImagesLayout @JvmOverloads constructor(context: Context?, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : RelativeLayout(context, attrs, defStyleAttr) {
 
     private val onItemClickListener: OnItemClickListenerImpl = OnItemClickListenerImpl()
-    private val controller = ImageUploadController(this)
+    private val controller = ImageUploadController()
     private val mAdapter = Adapter(onItemClickListener, controller)
 
     init {
@@ -45,37 +36,26 @@ class HFImagesUploadLayout @JvmOverloads constructor(context: Context?, attrs: A
         addView(hfCrazyGridView)
     }
 
-    fun setPathList(list: List<String>?) {
+    fun setPathList(list: List<Uri>?) {
         if (list == null || list.isEmpty()) {
             controller.repairsImages.clear()
             mAdapter.notifyDataSetChanged()
         } else {
             val kClone = controller.repairsImages.kClone()
             controller.repairsImages.clear()
-            list.forEach { path ->
-                val imageUpload = kClone.firstOrNull({ it.path == path }) ?: ImageUpload(path)
+            list.forEach { uri ->
+                val imageUpload = kClone.firstOrNull({ it.uri == uri }) ?: ImageUpload(uri)
                 controller.repairsImages.add(imageUpload)
             }
             mAdapter.notifyDataSetChanged()
-            controller.reUpload()
         }
     }
 
-    fun addPath(uri: String) {
-        val firstOrNull = controller.repairsImages.firstOrNull({ it.path == uri })
+    fun addPath(uri: Uri) {
+        val firstOrNull = controller.repairsImages.firstOrNull({ it.uri == uri })
         if (firstOrNull == null) {
             controller.repairsImages.add(ImageUpload(uri))
             mAdapter.notifyDataSetChanged()
-        }
-        controller.reUpload()
-    }
-
-    /**
-     * 本地地址对应网络地址
-     */
-    fun getResultPairs(): List<Pair<String, String?>> {
-        return controller.repairsImages.map {
-            it.path.to(it.url)
         }
     }
 
@@ -87,7 +67,7 @@ class HFImagesUploadLayout @JvmOverloads constructor(context: Context?, attrs: A
         this.onItemClickListener.base = onItemClickListener
     }
 
-    class OnItemClickListenerImpl : OnItemClickListener {
+    private class OnItemClickListenerImpl : OnItemClickListener {
 
         var base: OnItemClickListener? = null
 
@@ -126,11 +106,7 @@ class HFImagesUploadLayout @JvmOverloads constructor(context: Context?, attrs: A
                     if (getItemViewType(pos) == TYPE_ADD) {
                         onItemClickListener.onAdd()
                     } else {
-                        if (ImageUpload.STATE_FAILURE == getItem(pos)?.state) { //如果是失败的状态，点击重新上传
-                            controller.reUpload()
-                        } else {
-                            onItemClickListener.onImageClicked(getItem(pos)?.path.kParseFileUri(), pos)
-                        }
+                        onItemClickListener.onImageClicked(getItem(pos)?.uri, pos)
                     }
                 }
                 imageItem
@@ -142,7 +118,7 @@ class HFImagesUploadLayout @JvmOverloads constructor(context: Context?, attrs: A
                 imageItem.hfImageView.setImageResource(R.mipmap.ic_image_upload_add)
                 imageItem.hfImageView.mDefImageRes = R.mipmap.ic_image_upload_add
             } else {
-                imageItem.hfImageView.loadImageUri(getItem(position)?.path.kParseFileUri())
+                imageItem.hfImageView.loadImageUri(getItem(position)?.uri)
             }
             val item = getItem(position)
             when (item?.state) {
@@ -181,7 +157,7 @@ class HFImagesUploadLayout @JvmOverloads constructor(context: Context?, attrs: A
         }
 
         override fun getCount(): Int {
-            return (list.size + 1).coerceAtMost(8)
+            return list.size
         }
     }
 
@@ -200,11 +176,11 @@ class HFImagesUploadLayout @JvmOverloads constructor(context: Context?, attrs: A
             addView(hfImageView)
 
             val lp = LayoutParams(HFDimensUtils.dp2px(40.toFloat()), HFDimensUtils.dp2px(40.toFloat()))
-            lp.addRule(RelativeLayout.CENTER_IN_PARENT)
-            lp.addRule(RelativeLayout.ALIGN_LEFT, R.id.id_image_upload)
-            lp.addRule(RelativeLayout.ALIGN_TOP, R.id.id_image_upload)
-            lp.addRule(RelativeLayout.ALIGN_RIGHT, R.id.id_image_upload)
-            lp.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.id_image_upload)
+            lp.addRule(CENTER_IN_PARENT)
+            lp.addRule(ALIGN_LEFT, R.id.id_image_upload)
+            lp.addRule(ALIGN_TOP, R.id.id_image_upload)
+            lp.addRule(ALIGN_RIGHT, R.id.id_image_upload)
+            lp.addRule(ALIGN_BOTTOM, R.id.id_image_upload)
             ivState.layoutParams = lp
             ivState.setBackgroundColor(0X33E1E1E1)
             ivState.scaleType = ImageView.ScaleType.CENTER_CROP
@@ -223,79 +199,21 @@ class HFImagesUploadLayout @JvmOverloads constructor(context: Context?, attrs: A
 
     }
 
-    private class ImageUploadController(hfImagesUploadLayout: HFImagesUploadLayout) {
+    private class ImageUploadController {
 
         val repairsImages: MutableList<ImageUpload> = arrayListOf()
-        private val imageLayout = WeakReference(hfImagesUploadLayout)
-        private val backgroundThread = HandlerThread("updateImage").also { it.start() }
-        private val handler = object : Handler(backgroundThread.looper) {
-            override fun handleMessage(msg: Message?) {
-                super.handleMessage(msg)
-                repairsImages
-                        .filter {
-                            it.state != ImageUpload.STATE_UPDATING && it.state != ImageUpload.STATE_COMPLETE
-                        }
-                        .forEach { key ->
-                            key.state = ImageUpload.STATE_UPDATING
-                            HFRetrofit.hfService.uploadImage(File(key.path)).subscribe({
-                                if (it.resultOk) {
-                                    it.data?.attachmentUrl?.also {
-                                        key.state = ImageUpload.STATE_COMPLETE
-                                        key.url = it
-                                    } ?: let { _ ->
-                                        log("unknown reason, json = ${it.json}")
-                                        key.state = ImageUpload.STATE_FAILURE
-                                    }
-                                } else {
-                                    it.convertMessage().kToastShort()
-                                    key.state = ImageUpload.STATE_FAILURE
-                                }
-                                //刷新UI状态
-                                imageLayout.get()?.post {
-                                    imageLayout.get()?.mAdapter?.notifyDataSetChanged()
-                                }
-                            }, {
-                                log("uploadImage", it)
-                                key.state = ImageUpload.STATE_FAILURE
-                                //刷新UI状态
-                                imageLayout.get()?.post {
-                                    imageLayout.get()?.mAdapter?.notifyDataSetChanged()
-                                }
-                            })
-                            //刷新UI状态
-                            imageLayout.get()?.post {
-                                imageLayout.get()?.mAdapter?.notifyDataSetChanged()
-                            }
-                        }
-            }
-        }
 
-        fun reUpload() {
-            handler.sendEmptyMessage(100)
-        }
     }
 
-    private class ImageUpload(val path: String) {
+    private class ImageUpload(val uri: Uri?) {
 
-        var state: Int = STATE_PREPARE
-        var url: String? = null
+        var state: Int = STATE_COMPLETE
 
         companion object {
             const val STATE_PREPARE = 0
             const val STATE_UPDATING = 1
             const val STATE_COMPLETE = 2
             const val STATE_FAILURE = 3
-        }
-
-        override fun equals(other: Any?): Boolean {
-            if (other == null || other !is ImageUpload) {
-                return false
-            }
-            return path == other.path
-        }
-
-        override fun hashCode(): Int {
-            return path.hashCode()
         }
     }
 }

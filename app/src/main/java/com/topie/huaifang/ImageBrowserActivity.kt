@@ -3,6 +3,7 @@ package com.topie.huaifang
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.support.v4.view.PagerAdapter
 import android.support.v4.view.ViewPager
@@ -15,6 +16,7 @@ import com.topie.huaifang.extensions.kInflate
 import com.topie.huaifang.extensions.kInsteadTo
 import com.topie.huaifang.extensions.kParseUrlOrFileUri
 import com.topie.huaifang.extensions.kToastShort
+import com.topie.huaifang.http.HFRetrofit
 import com.topie.huaifang.imageloader.GlideApp
 import com.topie.huaifang.view.photoview.PhotoView
 import kotlinx.android.synthetic.main.base_title_layout.*
@@ -81,13 +83,16 @@ class ImageBrowserActivity : HFBaseTitleActivity() {
             }
             initTitle()
         }
+        mAdapter.showSelect = limit > 0
+        viewPager!!.addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
+            override fun onPageSelected(position: Int) {
+                initTitle()
+            }
+        })
         viewPager!!.currentItem = intent.getIntExtra(EXTRA_CURRENT_POSITION, 0)
         mAdapter.notifyDataSetChanged()
         tv_base_title_right.setOnClickListener {
             val intent = Intent()
-            if (selectList.isEmpty()) {
-                selectList.add(imageList[viewPager!!.currentItem])
-            }
             intent.putStringArrayListExtra(EXTRA_SELECT_LIST, ArrayList(selectList))
             setResult(Activity.RESULT_OK, intent)
             finish()
@@ -98,6 +103,7 @@ class ImageBrowserActivity : HFBaseTitleActivity() {
     override fun onDestroy() {
         super.onDestroy()
         mAdapter.onItemSelect = null
+        viewPager?.clearOnPageChangeListeners()
     }
 
     private fun initTitle() {
@@ -110,7 +116,7 @@ class ImageBrowserActivity : HFBaseTitleActivity() {
     }
 
     class Adapter(private val imageList: List<String>, private val selectList: List<String>) : PagerAdapter() {
-
+        var showSelect = true
         var onItemSelect: ((v: View, position: Int) -> Unit)? = null
 
         override fun isViewFromObject(view: View?, obj: Any?): Boolean {
@@ -128,6 +134,10 @@ class ImageBrowserActivity : HFBaseTitleActivity() {
             }
             val ivSelect = kInflate.findViewById<View>(R.id.iv_content_select)
             val photoView = kInflate.findViewById<PhotoView>(R.id.pv_content)
+            kInflate.findViewById<View>(R.id.rl_content_select).visibility = when {
+                showSelect -> View.VISIBLE
+                else -> View.GONE
+            }
             ivSelect.isSelected = selectList.contains(imageList[position])
             ivSelect.tag = position
             GlideApp.with(container).asBitmap().load(imageList[position].kParseUrlOrFileUri()).into(photoView)

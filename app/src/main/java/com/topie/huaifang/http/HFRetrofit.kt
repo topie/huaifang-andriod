@@ -1,5 +1,6 @@
 package com.topie.huaifang.http
 
+import android.net.Uri
 import android.os.AsyncTask
 import com.topie.huaifang.extensions.*
 import com.topie.huaifang.http.bean.HFBaseResponseBody
@@ -54,6 +55,14 @@ object HFRetrofit {
         client = client.newBuilder().addInterceptor(interceptor).build()
         retrofit = buildRetrofit()
         hfService = HFServiceDerived(retrofit.create(HFService::class.java))
+    }
+
+    fun parseUrlToBase(url: String): Uri {
+        return url.takeIf {
+            it.length > 1 && it[0] == '/'
+        }?.let {
+            Uri.parse(HFRetrofit.baseUrl + it.substring(1))
+        } ?: Uri.parse(url)
     }
 }
 
