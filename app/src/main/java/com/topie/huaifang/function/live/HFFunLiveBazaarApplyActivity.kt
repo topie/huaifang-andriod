@@ -1,20 +1,22 @@
 package com.topie.huaifang.function.live
 
+import android.app.Activity
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import android.os.Handler
-import android.os.HandlerThread
-import android.os.Message
-import android.view.ViewGroup
 import com.topie.huaifang.HFGetFileActivity
+import com.topie.huaifang.ImageBrowserActivity
 import com.topie.huaifang.R
 import com.topie.huaifang.base.HFBaseTitleActivity
-import com.topie.huaifang.extensions.*
+import com.topie.huaifang.extensions.kIsEmpty
+import com.topie.huaifang.extensions.kParseUrl
+import com.topie.huaifang.extensions.kToastShort
+import com.topie.huaifang.extensions.log
+import com.topie.huaifang.global.RequestCode
 import com.topie.huaifang.http.HFRetrofit
 import com.topie.huaifang.http.bean.function.HFFunLiveBazaarApplyRequestBody
-import com.topie.huaifang.http.subscribeApi
 import com.topie.huaifang.http.subscribeResultOkApi
-import com.topie.huaifang.imageloader.HFImageView
-import com.topie.huaifang.util.HFDimensUtils
+import com.topie.huaifang.view.HFImagesUploadLayout
 import kotlinx.android.synthetic.main.function_live_bazaar_apply_activity.*
 import kotlinx.android.synthetic.main.function_live_repairs_apply_activity.*
 import java.io.File
@@ -25,50 +27,30 @@ import java.io.File
  */
 class HFFunLiveBazaarApplyActivity : HFBaseTitleActivity() {
 
-    private val repairsImages: MutableMap<String, String> = hashMapOf()
-    private val backgroundThread = HandlerThread("updateImage").also { it.start() }
     private var mTopic: Pair<String, String?>? = null
-
-    private val handler = object : Handler(backgroundThread.looper) {
-        override fun handleMessage(msg: Message?) {
-            super.handleMessage(msg)
-            for (key in repairsImages.keys) {
-                repairsImages[key]?.takeIf { it.isNotEmpty() } ?: let {
-                    HFRetrofit.hfService.uploadImage(File(key)).subscribe({
-                        if (it.resultOk) {
-                            it.data?.attachmentUrl?.also {
-                                log("put [$key] to [$it]")
-                                repairsImages.put(key, it)
-                            } ?: log("unknown reason, json = ${it.json}")
-                        } else {
-                            it.convertMessage().kToastShort()
-                        }
-                    }, {
-                        "图片上传失败请重试".kToastShort()
-                        log("uploadImage", it)
-                    })
-                }
-            }
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.function_live_bazaar_apply_activity)
         setBaseTitle("发话题")
-        ll_fun_live_bazaar_apply_select_img.setOnClickListener {
-            HFGetFileActivity.takePicture {
-                it.firstOrNull()?.let {
-                    val value = repairsImages[it] ?: ""
-                    repairsImages.put(it, value)
-                    handler.sendEmptyMessage(100)
+        ul_fun_live_bazaar_apply_select_img.setOnItemClickListener(object : HFImagesUploadLayout.OnItemClickListener {
+            override fun onAdd() {
+                HFGetFileActivity.getImage({
+                    it.forEach {
+                        ul_fun_live_bazaar_apply_select_img?.addPath(it)
+                    }
                     refreshView()
-                }
+                }, 8 - ul_fun_live_bazaar_apply_select_img.getImageSize())
             }
-        }
+
+            override fun onImageClicked(uri: Uri?, position: Int) {
+                val arrayList = ul_fun_live_bazaar_apply_select_img.getResultPairs().map { it.first }
+                ImageBrowserActivity.openImageBrowserActivity(this@HFFunLiveBazaarApplyActivity, RequestCode.IMAGE_BROWSER, arrayList.size, arrayList, arrayList, position)
+            }
+        })
 
         iv_fun_live_bazaar_topic.setOnClickListener {
-            HFGetFileActivity.takePicture {
+            HFGetFileActivity.getImage({
                 it.firstOrNull()?.also { path ->
                     HFRetrofit.hfService.uploadImage(File(path)).subscribeResultOkApi({
                         if (it.resultOk) {
@@ -85,7 +67,7 @@ class HFFunLiveBazaarApplyActivity : HFBaseTitleActivity() {
                     mTopic = null
                     refreshView()
                 }
-            }
+            }, 1)
         }
 
         tv_fun_live_bazaar_apply_submit.setOnClickListener {
@@ -105,17 +87,6 @@ class HFFunLiveBazaarApplyActivity : HFBaseTitleActivity() {
     }
 
     private fun refreshView() {
-        val llImages = ll_fun_live_bazaar_apply_images ?: return
-        llImages.removeAllViews()
-        repairsImages.forEach {
-            val hfImageView = HFImageView(this)
-            val lp = ViewGroup.MarginLayoutParams(ViewGroup.MarginLayoutParams.MATCH_PARENT, ViewGroup.MarginLayoutParams.WRAP_CONTENT)
-            lp.topMargin = HFDimensUtils.dp2px(5.toFloat())
-            hfImageView.layoutParams = lp
-            hfImageView.setAspectRatio(1.toFloat())
-            hfImageView.loadImageUri(it.key.kParseFileUri())
-            llImages.addView(hfImageView)
-        }
         val ivTopic = iv_fun_live_bazaar_topic ?: return
         ivTopic.loadImageUri(mTopic?.second?.kParseUrl())
     }
@@ -144,13 +115,22 @@ class HFFunLiveBazaarApplyActivity : HFBaseTitleActivity() {
             } ?: throw IllegalArgumentException("请填写内容")
         }.also {
             //检查图片
-            repairsImages.forEach {
-                if (it.value.kIsEmpty()) {
+            val list = ul_fun_live_bazaar_apply_select_img.getResultPairs()
+            list.forEach {
+                if (it.second.kIsEmpty()) {
                     throw IllegalArgumentException("图片正在上传中，请稍后提交")
                 }
             }
-        }.apply {
-            images = repairsImages.values.joinToString()
+            it.images = list.map { it.second }.joinToString()
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == RequestCode.IMAGE_BROWSER && resultCode == Activity.RESULT_OK) {
+            val arrayList = data?.getStringArrayListExtra(ImageBrowserActivity.EXTRA_SELECT_LIST)
+            ul_fun_live_repairs_apply_select_img.setPathList(arrayList)
+            refreshView()
         }
     }
 }

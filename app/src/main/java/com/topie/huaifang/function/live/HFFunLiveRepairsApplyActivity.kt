@@ -1,22 +1,22 @@
 package com.topie.huaifang.function.live
 
+import android.app.Activity
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.os.Handler
-import android.os.HandlerThread
-import android.os.Message
-import android.support.v4.util.ArrayMap
 import com.topie.huaifang.HFGetFileActivity
+import com.topie.huaifang.ImageBrowserActivity
 import com.topie.huaifang.R
 import com.topie.huaifang.base.HFBaseTitleActivity
-import com.topie.huaifang.extensions.*
+import com.topie.huaifang.extensions.kIsEmpty
+import com.topie.huaifang.extensions.kToSimpleFormat
+import com.topie.huaifang.extensions.kToastShort
 import com.topie.huaifang.http.HFRetrofit
 import com.topie.huaifang.http.bean.function.HFFunLiveRepairsApplyRequestBody
 import com.topie.huaifang.http.subscribeResultOkApi
 import com.topie.huaifang.view.HFDateDialog
 import com.topie.huaifang.view.HFImagesUploadLayout
 import kotlinx.android.synthetic.main.function_live_repairs_apply_activity.*
-import java.io.File
 import java.util.*
 
 /**
@@ -27,30 +27,9 @@ import java.util.*
 class HFFunLiveRepairsApplyActivity : HFBaseTitleActivity() {
 
     private var repairsTime: Date? = null
-    private val repairsImages: MutableMap<String, String> = ArrayMap()
 
-    private val backgroundThread = HandlerThread("updateImage").also { it.start() }
-    private val handler = object : Handler(backgroundThread.looper) {
-        override fun handleMessage(msg: Message?) {
-            super.handleMessage(msg)
-            for (key in repairsImages.keys) {
-                repairsImages[key]?.takeIf { it.isNotEmpty() } ?: let {
-                    HFRetrofit.hfService.uploadImage(File(key)).subscribe({
-                        if (it.resultOk) {
-                            it.data?.attachmentUrl?.also {
-                                log("put [$key] to [$it]")
-                                repairsImages.put(key, it)
-                            } ?: log("unknown reason, json = ${it.json}")
-                        } else {
-                            it.convertMessage().kToastShort()
-                        }
-                    }, {
-                        "图片上传失败请重试".kToastShort()
-                        log("uploadImage", it)
-                    })
-                }
-            }
-        }
+    companion object {
+        const val REQUEST_CODE_BROWSER = 200
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -69,18 +48,17 @@ class HFFunLiveRepairsApplyActivity : HFBaseTitleActivity() {
         }
         ul_fun_live_repairs_apply_select_img.setOnItemClickListener(object : HFImagesUploadLayout.OnItemClickListener {
             override fun onAdd() {
-                HFGetFileActivity.getImage {
-                    it.firstOrNull()?.let {
-                        val value = repairsImages[it] ?: ""
-                        repairsImages.put(it, value)
-                        handler.sendEmptyMessage(100)
-                        refreshView()
+                HFGetFileActivity.getImage({
+                    it.forEach {
+                        ul_fun_live_repairs_apply_select_img?.addPath(it)
                     }
-                }
+                    refreshView()
+                }, 8 - ul_fun_live_repairs_apply_select_img.getImageSize())
             }
 
             override fun onImageClicked(uri: Uri?, position: Int) {
-
+                val arrayList = ul_fun_live_repairs_apply_select_img.getResultPairs().map { it.first }
+                ImageBrowserActivity.openImageBrowserActivity(this@HFFunLiveRepairsApplyActivity, REQUEST_CODE_BROWSER, arrayList.size, arrayList, arrayList, position)
             }
 
         })
@@ -102,8 +80,6 @@ class HFFunLiveRepairsApplyActivity : HFBaseTitleActivity() {
 
     private fun refreshView() {
         tv_fun_live_repairs_apply_time.text = repairsTime?.kToSimpleFormat() ?: ""
-        val uriList = repairsImages.keys.map { it.kParseFileUri() }
-        ul_fun_live_repairs_apply_select_img?.setUriList(uriList)
     }
 
     @Throws(IllegalArgumentException::class)
@@ -128,12 +104,24 @@ class HFFunLiveRepairsApplyActivity : HFBaseTitleActivity() {
             it.isNotEmpty()
         } ?: throw IllegalArgumentException("请填写详细报修内容")
 
-        repairsImages.forEach {
-            if (it.value.kIsEmpty()) {
-                throw IllegalArgumentException("图片正在上传中，请稍后提交")
+        ul_fun_live_repairs_apply_select_img.getResultPairs().also {
+            it.forEach {
+                if (it.second.kIsEmpty()) {
+                    throw IllegalArgumentException("图片正在上传中，请稍后提交")
+                }
             }
+        }.let {
+            requestBody.images = it.map { it.second }.joinToString()
         }
-        requestBody.images = repairsImages.values.joinToString()
         return requestBody
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_CODE_BROWSER && resultCode == Activity.RESULT_OK) {
+            val arrayList = data?.getStringArrayListExtra(ImageBrowserActivity.EXTRA_SELECT_LIST)
+            ul_fun_live_repairs_apply_select_img.setPathList(arrayList)
+            refreshView()
+        }
     }
 }

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/facing_index_background"
+    android:background="@color/colorLightGray"
     android:fillViewport="true">
 
     <LinearLayout
@@ -237,85 +237,6 @@
             android:visibility="gone"
             app:aspectRatio="2.027"
             app:defImageRes="@mipmap/img_fun_part_act_detail_default" />
-
-        <include layout="@layout/function_line_item" />
-
-        <!--附件-->
-        <LinearLayout
-            android:id="@+id/ll_fun_party_act_publish_enclosure"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/white"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:padding="10dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:minWidth="70dp"
-                android:text="附件"
-                android:textColor="@color/colorDark"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/tv_fun_party_act_enclosure"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_weight="1"
-                android:background="@null"
-                android:textColor="@color/colorDark"
-                android:textSize="14sp" />
-
-            <ImageView
-                android:id="@+id/iv_fun_party_act_publish_enclosure_forward"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp"
-                android:src="@mipmap/ic_default_forward" />
-        </LinearLayout>
-
-        <include layout="@layout/function_thick_line_item" />
-
-        <!--&lt;!&ndash;活动范围&ndash;&gt;-->
-        <!--<LinearLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:background="@android:color/white"-->
-            <!--android:gravity="center_vertical"-->
-            <!--android:orientation="horizontal"-->
-            <!--android:padding="10dp">-->
-
-            <!--<TextView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:minWidth="70dp"-->
-                <!--android:text="活动范围"-->
-                <!--android:textColor="@color/colorDark"-->
-                <!--android:textSize="14sp" />-->
-
-            <!--<TextView-->
-                <!--android:id="@+id/tv_fun_party_act_publish_range"-->
-                <!--android:layout_width="0dp"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginLeft="10dp"-->
-                <!--android:layout_marginRight="10dp"-->
-                <!--android:layout_weight="1"-->
-                <!--android:background="@null"-->
-                <!--android:textColor="@color/colorDark"-->
-                <!--android:textSize="14sp" />-->
-
-            <!--<ImageView-->
-                <!--android:id="@+id/iv_fun_party_act_publish_range_forward"-->
-                <!--android:layout_width="16dp"-->
-                <!--android:layout_height="16dp"-->
-                <!--android:layout_marginBottom="5dp"-->
-                <!--android:layout_marginTop="5dp"-->
-                <!--android:src="@mipmap/ic_default_forward" />-->
-        <!--</LinearLayout>-->
 
         <include layout="@layout/function_line_item" />
 

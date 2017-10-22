@@ -65,7 +65,8 @@
         <activity android:name=".function.identity.HFFunIdentityEditActivity" />
         <activity android:name=".function.notice.HFFunNoteDetailActivity" />
         <activity android:name=".function.guide.HFFunGuideDetailActivity" />
-        <activity android:name=".imageloader.ImageScanActivity" />
+        <activity android:name=".ImageScanActivity" />
+        <activity android:name=".ImageBrowserActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

@@ -2,4 +2,5 @@
 <resources>
     <item name="id_facing_bottom_index" type="id" />
     <item name="id_image_tag" type="id" />
+    <item name="id_image_upload" type="id" />
 </resources>

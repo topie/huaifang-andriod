@@ -31,9 +31,6 @@ class HFFunPartyActPublishActivity : HFBaseTitleActivity() {
     private var endTime = Date()
 
     private var imgUrl: String? = null
-    private var enclosureUrl: String? = null
-    private var enclosureName: String? = null
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,7 +79,7 @@ class HFFunPartyActPublishActivity : HFBaseTitleActivity() {
         }
         //图片
         ll_fun_party_act_publish_img.setOnClickListener {
-            HFGetFileActivity.takePicture {
+            HFGetFileActivity.getImage({
                 val firstOrNull = it.firstOrNull()?.takeIf { it.isNotEmpty() }
                 if (firstOrNull == null) {
                     imgUrl = null
@@ -98,31 +95,7 @@ class HFFunPartyActPublishActivity : HFBaseTitleActivity() {
                         }
                     }
                 }
-            }
-        }
-
-        //附件
-        ll_fun_party_act_publish_enclosure.setOnClickListener {
-            HFGetFileActivity.getFileFromProvider {
-                val firstOrNull = it.firstOrNull()?.takeIf { it.isNotEmpty() }
-                if (firstOrNull == null) {
-                    enclosureUrl = null
-                    enclosureName = null
-                    updateView()
-                } else {
-                    HFRetrofit.hfService.uploadFile(File(firstOrNull)).subscribeResultOkApi {
-                        if (it.data?.attachmentUrl.kIsEmpty()) {
-                            enclosureUrl = null
-                            enclosureName = null
-                            updateView()
-                        } else {
-                            enclosureUrl = it.data?.attachmentUrl
-                            enclosureName = it.data?.attachmentName
-                            updateView()
-                        }
-                    }
-                }
-            }
+            }, 1)
         }
         updateView()
     }
@@ -137,7 +110,5 @@ class HFFunPartyActPublishActivity : HFBaseTitleActivity() {
             iv_fun_party_act_publish_img.visibility = View.VISIBLE
             iv_fun_party_act_publish_img.loadImageUri(imgUrl.kParseUrl())
         }
-
-        tv_fun_party_act_enclosure.text = enclosureName
     }
 }

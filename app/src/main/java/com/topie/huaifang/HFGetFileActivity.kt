@@ -21,7 +21,6 @@ import android.view.WindowManager
 import com.topie.huaifang.extensions.kGetCachePictureDir
 import com.topie.huaifang.extensions.kStartActivity
 import com.topie.huaifang.extensions.kToastShort
-import com.topie.huaifang.imageloader.ImageScanActivity
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -34,7 +33,7 @@ import java.util.*
 class HFGetFileActivity : AppCompatActivity() {
 
     private var mId: Int = 0
-
+    private var mLimit: Int = 0
     private var mTakePicFile: File? = null
 
 
@@ -42,6 +41,7 @@ class HFGetFileActivity : AppCompatActivity() {
         window.addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
         super.onCreate(savedInstanceState)
         mId = intent.getIntExtra(EXTRA_ID, 0)
+        mLimit = intent.getIntExtra(EXTRA_LIMIT, 0)
         val type = intent.getIntExtra(EXTRA_TYPE, 0)
         when (type) {
             TYPE_GET_FILE -> {
@@ -78,7 +78,7 @@ class HFGetFileActivity : AppCompatActivity() {
     }
 
     private fun dispatchGetImageIntent() {
-        ImageScanActivity.openImageScanActivity(this, REQUEST_GET_IMG, 8, null)
+        ImageScanActivity.openImageScanActivity(this, REQUEST_GET_IMG, mLimit, null)
     }
 
     private fun dispatchTakePictureIntent() {
@@ -143,6 +143,7 @@ class HFGetFileActivity : AppCompatActivity() {
     companion object {
         private const val EXTRA_ID = "EXTRA_ID"
         private const val EXTRA_TYPE = "EXTRA_TYPE"
+        private const val EXTRA_LIMIT = "EXTRA_LIMIT"
         private const val TYPE_GET_FILE = 1
         private const val TYPE_TAKE_PIC = 2
         private const val TYPE_GET_IMG = 3
@@ -169,19 +170,19 @@ class HFGetFileActivity : AppCompatActivity() {
             getFile(TYPE_GET_FILE, ListenerImpl(onResult))
         }
 
-        fun getImage(onResult: ((list: List<String>) -> Unit)) {
-            getFile(TYPE_GET_IMG, ListenerImpl(onResult))
+        fun getImage(onResult: ((list: List<String>) -> Unit), limit: Int = 1) {
+            getFile(TYPE_GET_IMG, ListenerImpl(onResult), limit)
         }
 
-        private fun getFile(type: Int, listener: Listener) {
+        private fun getFile(type: Int, listener: Listener, limit: Int = 1) {
             this.listener?.onCancel()
             this.listener = listener
             id = (id.shl(1) + 1).takeIf { it != id } ?: 0
-            Bundle().also {
-                it.putInt(EXTRA_ID, id)
-                it.putInt(EXTRA_TYPE, type)
-                kStartActivity(HFGetFileActivity::class.java, it)
-            }
+            val bundle = Bundle()
+            bundle.putInt(EXTRA_ID, id)
+            bundle.putInt(EXTRA_TYPE, type)
+            bundle.putInt(EXTRA_LIMIT, limit)
+            kStartActivity(HFGetFileActivity::class.java, bundle)
         }
 
         fun onResult(id: Int, list: List<String>) {

@@ -15,6 +15,7 @@
  *******************************************************************************/
 package com.topie.huaifang.view.photoview;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Matrix;
 import android.graphics.RectF;
@@ -24,13 +25,12 @@ import android.util.AttributeSet;
 import android.view.GestureDetector;
 import android.widget.ImageView;
 
-import com.topie.huaifang.imageloader.HFImageView;
-
 /**
  * A zoomable {@link ImageView}. See {@link PhotoViewAttacher} for most of the details on how the zooming
  * is accomplished
  */
-public class PhotoView extends HFImageView {
+@SuppressLint("AppCompatCustomView")
+public class PhotoView extends ImageView {
 
     private PhotoViewAttacher attacher;
     private ScaleType pendingScaleType;

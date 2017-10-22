@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.HandlerThread
 import android.os.Message
+import android.support.v4.util.ArrayMap
 import android.view.ViewGroup
 import com.topie.huaifang.HFGetFileActivity
 import com.topie.huaifang.R
@@ -26,7 +27,7 @@ import java.io.File
  */
 class HFFunDisNeighborhoodApplyActivity : HFBaseTitleActivity() {
 
-    private val repairsImages: MutableMap<String, String> = hashMapOf()
+    private val repairsImages: MutableMap<String, String> = ArrayMap()
     private val backgroundThread = HandlerThread("updateImage").also { it.start() }
 
     private val handler = object : Handler(backgroundThread.looper) {
@@ -37,8 +38,10 @@ class HFFunDisNeighborhoodApplyActivity : HFBaseTitleActivity() {
                     HFRetrofit.hfService.uploadImage(File(key)).subscribe({
                         if (it.resultOk) {
                             it.data?.attachmentUrl?.also {
-                                log("put [$key] to [$it]")
-                                repairsImages.put(key, it)
+                                if (repairsImages.keys.contains(key)) {
+                                    log("put [$key] to [$it]")
+                                    repairsImages.put(key, it)
+                                }
                             } ?: log("unknown reason, json = ${it.json}")
                         } else {
                             it.convertMessage().kToastShort()
@@ -57,14 +60,14 @@ class HFFunDisNeighborhoodApplyActivity : HFBaseTitleActivity() {
         setContentView(R.layout.function_dis_neighborhood_apply_activity)
         setBaseTitle("发话题")
         ll_fun_dis_neighborhood_apply_select_img.setOnClickListener {
-            HFGetFileActivity.getImage {
-                it.firstOrNull()?.let {
+            HFGetFileActivity.getImage({
+                it.forEach {
                     val value = repairsImages[it] ?: ""
                     repairsImages.put(it, value)
-                    handler.sendEmptyMessage(100)
-                    refreshView()
                 }
-            }
+                handler.sendEmptyMessage(100)
+                refreshView()
+            }, 8)
         }
 
         tv_fun_dis_neighborhood_apply_submit.setOnClickListener {

@@ -1,11 +1,10 @@
-package com.topie.huaifang.imageloader
+package com.topie.huaifang
 
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.ActionBarDrawerToggle
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -13,10 +12,13 @@ import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import com.topie.huaifang.R
+import com.topie.huaifang.base.HFBaseActivity
 import com.topie.huaifang.extensions.kInsteadTo
 import com.topie.huaifang.extensions.kParseFileUri
+import com.topie.huaifang.extensions.kReset
 import com.topie.huaifang.extensions.kToastShort
+import com.topie.huaifang.imageloader.HFImageView
+import com.topie.huaifang.imageloader.getLocalImageSet
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.image_scan_activity.*
@@ -25,7 +27,7 @@ import kotlinx.android.synthetic.main.image_scan_activity.*
  * Created by arman on 2017/10/18.
  * 图片浏览框架
  */
-class ImageScanActivity : AppCompatActivity() {
+class ImageScanActivity : HFBaseActivity() {
 
 
     private var limit = 0
@@ -36,6 +38,7 @@ class ImageScanActivity : AppCompatActivity() {
     companion object {
         const val EXTRA_LIMIT = "extra_limit"
         const val EXTRA_SELECT_LIST = "extra_select_list"
+        const val REQUEST_CODE_BROWSER = 200
 
         fun openImageScanActivity(context: Context, requestCode: Int, limit: Int, selectList: List<String>?) {
             if (context !is Activity) {
@@ -114,6 +117,10 @@ class ImageScanActivity : AppCompatActivity() {
                 }
             }
         }
+
+        contentAdapter.onItemClick = {
+            ImageBrowserActivity.openImageBrowserActivity(this@ImageScanActivity, REQUEST_CODE_BROWSER, limit, contentAdapter.list!!, selectList, it)
+        }
     }
 
     override fun onDestroy() {
@@ -121,6 +128,14 @@ class ImageScanActivity : AppCompatActivity() {
         contentAdapter.onItemClick = null
         contentAdapter.onItemSelectClick = null
         slidingMenuAdapter.onItemClick = null
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_CODE_BROWSER && resultCode == Activity.RESULT_OK) {
+            data?.getStringArrayListExtra(ImageBrowserActivity.EXTRA_SELECT_LIST)?.kInsteadTo(selectList)
+            contentAdapter.notifyDataSetChanged()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

@@ -2,6 +2,7 @@ package com.topie.huaifang.extensions
 
 import android.net.Uri
 import android.text.TextUtils
+import android.webkit.URLUtil
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -36,6 +37,17 @@ fun String?.kParseFileUri(): Uri? {
     }
     return Uri.fromFile(File(this))
 }
+
+fun String?.kParseUrlOrFileUri(): Uri? {
+    if (this == null || this.isEmpty()) {
+        return null
+    }
+    if (URLUtil.isHttpUrl(this) || URLUtil.isHttpsUrl(this)) {
+        return Uri.parse(this)
+    }
+    return Uri.fromFile(File(this))
+}
+
 
 private val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
 
