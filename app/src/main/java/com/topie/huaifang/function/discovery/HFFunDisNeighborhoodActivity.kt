@@ -133,7 +133,7 @@ class HFFunDisNeighborhoodActivity : HFBaseTitleActivity() {
             bindLikeList(d.likes)
             bindCommList(d.comments)
             mTvName.text = d.addUserName
-            mTvTime.text = d.publishTime
+            mTvTime.text = d.publishTime?.kSimpleFormatToDate()?.kSplit() ?: d.publishTime
             mTvContent.text = d.content
         }
 

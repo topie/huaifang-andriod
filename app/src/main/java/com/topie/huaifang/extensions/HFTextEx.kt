@@ -51,11 +51,33 @@ fun String?.kParseUrlOrFileUri(): Uri? {
 
 private val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
 
+const val DAY = 1000 * 60 * 60 * 24
+const val HOUR = 1000 * 60 * 60
+const val MINUTE = 1000 * 60
+const val SECOND = 1000
+
 /**
  * 转化为常规时间，后台约定
  */
 fun Date.kToSimpleFormat(): String {
     return simpleDateFormat.format(this)
+}
+
+/**
+ * 按时间段显示，今天、昨天、明天
+ */
+fun Date.kSplit(): String {
+    val today = Date()
+    if (today.time / DAY - time / DAY == 1.toLong()) {
+        return "昨天"
+    }
+    val defSecond = today.time - time
+    return when {
+        defSecond < MINUTE -> "刚刚"
+        defSecond < HOUR -> "${defSecond / MINUTE}分钟前"
+        defSecond < DAY -> "${defSecond / HOUR}小时前"
+        else -> kToSimpleFormat()
+    }
 }
 
 
