@@ -195,15 +195,21 @@ fun <T : HFBaseResponseBody> Observable<T>.subscribeResultOkApi(onNext: ((t: T) 
             it.resultOk -> onNext(it)
             else -> it.convertMessage().kToastShort()
         }
+        onComplete()
     }, {
         HFLogger.log("error", it)
         it.message?.kToastShort()
-    }, onComplete)
+        onComplete()
+    })
 }
 
 fun <T : HFBaseResponseBody> Observable<T>.subscribeApi(onNext: ((t: T) -> Unit), onComplete: () -> Unit): Disposable {
-    return subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(onNext, {
+    return subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe({
+        onNext(it)
+        onComplete()
+    }, {
         HFLogger.log("error", it)
         it.message?.kToastShort()
-    }, onComplete)
+        onComplete()
+    })
 }

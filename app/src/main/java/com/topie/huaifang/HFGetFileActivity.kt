@@ -21,6 +21,10 @@ import android.view.WindowManager
 import com.topie.huaifang.extensions.kGetCachePictureDir
 import com.topie.huaifang.extensions.kStartActivity
 import com.topie.huaifang.extensions.kToastShort
+import com.yanzhenjie.permission.AndPermission
+import com.yanzhenjie.permission.Permission
+import com.yanzhenjie.permission.PermissionNo
+import com.yanzhenjie.permission.PermissionYes
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -42,6 +46,24 @@ class HFGetFileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         mId = intent.getIntExtra(EXTRA_ID, 0)
         mLimit = intent.getIntExtra(EXTRA_LIMIT, 0)
+        AndPermission.with(this)
+                .requestCode(100)
+                .permission(Permission.STORAGE)
+                .rationale { _, rationale ->
+                    AndPermission.rationaleDialog(this@HFGetFileActivity, rationale).show()
+                }
+                .callback(this)
+                .start()
+    }
+
+    @PermissionNo(100)
+    private fun onPermissionNo(deniedPermissions: List<String>) {
+        onCancel(mId)
+        finish()
+    }
+
+    @PermissionYes(100)
+    private fun onPermissionYes(grantedPermissions: List<String>) {
         val type = intent.getIntExtra(EXTRA_TYPE, 0)
         when (type) {
             TYPE_GET_FILE -> {

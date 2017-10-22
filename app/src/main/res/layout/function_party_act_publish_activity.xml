@@ -177,7 +177,7 @@
 
         <!-- 活动内容-->
         <EditText
-            android:id="@+id/tv_fun_party_act_publish_content"
+            android:id="@+id/et_fun_party_act_publish_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/white"

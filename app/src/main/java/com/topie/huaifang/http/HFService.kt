@@ -95,8 +95,17 @@ interface HFService {
     @GET("/api/m/party/activity/list")
     fun getFunPartyActList(@Query("pageNum") pageNum: Int = 0, @Query("pageSize") pageSize: Int = 15): Observable<HFFunPartyResponseBody>
 
+    /**
+     * 党建活动-党支部活动报名
+     */
     @GET("/api/m/party/activity/join")
     fun postFunPartyAct(@Query("id") id: Int): Observable<HFBaseResponseBody>
+
+    /**
+     * 党建活动-党支部活动发布
+     */
+    @POST("/api/m/party/activity/join")
+    fun postFunPartyActPublish(@Body requestBody: HFFunPartyActPublishRequestBody): Observable<HFBaseResponseBody>
 
     /**
      * 党务公开

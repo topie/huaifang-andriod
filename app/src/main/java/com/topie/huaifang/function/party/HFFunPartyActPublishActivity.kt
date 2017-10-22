@@ -5,15 +5,11 @@ import android.view.View
 import com.topie.huaifang.HFGetFileActivity
 import com.topie.huaifang.R
 import com.topie.huaifang.base.HFBaseTitleActivity
-import com.topie.huaifang.extensions.kIsEmpty
-import com.topie.huaifang.extensions.kParseUrl
+import com.topie.huaifang.extensions.*
 import com.topie.huaifang.http.HFRetrofit
+import com.topie.huaifang.http.bean.function.HFFunPartyActPublishRequestBody
 import com.topie.huaifang.http.subscribeResultOkApi
 import com.topie.huaifang.view.HFDateDialog
-import com.yanzhenjie.permission.AndPermission
-import com.yanzhenjie.permission.Permission
-import com.yanzhenjie.permission.PermissionNo
-import com.yanzhenjie.permission.PermissionYes
 import kotlinx.android.synthetic.main.function_party_act_publish_activity.*
 import java.io.File
 import java.text.SimpleDateFormat
@@ -30,31 +26,10 @@ class HFFunPartyActPublishActivity : HFBaseTitleActivity() {
     private var startTime = Date()
     private var endTime = Date()
 
-    private var imgUrl: String? = null
+    private var imagePair: Pair<String, String>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        AndPermission.with(this)
-                .requestCode(100)
-                .permission(Permission.STORAGE)
-                .rationale { _, rationale ->
-                    AndPermission.rationaleDialog(this@HFFunPartyActPublishActivity, rationale).show()
-                }
-                .callback(this)
-                .start()
-    }
-
-    @PermissionNo(100)
-    private fun onPermissionNo(deniedPermissions: List<String>) {
-        finish()
-    }
-
-    @PermissionYes(100)
-    private fun onPermissionYes(grantedPermissions: List<String>) {
-        onCreateSupper()
-    }
-
-    private fun onCreateSupper() {
         setContentView(R.layout.function_party_act_publish_activity)
         setBaseTitle("活动发布")
         //开始时间
@@ -80,22 +55,34 @@ class HFFunPartyActPublishActivity : HFBaseTitleActivity() {
         //图片
         ll_fun_party_act_publish_img.setOnClickListener {
             HFGetFileActivity.getImage({
-                val firstOrNull = it.firstOrNull()?.takeIf { it.isNotEmpty() }
-                if (firstOrNull == null) {
-                    imgUrl = null
-                    updateView()
-                } else {
-                    HFRetrofit.hfService.uploadImage(File(firstOrNull)).subscribeResultOkApi {
+                imagePair = it.firstOrNull()?.takeIf { it.isNotEmpty() }?.to("")
+                updateView()
+                if (imagePair?.first.kIsNotEmpty()) {
+                    val path = imagePair!!.first
+                    HFRetrofit.hfService.uploadImage(File(path)).subscribeResultOkApi {
                         if (it.data?.attachmentUrl.kIsEmpty()) {
-                            imgUrl = null
-                            updateView()
-                        } else {
-                            imgUrl = it.data?.attachmentUrl
-                            updateView()
+                            //
+                        } else if (path == imagePair?.first) {
+                            imagePair = path.to(it.data?.attachmentUrl ?: "")
                         }
                     }
                 }
             }, 1)
+        }
+        ll_fun_party_act_publish.setOnClickListener {
+            try {
+                val requestBody = getRequestBody()
+                ll_fun_party_act_publish.isEnabled = false
+                HFRetrofit.hfService.postFunPartyActPublish(requestBody).subscribeResultOkApi({
+                    ll_fun_party_act_publish.isEnabled = true
+                    kToastShort("发布成功")
+                    finish()
+                }, {
+                    ll_fun_party_act_publish.isEnabled = true
+                })
+            } catch (e: Exception) {
+                e.message?.kToastShort()
+            }
         }
         updateView()
     }
@@ -104,11 +91,32 @@ class HFFunPartyActPublishActivity : HFBaseTitleActivity() {
         tv_fun_party_act_publish_start.text = dateFormat.format(startTime)
         tv_fun_party_act_publish_end.text = dateFormat.format(endTime)
 
-        if (imgUrl == null) {
+        if (imagePair?.first.kIsEmpty()) {
             iv_fun_party_act_publish_img.visibility = View.GONE
         } else {
             iv_fun_party_act_publish_img.visibility = View.VISIBLE
-            iv_fun_party_act_publish_img.loadImageUri(imgUrl.kParseUrl())
+            iv_fun_party_act_publish_img.loadImageUri(imagePair?.first.kParseFileUri())
         }
+    }
+
+    @Throws(IllegalStateException::class)
+    private fun getRequestBody(): HFFunPartyActPublishRequestBody {
+        val requestBody = HFFunPartyActPublishRequestBody()
+        requestBody.topic = et_fun_party_act_publish_topic.text.toString().trim().takeIf {
+            it.isNotEmpty()
+        } ?: throw IllegalStateException("请填写活动主题")
+        et_fun_party_act_publish_content.text.toString().trim().takeIf {
+            it.isNotEmpty()
+        } ?: throw IllegalStateException("请填写活动内容")
+        requestBody.address = et_fun_party_act_publish_address.text.toString().trim()
+        requestBody.publishUser = et_fun_party_act_publish_publisher.text.toString().trim().takeIf {
+            it.isNotEmpty()
+        } ?: throw IllegalStateException("请填写发布者")
+        requestBody.image = imagePair?.second?.takeIf {
+            it.isNotEmpty()
+        } ?: throw IllegalStateException("请上传图片")
+        requestBody.beginTime = startTime.kToSimpleFormat()
+        requestBody.endTime = endTime.kToSimpleFormat()
+        return requestBody
     }
 }
