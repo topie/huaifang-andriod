@@ -40,7 +40,7 @@ class HFFunDisNeighborhoodActivity : HFBaseTitleActivity() {
             this@HFFunDisNeighborhoodActivity.kStartActivity(HFFunDisNeighborhoodApplyActivity::class.java)
         }
         pt2_base_recycler.setPt2Handler(HFDefaultPt2Handler({ ->
-            getNeighborhoodList(0)
+            getNeighborhoodList(1)
         }, { ->
             getNeighborhoodList(mAdapter.mPageSize)
         }))
@@ -52,7 +52,7 @@ class HFFunDisNeighborhoodActivity : HFBaseTitleActivity() {
         HFRetrofit.hfService.getFunDisNeighborhoodList(aPageSize).subscribeResultOkApi({
             it.data?.data?.also {
                 when (aPageSize) {
-                    0 -> mAdapter.setList(it)
+                    0, 1 -> mAdapter.setList(it)
                     mAdapter.mPageSize -> mAdapter.addList(it)
                 }
                 mAdapter.notifyDataSetChanged()
@@ -65,7 +65,7 @@ class HFFunDisNeighborhoodActivity : HFBaseTitleActivity() {
     override fun onResume() {
         super.onResume()
         if (mAdapter.itemCount == 0) {
-            getNeighborhoodList(0)
+            getNeighborhoodList(1)
         }
     }
 
