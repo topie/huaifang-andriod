@@ -1,22 +1,22 @@
 package com.topie.huaifang.function.party
 
 import `in`.srain.cube.views.ptr.PtrFrameLayout
-import android.content.Context
 import android.os.Bundle
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
+import android.util.SparseArray
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseExpandableListAdapter
-import android.widget.ExpandableListView
 import android.widget.TextView
 import com.davdian.ptr.AbsPt2Handler
 import com.davdian.ptr.Pt2FrameLayout
 import com.davdian.ptr.ptl.PtlFrameLayout
 import com.topie.huaifang.R
 import com.topie.huaifang.base.HFBaseFragment
+import com.topie.huaifang.base.HFBaseParentViewHolder
+import com.topie.huaifang.base.HFBaseRecyclerViewHolder
 import com.topie.huaifang.extensions.kFindViewById
-import com.topie.huaifang.extensions.kGet
-import com.topie.huaifang.extensions.kGetOne
 import com.topie.huaifang.extensions.kStartActivity
 import com.topie.huaifang.http.HFRetrofit
 import com.topie.huaifang.http.bean.function.HFFunPartyMemberResponseBody
@@ -31,7 +31,7 @@ class HFFunPartyMembersFragment : HFBaseFragment() {
 
     private var disposable: Disposable? = null
 
-    private lateinit var adapter: Adapter
+    private val adapter = Adapter()
     private lateinit var pt2FrameLayout: Pt2FrameLayout
 
     private val handler: AbsPt2Handler = object : AbsPt2Handler() {
@@ -50,20 +50,11 @@ class HFFunPartyMembersFragment : HFBaseFragment() {
     }
 
     override fun onCreateViewSupport(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        adapter = Adapter(inflater.context)
-        pt2FrameLayout = inflater.inflate(R.layout.base_pt2_list_layout, container, false) as Pt2FrameLayout
+        pt2FrameLayout = inflater.inflate(R.layout.base_pt2_recycler_layout, container, false) as Pt2FrameLayout
         pt2FrameLayout.setPt2Handler(handler)
-        val listView: ExpandableListView = pt2FrameLayout.kFindViewById(R.id.elv_base_pt2)
-        listView.setAdapter(adapter)
-        listView.setOnChildClickListener { _, _, groupPosition, childPosition, _ ->
-            return@setOnChildClickListener adapter.getChild(groupPosition, childPosition)?.let {
-                Bundle().apply {
-                    putSerializable(HFFunPartyMembersDetailActivity.EXTRA_DATA, it)
-                }.let {
-                    this@HFFunPartyMembersFragment.kStartActivity(HFFunPartyMembersDetailActivity::class.java, it)
-                }
-            } ?: false
-        }
+        val recyclerView: RecyclerView = pt2FrameLayout.kFindViewById(R.id.rv_base_pt2)
+        recyclerView.layoutManager = LinearLayoutManager(inflater.context)
+        recyclerView.adapter = adapter
         return pt2FrameLayout
     }
 
@@ -94,85 +85,77 @@ class HFFunPartyMembersFragment : HFBaseFragment() {
         disposable?.takeIf { it.isDisposed.not() }?.dispose()
     }
 
-    class Adapter(context: Context) : BaseExpandableListAdapter() {
+    private class Adapter(val list: MutableList<Group> = mutableListOf()) : RecyclerView.Adapter<HFBaseRecyclerViewHolder<Group>>() {
 
-        val list: MutableList<Group> = arrayListOf()
-        val inflater: LayoutInflater = LayoutInflater.from(context)
-
-        override fun getGroup(groupPosition: Int): Group? {
-            return list.kGet(groupPosition)
+        override fun onBindViewHolder(holder: HFBaseRecyclerViewHolder<Group>?, position: Int) {
+            holder?.bindData(list[position])
         }
 
-        override fun isChildSelectable(groupPosition: Int, childPosition: Int): Boolean {
-            return true
-        }
-
-        override fun hasStableIds(): Boolean {
-            return true
-        }
-
-        override fun getGroupView(groupPosition: Int, isExpanded: Boolean, convertView: View?, parent: ViewGroup?): View {
-            val view = convertView ?: inflater.inflate(R.layout.function_party_members_group_title, parent, false)
-            val textView = view.kFindViewById<TextView>(R.id.tv_fun_party_members_node)
-            textView.text = getGroup(groupPosition)?.note
-            return view
-        }
-
-        override fun getChildrenCount(groupPosition: Int): Int {
-            return getGroup(groupPosition)?.getCount() ?: 0
-        }
-
-        override fun getChild(groupPosition: Int, childPosition: Int): HFFunPartyMemberResponseBody.ListData? {
-            return getGroup(groupPosition)?.getItem(childPosition)
-        }
-
-        override fun getGroupId(groupPosition: Int): Long {
-            return getGroup(groupPosition)?.nodeId?.toLong() ?: (-1).toLong()
-        }
-
-        override fun getChildView(groupPosition: Int, childPosition: Int, isLastChild: Boolean, convertView: View?, parent: ViewGroup?): View {
-            val view = convertView ?: inflater.inflate(R.layout.function_party_members_group_item, parent, false)
-            val tvName = view.kFindViewById<TextView>(R.id.tv_fun_party_members_name)
-            val tvFlag = view.kFindViewById<TextView>(R.id.tv_fun_party_members_flag)
-            tvName.text = getChild(groupPosition, childPosition)?.name
-            tvFlag.text = getChild(groupPosition, childPosition)?.flag
-            return view
-        }
-
-        override fun getChildId(groupPosition: Int, childPosition: Int): Long {
-            return getChild(groupPosition, childPosition)?.nodeId?.toLong() ?: (-1).toLong()
-        }
-
-        override fun getGroupCount(): Int {
+        override fun getItemCount(): Int {
             return list.size
         }
 
-
-    }
-
-    class Group(var note: String? = null, var nodeId: Int = -1) {
-
-        private val list: MutableList<HFFunPartyMemberResponseBody.ListData> = arrayListOf()
-
-        companion object {
-            fun convertToGroupList(list: List<HFFunPartyMemberResponseBody.ListData>): ArrayList<Group> {
-                val groupList = ArrayList<Group>()
-                list.forEach { item ->
-                    groupList.kGetOne(
-                            { item.nodeId == it.nodeId },
-                            { Group(item.partyNodeName, item.nodeId) }
-                    ).list.add(item)
-                }
-                return groupList
+        override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): HFBaseRecyclerViewHolder<Group> {
+            return when (viewType) {
+                Group.TYPE_BODY -> ItemViewHolder(parent!!)
+                else -> TitleViewHolder(parent!!)
             }
         }
 
-        fun getCount(): Int {
-            return list.size
+        override fun getItemViewType(position: Int): Int {
+            return list[position].type
         }
 
-        fun getItem(position: Int): HFFunPartyMemberResponseBody.ListData? {
-            return list.kGet(position)
+    }
+
+    private class ItemViewHolder(parent: ViewGroup) : HFBaseParentViewHolder<Group>(parent, R.layout.function_party_members_group_item, true) {
+        val tvName = itemView.kFindViewById<TextView>(R.id.tv_fun_party_members_name)
+        val tvFlag = itemView.kFindViewById<TextView>(R.id.tv_fun_party_members_flag)
+        override fun onBindData(d: Group) {
+            tvName.text = d.data.name
+            tvFlag.text = d.data.flag
+        }
+    }
+
+    private class TitleViewHolder(parent: ViewGroup) : HFBaseParentViewHolder<Group>(parent, R.layout.function_party_members_group_title, false) {
+        val tvNode = itemView.kFindViewById<TextView>(R.id.tv_fun_party_members_node)
+        override fun onBindData(d: Group) {
+            tvNode.text = d.note
+        }
+
+        override fun onItemClicked(d: Group?) {
+            super.onItemClicked(d)
+            d ?: return
+            val bundle = Bundle()
+            bundle.putSerializable(HFFunPartyMembersDetailActivity.EXTRA_DATA, d.data)
+            itemView.kStartActivity(HFFunPartyMembersDetailActivity::class.java, bundle)
+        }
+    }
+
+    private class Group(val note: String? = null, val nodeId: Int = -1, val data: HFFunPartyMemberResponseBody.ListData, val type: Int) {
+
+        companion object {
+
+            const val TYPE_TITLE = 100
+            const val TYPE_BODY = 200
+
+            fun convertToGroupList(list: List<HFFunPartyMemberResponseBody.ListData>): ArrayList<Group> {
+                val sparseArray = SparseArray<MutableList<Group>>()
+                list.forEach { e ->
+                    if (sparseArray[e.nodeId] == null) {
+                        sparseArray.put(e.nodeId, mutableListOf())
+                    }
+                    sparseArray[e.nodeId].add(Group(e.partyNodeName, e.nodeId, e, TYPE_BODY))
+                }
+                val groupList = ArrayList<Group>()
+                for (i in 0 until sparseArray.size()) {
+                    val mutableList = sparseArray[sparseArray.keyAt(i)]
+                    val title = mutableList[0].let { Group(it.note, it.nodeId, it.data, TYPE_TITLE) }
+                    groupList.add(title)
+                    groupList.addAll(mutableList)
+                }
+                return groupList
+            }
         }
     }
 }

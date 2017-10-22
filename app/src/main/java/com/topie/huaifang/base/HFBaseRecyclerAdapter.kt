@@ -1,8 +1,10 @@
 package com.topie.huaifang.base
 
+import android.support.annotation.LayoutRes
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
+import com.topie.huaifang.extensions.kInflate
 
 /**
  * Created by arman on 2017/9/22.
@@ -20,6 +22,11 @@ open class HFBaseRecyclerAdapter<D, VH : HFBaseRecyclerViewHolder<D>>(private va
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
         return factory.create(parent, viewType)
     }
+}
+
+abstract class HFBaseParentViewHolder<D>(parent: ViewGroup, @LayoutRes layoutId: Int, initItemClick: Boolean = false) :
+        HFBaseRecyclerViewHolder<D>(parent.kInflate(layoutId), initItemClick) {
+
 }
 
 abstract class HFBaseRecyclerViewHolder<D>(itemView: View, initItemClick: Boolean = false) : RecyclerView.ViewHolder(itemView) {

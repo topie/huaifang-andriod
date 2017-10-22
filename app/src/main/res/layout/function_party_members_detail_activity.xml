@@ -112,7 +112,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@color/facing_index_background"
+        android:background="@color/colorLightGray"
         android:gravity="bottom"
         android:orientation="vertical">
 
