@@ -1,5 +1,6 @@
 package com.topie.huaifang.function.discovery
 
+import android.net.Uri
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -17,6 +18,7 @@ import com.topie.huaifang.http.bean.function.HFFunDisNeighborhoodResponseBody
 import com.topie.huaifang.http.subscribeResultOkApi
 import com.topie.huaifang.imageloader.HFImageView
 import com.topie.huaifang.util.HFDimensUtils
+import com.topie.huaifang.view.HFImagesLayout
 import kotlinx.android.synthetic.main.base_pt2_recycler_layout.*
 import kotlinx.android.synthetic.main.base_title_layout.*
 
@@ -104,7 +106,7 @@ class HFFunDisNeighborhoodActivity : HFBaseTitleActivity() {
         private val mTvContent: TextView = itemView.findViewById(R.id.tv_fun_dis_neighborhood_content)
         private val mTvTime: TextView = itemView.findViewById(R.id.tv_fun_dis_neighborhood_time)
         //图片集合
-        private val mLLImages: LinearLayout = itemView.findViewById(R.id.ll_fun_dis_neighborhood_images)
+        private val hfImagesLayout: HFImagesLayout = itemView.findViewById(R.id.il_fun_dis_neighborhood_images)
         //喜欢列表
         private val mLLLikeList: LinearLayout = itemView.findViewById(R.id.ll_fun_dis_neighborhood_like_list)
         //评论列表
@@ -171,33 +173,17 @@ class HFFunDisNeighborhoodActivity : HFBaseTitleActivity() {
         }
 
         private fun bindImages(images: String?) {
-            //删除旧的View
-            val imageViewList = ArrayList<HFImageView>().apply {
-                for (i in 0 until mLLImages.childCount) {
-                    val childAt = mLLImages.getChildAt(i)
-                    if (childAt is HFImageView) {
-                        childAt.setImageDrawable(null)
-                        add(childAt)
-                    }
-                }
-                mLLImages.removeAllViews()
-            }
             //获取新数据
-            val list = images?.split(",") ?: arrayListOf(null, null, null)
-            //添加新的View
-            for (i in 0..2) {
-                val hfImageView = imageViewList.kGet(i) ?: HFImageView(itemView.context).apply {
-                    setAspectRatio(1.toFloat())
-                    layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT).apply {
-                        rightMargin = when (i) {
-                            2 -> 0
-                            else -> HFDimensUtils.dp2px(10.toFloat())
-                        }
-                        weight = 1.toFloat()
-                    }
-                }
-                hfImageView.loadImageUri(list.kGet(i)?.trim()?.kParseUrl())
-                mLLImages.addView(hfImageView)
+            val list = images
+                    ?.split(",")
+                    ?.map { it.trim() }
+                    ?.filterIndexed { index, s -> s.isNotEmpty() && index < 4 }
+                    ?.map { it.kParseUrl() ?: Uri.EMPTY }
+            if (list.kIsEmpty()) {
+                hfImagesLayout.visibility = View.GONE
+            } else {
+                hfImagesLayout.visibility = View.VISIBLE
+                hfImagesLayout.setPathList(list)
             }
         }
 
