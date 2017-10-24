@@ -2,6 +2,7 @@ package com.topie.huaifang.http
 
 import com.topie.huaifang.http.bean.HFBaseResponseBody
 import com.topie.huaifang.http.bean.account.HFAccountResponseBody
+import com.topie.huaifang.http.bean.account.HFAccountUserInfoRequestBody
 import com.topie.huaifang.http.bean.account.HFCheckPhoneResponseBody
 import com.topie.huaifang.http.bean.account.HFLoginResponseBody
 import com.topie.huaifang.http.bean.communication.HFCommFriendsResponseBody
@@ -260,7 +261,7 @@ interface HFService {
     /**
      * 发布活动
      */
-    @POST("/api/m/appTimeLine/post")
+    @POST("/api/m/aroundActivity/post")
     @FormUrlEncoded
     fun postFunDisAction(@FieldMap map: Map<String, Any?>): Observable<HFBaseResponseBody>
 
@@ -274,6 +275,7 @@ interface HFService {
     /**
      * 活动详情
      */
+    @GET("/api/m/aroundActivity/detail")
     fun getFunDisActionDetail(@Field("id") id: Int): Observable<HFFunDisActionDetailResponseBody>
 
     /**
@@ -317,5 +319,8 @@ interface HFService {
      */
     @GET("/api/m/index/userInfo")
     fun getAccountInfo(): Observable<HFAccountResponseBody>
+
+    @POST("/api/m/appUser/updateInfo")
+    fun postAccountInfo(@Body hfAccountUserInfoRequestBody: HFAccountUserInfoRequestBody): Observable<HFBaseResponseBody>
 
 }

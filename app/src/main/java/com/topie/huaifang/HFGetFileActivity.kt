@@ -96,6 +96,11 @@ class HFGetFileActivity : AppCompatActivity() {
                     dismiss()
                 }
             }
+        }.apply {
+            setOnCancelListener {
+                onCancel(mId)
+                finish()
+            }
         }.show()
     }
 

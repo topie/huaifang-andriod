@@ -20,7 +20,8 @@ object HFAccountManager {
     private const val SP_NAME = "com.topie.huaifang.account.HFAccountManager"
     private const val KEY_MODEL = "model"
     private val logger: HFLogger = HFLogger.HFDefaultLogger("Account")
-    private var accountModel: HFAccountModel = getData()
+    var accountModel: HFAccountModel = getData()
+        private set
 
     init {
         HFRetrofit.addIntercept(HFAccountHttpInterceptor())

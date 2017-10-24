@@ -70,6 +70,8 @@
         <activity android:name=".function.discovery.HFFunDisActionPublishActivity" />
         <activity android:name=".function.discovery.HFFunDisActionActivity" />
         <activity android:name=".function.discovery.HFFunDisActionDetailActivity" />
+        <activity android:name=".function.infomation.HFMineInfoActivity" />
+        <activity android:name=".function.infomation.HFMineInfoNicknameActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

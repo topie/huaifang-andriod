@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/item_selected_material"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/ll_facing_list_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <com.topie.huaifang.imageloader.HFImageView
+            android:id="@+id/iv_facing_list_icon"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:scaleType="centerCrop"
+            app:defImageRes="@mipmap/ic_function_party_members_head"
+            app:roundedAsCircle="true"
+            app:borderWidth="0.5dp"
+            app:borderColor="@color/colorGray"/>
+
+        <TextView
+            android:id="@+id/tv_facing_list_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
+            android:maxLines="1"
+            android:text="系统通知"
+            android:textColor="@color/colorBlack" />
+    </LinearLayout>
+
+    <include layout="@layout/function_thick_line_item" />
+</LinearLayout>
