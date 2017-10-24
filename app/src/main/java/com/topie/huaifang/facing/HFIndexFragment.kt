@@ -9,6 +9,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.davdian.ptr.Pt2FrameLayout
 import com.topie.huaifang.R
+import com.topie.huaifang.account.HFAccountManager
 import com.topie.huaifang.base.HFBaseFragment
 import com.topie.huaifang.extensions.*
 import com.topie.huaifang.function.HFFunAllActivity
@@ -63,6 +64,9 @@ class HFIndexFragment : HFBaseFragment() {
         getFunQuestionList()
         getCommSimilarFriendList()
         getTopImage()
+        if (HFAccountManager.isLogin && HFAccountManager.accountModel.roomInfo == null) {
+            HFAccountManager.refreshAccountData()
+        }
     }
 
     /**

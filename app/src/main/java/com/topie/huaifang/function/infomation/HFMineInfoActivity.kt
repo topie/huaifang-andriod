@@ -50,6 +50,11 @@ class HFMineInfoActivity : HFBaseTitleActivity() {
     override fun onResume() {
         super.onResume()
         initView()
+        if (HFAccountManager.isLogin) {
+            HFAccountManager.refreshAccountData {
+                initView()
+            }
+        }
     }
 
     private fun initView() {
