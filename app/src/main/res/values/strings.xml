@@ -18,7 +18,7 @@
     <string name="facing_index_friend">可能认识的人</string>
     <string name="facing_index_friend_add">+加为好友</string>
     <string name="facing_list_search_friend">搜索我的好友，发起聊天</string>
-    <string name="facing_discovery_activity">社区活动</string>
+    <string name="facing_discovery_action">社区活动</string>
     <string name="facing_discovery_around">周边</string>
     <string name="facing_discovery_forum">社区论坛</string>
     <string name="facing_discovery_neighborhood">邻里圈</string>

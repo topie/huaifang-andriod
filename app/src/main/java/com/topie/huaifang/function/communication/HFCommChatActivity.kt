@@ -6,11 +6,8 @@ import android.widget.TextView
 import com.topie.huaifang.R
 import com.topie.huaifang.base.HFBaseRecyclerViewHolder
 import com.topie.huaifang.base.HFBaseTitleActivity
-import com.topie.huaifang.extensions.HFDefaultPt2Handler
-import com.topie.huaifang.extensions.kGetColor
 import com.topie.huaifang.http.bean.communication.HFCommMsgDetail
 import com.topie.huaifang.imageloader.HFImageView
-import kotlinx.android.synthetic.main.function_comm_chart_activity.*
 
 /**
  * Created by arman on 2017/10/11.
@@ -22,8 +19,6 @@ class HFCommChatActivity : HFBaseTitleActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.function_comm_chart_activity)
         setBaseTitle("聊天室")
-        pt2_fun_chart.setPt2Handler(HFDefaultPt2Handler())
-        pt2_fun_chart.setBackgroundColor(kGetColor(R.color.facing_index_background))
     }
 
     private class LeftViewHolder(itemView: View) : HFBaseRecyclerViewHolder<HFCommMsgDetail>(itemView, true) {
@@ -33,7 +28,7 @@ class HFCommChatActivity : HFBaseTitleActivity() {
         private val mTvHead: TextView = itemView.findViewById(R.id.tv_fun_comm_name)
 
         override fun onBindData(d: HFCommMsgDetail) {
-            
+
         }
     }
 }

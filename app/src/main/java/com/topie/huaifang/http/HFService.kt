@@ -258,6 +258,25 @@ interface HFService {
     fun getFunDisNeighborhoodList(@Query("pageNum") pageNum: Int = 1, @Query("pageSize") pageSize: Int = 15): Observable<HFFunDisNeighborhoodResponseBody>
 
     /**
+     * 发布活动
+     */
+    @POST("/api/m/appTimeLine/post")
+    @FormUrlEncoded
+    fun postFunDisAction(@FieldMap map: Map<String, Any?>): Observable<HFBaseResponseBody>
+
+    /**
+     * 活动列表
+     */
+    @GET("/api/m/aroundActivity/list")
+    fun getFunDisActionList(@Query("pageNum") pageNum: Int = 0, @Query("pageSize") pageSize: Int = 15): Observable<HFFunDisActionListResponseBody>
+
+
+    /**
+     * 活动详情
+     */
+    fun getFunDisActionDetail(@Field("id") id: Int): Observable<HFFunDisActionDetailResponseBody>
+
+    /**
      * 我的信息
      */
     @GET("/api/m/appUser/authInfo")
