@@ -263,7 +263,7 @@ interface HFService {
      */
     @POST("/api/m/aroundActivity/post")
     @FormUrlEncoded
-    fun postFunDisAction(@FieldMap map: Map<String, Any?>): Observable<HFBaseResponseBody>
+    fun postFunDisAction(@FieldMap map: Map<String, String>): Observable<HFBaseResponseBody>
 
     /**
      * 活动列表

@@ -15,16 +15,16 @@ class HFFunDisActionPublishRequestBody {
     var content: String? = null //内容
     var image: String? = null //图片
 
-    fun toMap(): Map<String, Any?> {
-        val map = hashMapOf<String, Any?>()
-        map.put("title", topic)
-        map.put("image", image)
-        map.put("type", type)
-        map.put("address", address)
-        map.put("joinLimit", limit)
-        map.put("content", content)
-        map.put("beginTime", beginTime)
-        map.put("endTime", endTime)
+    fun toMap(): Map<String, String> {
+        val map = hashMapOf<String, String>()
+        map.put("title", topic ?: "")
+        map.put("image", image ?: "")
+        map.put("type", type ?: "")
+        map.put("address", address ?: "")
+        map.put("joinLimit", limit.toString())
+        map.put("content", content ?: "")
+        map.put("beginTime", beginTime ?: "")
+        map.put("endTime", endTime ?: "")
         return map
     }
 }

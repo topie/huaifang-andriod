@@ -15,13 +15,13 @@
     <RadioGroup
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="10dp">
 
         <RadioButton
             android:id="@+id/rb_fun_dis_action_type0"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:checked="true"
             android:text="社团活动" />
 

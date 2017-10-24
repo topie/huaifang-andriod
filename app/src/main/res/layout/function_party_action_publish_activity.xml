@@ -239,6 +239,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_weight="1"
+                android:inputType="number"
                 android:background="@null"
                 android:hint="请填写人数限制（选填）"
                 android:textColor="@color/colorDark"

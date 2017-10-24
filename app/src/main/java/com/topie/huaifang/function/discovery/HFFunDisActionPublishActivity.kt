@@ -37,10 +37,11 @@ class HFFunDisActionPublishActivity : HFBaseTitleActivity() {
         setContentView(R.layout.function_party_action_publish_activity)
         setBaseTitle("活动发布")
         ll_fun_party_action_publish_type.setOnClickListener {
-            TypeDialog(this@HFFunDisActionPublishActivity, { position, str ->
+            TypeDialog(this@HFFunDisActionPublishActivity, { position, str, dialog ->
                 actionType = str
                 tv_fun_party_action_publish_type?.text = str
-            })
+                dialog.dismiss()
+            }).show()
         }
         //开始时间
         ll_fun_party_action_publish_start.setOnClickListener {
@@ -150,21 +151,21 @@ class HFFunDisActionPublishActivity : HFBaseTitleActivity() {
         return requestBody
     }
 
-    private class TypeDialog(context: Context?, val onItemSelect: ((position: Int, str: String) -> Unit)) : Dialog(context) {
+    private class TypeDialog(context: Context?, val onItemSelect: ((position: Int, str: String, dialog: Dialog) -> Unit)) : Dialog(context) {
         override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
             setContentView(R.layout.function_dis_action_type_dialog)
             rb_fun_dis_action_type0.setOnClickListener {
-                onItemSelect.invoke(0, (it as RadioButton).text.toString())
+                onItemSelect.invoke(0, (it as RadioButton).text.toString(), this)
             }
             rb_fun_dis_action_type1.setOnClickListener {
-                onItemSelect.invoke(1, (it as RadioButton).text.toString())
+                onItemSelect.invoke(1, (it as RadioButton).text.toString(), this)
             }
             rb_fun_dis_action_type2.setOnClickListener {
-                onItemSelect.invoke(2, (it as RadioButton).text.toString())
+                onItemSelect.invoke(2, (it as RadioButton).text.toString(), this)
             }
             rb_fun_dis_action_type3.setOnClickListener {
-                onItemSelect.invoke(3, (it as RadioButton).text.toString())
+                onItemSelect.invoke(3, (it as RadioButton).text.toString(), this)
             }
 
             setWindowScreenWidth()
