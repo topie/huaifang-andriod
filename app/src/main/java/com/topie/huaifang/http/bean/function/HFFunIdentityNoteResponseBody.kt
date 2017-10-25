@@ -20,5 +20,6 @@ class HFFunIdentityNoteResponseBody : HFBaseResponseBody() {
         var pId: Int = 0
         var name: String? = null
         var roomNumber: String? = null
+        var companyName: String? = null
     }
 }

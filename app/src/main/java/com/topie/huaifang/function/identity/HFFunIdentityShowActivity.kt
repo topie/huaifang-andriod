@@ -41,6 +41,7 @@ class HFFunIdentityShowActivity : HFBaseTitleActivity() {
         if (isFinishing) {
             return
         }
+        tv_fun_identity_company.text = data.company
         tv_fun_identity_sf.text = data.sf
         tv_fun_identity_name.text = data.name
         tv_fun_identity_number.text = data.idn

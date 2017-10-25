@@ -23,13 +23,14 @@ class HFFunDisActionListResponseBody : HFBaseResponseBody() {
         }
 
         var image: String? = null
+        var type: String? = null
         var publishTime: String? = null
         var address: String? = null //活动地址
         var publishUser: String? = null //发布人
-        var joinLimit: String? = null   //参加人数上限
+        var joinLimit: Int = 0   //参加人数上限
         var content: String? = null //内容
         var activityRange: String? = null   //活动范围
-        var topic: String? = null   //活动主题
+        var title: String? = null   //活动主题
         var beginTime: String? = null
         var endTime: String? = null
         var id: Int = 0

@@ -41,9 +41,9 @@ class HFFunDisActionDetailActivity : HFBaseTitleActivity() {
     }
 
     private fun initData(detail: HFFunDisActionListResponseBody.ListData?) {
-        setBaseTitle(detail?.topic)
+        setBaseTitle(detail?.title)
         iv_fun_party_detail_img.loadImageUri(detail?.image?.kParseUrl())
-        tv_fun_party_act_title.text = detail?.topic
+        tv_fun_party_act_title.text = detail?.title
         tv_fun_party_act_organ.text = ""
         tv_fun_party_act_time.text = detail?.beginTime
         tv_fun_party_act_address.text = detail?.address

@@ -12,4 +12,5 @@ class HFRoomInfo {
     var mp: String? = null  //门牌
     var name: String? = null    //名称
     var idn: String? = null //身份证
+    var company: String? = null //身份证
 }

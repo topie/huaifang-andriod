@@ -10,5 +10,6 @@ class HFFunIdentityEditRequestBody {
     var pPersonType: String? = null //0住户，1租户
     var pName: String? = null
     var pIdentifyNumber: String? = null
+    var companyId: String? = null//企业id
 
 }

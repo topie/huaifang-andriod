@@ -100,10 +100,38 @@
             android:textSize="14sp" />
     </LinearLayout>
 
-    <include
-        layout="@layout/function_line_item"
+    <include layout="@layout/function_thick_line_item" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:lines="1"
+        android:maxLines="1"
+        android:text="企业信息"
+        android:textColor="@color/colorDark"
+        android:textSize="14sp" />
+
+    <include layout="@layout/function_line_item" />
+
+    <!--企业-->
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="20dp" />
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:gravity="center_vertical|right">
+
+        <TextView
+            android:id="@+id/tv_fun_identity_company"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:lines="1"
+            android:maxLines="1"
+            android:textColor="@color/colorDark"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <include layout="@layout/function_thick_line_item" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -122,7 +150,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical|right">
 
         <TextView
             android:id="@+id/tv_fun_identity_xq"
@@ -142,7 +170,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical|right">
 
         <TextView
             android:id="@+id/tv_fun_identity_lh"
@@ -161,7 +189,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical|right">
 
         <TextView
             android:id="@+id/tv_fun_identity_dy"
@@ -180,7 +208,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical|right">
 
         <TextView
             android:id="@+id/tv_fun_identity_lc"
@@ -199,7 +227,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical|right">
 
         <TextView
             android:id="@+id/tv_fun_identity_mp"

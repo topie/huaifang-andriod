@@ -106,7 +106,7 @@ class HFFunDisActionFragment : HFBaseFragment() {
 
         override fun onBindData(d: HFFunDisActionListResponseBody.ListData) {
             imageView.loadImageUri(d.image.kParseUrl())
-            tvTitle.text = d.topic
+            tvTitle.text = d.title
             tvTime.text = d.beginTime
             tvStatus.text = d.status?.let {
                 when (it) {

@@ -35,18 +35,19 @@ class HFFunIdentityEditActivity : HFBaseTitleActivity() {
     private val mNoteOnClick: ((v: View) -> Unit) = {
 
         val index = when (it.id) {
+            R.id.ll_fun_identity_company -> -1
             R.id.ll_fun_identity_xq -> 0
             R.id.ll_fun_identity_lh -> 1
             R.id.ll_fun_identity_dy -> 2
             R.id.ll_fun_identity_lc -> 3
             R.id.ll_fun_identity_mp -> 4
-            else -> -1
+            else -> -100
         }
         when (index) {
-            -1 -> kToastShort("unknown index")
+            -100 -> kToastShort("unknown index")
             else -> {
                 val node = when (index) {
-                    0 -> 0.to("")
+                    0, -1 -> index.to("")
                     else -> mNoteList[index - 1]
                 }
                 if (node == null) {
@@ -70,7 +71,7 @@ class HFFunIdentityEditActivity : HFBaseTitleActivity() {
                     }
                 }
             }?.map {
-                it.id.to(it.name ?: it.roomNumber ?: it.id.toString())
+                it.id.to(it.name ?: it.roomNumber ?: it.companyName ?: it.id.toString())
             }?.takeIf {
                 //activity没有关闭
                 !isFinishing
@@ -87,12 +88,14 @@ class HFFunIdentityEditActivity : HFBaseTitleActivity() {
             }
         }
         showNoteDis = when (index) {
+            -1 -> HFRetrofit.hfService.getFunIdentityCompany().subscribeResultOkApi(onNext)
             4 -> HFRetrofit.hfService.getFunIdentityRoom(parent.first).subscribeResultOkApi(onNext)
             else -> HFRetrofit.hfService.getFunIdentityNote(parent.first).subscribeResultOkApi(onNext)
         }
     }
 
     private fun initRoomNode() {
+        tv_fun_identity_company?.text = mNoteList[-1]?.second
         tv_fun_identity_xq?.text = mNoteList[0]?.second
         tv_fun_identity_lh?.text = mNoteList[1]?.second
         tv_fun_identity_dy?.text = mNoteList[2]?.second
@@ -104,6 +107,7 @@ class HFFunIdentityEditActivity : HFBaseTitleActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.function_indentity_edit_activity)
         setBaseTitle("编辑个人信息")
+        ll_fun_identity_company.setOnClickListener(mNoteOnClick)
         ll_fun_identity_xq.setOnClickListener(mNoteOnClick)
         ll_fun_identity_lh.setOnClickListener(mNoteOnClick)
         ll_fun_identity_dy.setOnClickListener(mNoteOnClick)
@@ -126,6 +130,8 @@ class HFFunIdentityEditActivity : HFBaseTitleActivity() {
     @Throws(IllegalStateException::class)
     private fun getEditBody(): HFFunIdentityEditRequestBody {
         return HFFunIdentityEditRequestBody().also {
+            it.companyId = mNoteList[-1]?.first?.toString() ?:
+                    throw IllegalStateException("请选择企业信息")
             it.pName = et_fun_identity_name.text.toString().trim().takeIf { it.isNotEmpty() } ?:
                     throw IllegalStateException("请填写姓名")
             it.pPersonType = when {

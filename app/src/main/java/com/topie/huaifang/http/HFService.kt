@@ -276,7 +276,7 @@ interface HFService {
      * 活动详情
      */
     @GET("/api/m/aroundActivity/detail")
-    fun getFunDisActionDetail(@Field("id") id: Int): Observable<HFFunDisActionDetailResponseBody>
+    fun getFunDisActionDetail(@Query("id") id: Int): Observable<HFFunDisActionDetailResponseBody>
 
     /**
      * 我的信息
@@ -295,6 +295,12 @@ interface HFService {
      */
     @GET("/api/m/houseInfo/house")
     fun getFunIdentityRoom(@Query("nodeId") nodeId: Int): Observable<HFFunIdentityNoteResponseBody>
+
+    /**
+     * 企业信息
+     */
+    @GET("/api/m/companyInfo/list")
+    fun getFunIdentityCompany(): Observable<HFFunIdentityNoteResponseBody>
 
     /**
      * 发布信息认证

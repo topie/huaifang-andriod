@@ -112,10 +112,46 @@
             android:textSize="14sp" />
     </LinearLayout>
 
-    <include
-        layout="@layout/function_line_item"
+    <include layout="@layout/function_thick_line_item" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:lines="1"
+        android:maxLines="1"
+        android:text="我的企业信息"
+        android:textColor="@color/colorDark"
+        android:textSize="14sp" />
+
+    <include layout="@layout/function_line_item" />
+
+    <!---->
+    <LinearLayout
+        android:id="@+id/ll_fun_identity_company"
         android:layout_width="match_parent"
-        android:layout_height="20dp" />
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:gravity="center_vertical|right">
+
+        <TextView
+            android:id="@+id/tv_fun_identity_company"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="请选择企业"
+            android:lines="1"
+            android:maxLines="1"
+            android:textColor="@color/colorDark"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:src="@mipmap/ic_default_forward"
+            android:visibility="visible" />
+    </LinearLayout>
+
+    <include layout="@layout/function_thick_line_item" />
 
     <TextView
         android:layout_width="wrap_content"
