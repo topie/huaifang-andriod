@@ -1,5 +1,6 @@
 package com.topie.huaifang.function.identity
 
+import android.app.Dialog
 import android.os.Bundle
 import com.topie.huaifang.R
 import com.topie.huaifang.base.HFBaseTitleActivity
@@ -17,6 +18,8 @@ import kotlinx.android.synthetic.main.function_indentity_show_activity.*
  * 我的身份信息
  */
 class HFFunIdentityShowActivity : HFBaseTitleActivity() {
+
+    private var dialog: Dialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,13 +56,16 @@ class HFFunIdentityShowActivity : HFBaseTitleActivity() {
     }
 
     private fun toEdit() {
+        if (dialog?.isShowing == true) {
+            return
+        }
         val builder = HFTipDialog.Builder()
         builder.content = "使用该功能需要进行身份认证，立即进行身份认证？?"
         builder.onOkClicked = {
             this@HFFunIdentityShowActivity.kStartActivity(HFFunIdentityEditActivity::class.java)
             finish()
         }
-        builder.show(this)
+        dialog = builder.show(this)
 
     }
 }
