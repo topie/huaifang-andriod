@@ -329,4 +329,15 @@ interface HFService {
     @POST("/api/m/appUser/updateInfo")
     fun postAccountInfo(@Body hfAccountUserInfoRequestBody: HFAccountUserInfoRequestBody): Observable<HFBaseResponseBody>
 
+    /**
+     * 发表意见
+     */
+    @POST("/api/m/adviceBox/post")
+    fun postFunAdvice(@Body hfFunAdviceRequestBody: HFFunAdviceRequestBody): Observable<HFBaseResponseBody>
+
+    /**
+     * 意见列表
+     */
+    @GET("/api/m/adviceBox/list")
+    fun getFunAdviceList(): Observable<HFFunAdviceResponseBody>
 }

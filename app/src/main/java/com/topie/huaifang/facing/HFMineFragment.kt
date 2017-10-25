@@ -15,6 +15,7 @@ import com.topie.huaifang.base.HFBaseFragment
 import com.topie.huaifang.base.HFBaseParentViewHolder
 import com.topie.huaifang.base.HFBaseRecyclerViewHolder
 import com.topie.huaifang.extensions.*
+import com.topie.huaifang.function.advice.HFFunAdviceActivity
 import com.topie.huaifang.function.communication.HFCommFriendsActivity
 import com.topie.huaifang.function.identity.HFFunIdentityShowActivity
 import com.topie.huaifang.function.infomation.HFMineInfoActivity
@@ -111,6 +112,7 @@ class HFMineFragment : HFBaseFragment() {
             when (d?.itemType ?: -1) {
                 0 -> itemView.context.kStartActivity(HFCommFriendsActivity::class.java)
                 1 -> itemView.context.kStartActivity(HFFunIdentityShowActivity::class.java)
+                5 -> itemView.context.kStartActivity(HFFunAdviceActivity::class.java)
                 7 -> HFRetrofit.hfService.logout().subscribeApi {
                     if (!it.resultOk) {
                         it.convertMessage().kToastShort()
