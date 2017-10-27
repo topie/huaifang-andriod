@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorGray"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
     android:orientation="horizontal">
 
     <com.topie.huaifang.imageloader.HFImageView
@@ -15,6 +15,8 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:src="@mipmap/ic_facing_index_friend_head"
+        app:borderColor="@color/colorGray"
+        app:borderWidth="0.5dp"
         app:defImageRes="@mipmap/ic_facing_index_friend_head"
         app:roundedAsCircle="true" />
 
@@ -39,7 +41,7 @@
             android:id="@+id/tv_fun_comm_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="5dp"
             android:layout_marginRight="100dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/ic_fun_comm_msg_left"

@@ -1,6 +1,5 @@
 package com.topie.huaifang.http
 
-import android.net.Uri
 import android.os.AsyncTask
 import com.topie.huaifang.extensions.*
 import com.topie.huaifang.http.bean.HFBaseResponseBody

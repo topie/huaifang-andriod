@@ -17,6 +17,7 @@ import com.topie.huaifang.base.HFBaseTitleActivity
 import com.topie.huaifang.base.HFViewHolderFactory
 import com.topie.huaifang.extensions.kFindViewById
 import com.topie.huaifang.extensions.kIsNotEmpty
+import com.topie.huaifang.extensions.kStartActivity
 import com.topie.huaifang.http.HFRetrofit
 import com.topie.huaifang.http.bean.account.HFUserInfo
 import com.topie.huaifang.http.subscribeApi
@@ -77,13 +78,10 @@ class HFCommFriendsActivity : HFBaseTitleActivity() {
 
         override fun onItemClicked(d: HFUserInfo?) {
             super.onItemClicked(d)
-            d?.mobilePhone?.let {
-
-                val context = HFActivityManager.resumedActivity?.get()
-                if (context is Activity) {
-                    context.kShowTelDialog(it)
-                }
-            }
+            val userId = d?.id ?: return
+            val bundle = Bundle()
+            bundle.putInt(HFCommChatActivity.EXTRA_CONNECT_USER_ID, userId)
+            itemView.kStartActivity(HFCommChatActivity::class.java, bundle)
         }
 
     }

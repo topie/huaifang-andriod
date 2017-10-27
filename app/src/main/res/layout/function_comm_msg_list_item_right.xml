@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorGray"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
     android:orientation="horizontal">
 
 
@@ -51,9 +51,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="100dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="5dp"
                 android:background="@drawable/ic_fun_comm_msg_right"
-                android:gravity="center_vertical|right"
+                android:gravity="center_vertical"
                 android:paddingBottom="5dp"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
@@ -71,6 +71,8 @@
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
         android:src="@mipmap/ic_facing_index_friend_head"
+        app:borderColor="@color/colorGray"
+        app:borderWidth="0.5dp"
         app:defImageRes="@mipmap/ic_facing_index_friend_head"
         app:roundedAsCircle="true" />
 </LinearLayout>
