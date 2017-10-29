@@ -43,7 +43,9 @@ internal class HFAccountHttpInterceptor : Interceptor {
                     code = jsonObject.optInt("code")
                 } finally {
                     if (code == 401) {
-                        HFAccountManager.resetToGuest()
+                        HFAccountManager.resetToGuestRelogin()
+                    }else if (code == 402){
+                        HFAccountManager.showIdentifyDialog()
                     }
                 }
             }

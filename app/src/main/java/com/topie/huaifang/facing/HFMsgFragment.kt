@@ -107,7 +107,7 @@ class HFMsgFragment : HFBaseFragment() {
                 -1 -> {
                     val holder = HFEmptyRecyclerViewHolder<HFCommMsgDetail>(View(parent.context))
                     holder.itemView.layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, HFDimensUtils.dp2px(10.toFloat()))
-                    holder.itemView.setBackgroundColor(kGetColor(R.color.colorGray))
+                    holder.itemView.setBackgroundColor(kGetColor(R.color.colorLightGray))
                     holder.itemView.kHiddenChildren()
                     holder
                 }

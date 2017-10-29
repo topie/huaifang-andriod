@@ -278,6 +278,12 @@ interface HFService {
     fun getFunDisActionDetail(@Query("id") id: Int): Observable<HFFunDisActionDetailResponseBody>
 
     /**
+     * 活动报名
+     */
+    @GET("/api/m/aroundActivity/join")
+    fun postFunDisAction(@Query("id") id: Int): Observable<HFBaseResponseBody>
+
+    /**
      * 我的信息
      */
     @GET("/api/m/appUser/authInfo")

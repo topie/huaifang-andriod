@@ -51,7 +51,7 @@ class HFFunDisActionDetailActivity : HFBaseTitleActivity() {
         tv_fun_party_act_read.text = detail?.total?.toString()?.let { it + "人已参加" }
         tv_fun_party_act_content.text = detail?.content?.let { Html.fromHtml(it) }
         fl_fun_party_act_join.setOnClickListener {
-            HFRetrofit.hfService.postFunPartyAct(detail?.id ?: -1).subscribeResultOkApi {
+            HFRetrofit.hfService.postFunDisAction(detail?.id ?: -1).subscribeResultOkApi {
                 kToastShort("报名成功")
                 finish()
             }.kInto(pauseDisableList)
