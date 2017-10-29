@@ -11,15 +11,16 @@ import android.widget.TextView
 import com.davdian.ptr.Pt2FrameLayout
 import com.topie.huaifang.R
 import com.topie.huaifang.base.HFBaseFragment
+import com.topie.huaifang.base.HFBaseParentViewHolder
 import com.topie.huaifang.base.HFBaseRecyclerViewHolder
 import com.topie.huaifang.base.HFEmptyRecyclerViewHolder
 import com.topie.huaifang.extensions.*
+import com.topie.huaifang.function.communication.HFCommChatActivity
 import com.topie.huaifang.http.HFRetrofit
 import com.topie.huaifang.http.bean.communication.HFCommMsgDetail
 import com.topie.huaifang.http.subscribeResultOkApi
 import com.topie.huaifang.imageloader.HFImageView
 import com.topie.huaifang.util.HFDimensUtils
-import io.reactivex.disposables.Disposable
 
 /**
  * Created by arman on 2017/9/16.
@@ -29,7 +30,6 @@ class HFMsgFragment : HFBaseFragment() {
 
     private lateinit var pt2FrameLayout: Pt2FrameLayout
     private var adapter: Adapter = Adapter()
-    private var disposable: Disposable? = null
 
     override fun onCreateViewSupport(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         pt2FrameLayout = inflater.inflate(R.layout.base_pt2_recycler_layout, container, false) as Pt2FrameLayout
@@ -45,30 +45,39 @@ class HFMsgFragment : HFBaseFragment() {
         getMsgList()
     }
 
-    override fun onPause() {
-        super.onPause()
-        disposable?.takeIf { !it.isDisposed }?.dispose()
-    }
-
     private fun getMsgList() {
-        disposable?.takeIf { !it.isDisposed }?.dispose()
-        disposable = HFRetrofit.hfService.getCommMsgList().subscribeResultOkApi({
+        HFRetrofit.hfService.getCommMsgList().subscribeResultOkApi({
             it.data?.data?.let {
                 adapter.setListData(it)
                 adapter.notifyDataSetChanged()
             }
         }, {
             pt2FrameLayout.complete2()
-        })
+        }).kInto(pauseDisableList)
     }
 
-    private class ViewHolder(itemView: View) : HFBaseRecyclerViewHolder<HFCommMsgDetail>(itemView, true) {
-        private val ivIcon: HFImageView = itemView.kFindViewById(R.id.iv_facing_list_icon)
+    private class ViewHolder(parent: ViewGroup) : HFBaseParentViewHolder<HFCommMsgDetail>(parent, R.layout.facing_msg_list_item, true) {
 
-        private val tvName: TextView = itemView.kFindViewById(R.id.tv_facing_list_name)
+        private val ivIcon: HFImageView = itemView.kFindViewById(R.id.iv_facing_msg_head)
+        private val tvName: TextView = itemView.kFindViewById(R.id.tv_facing_msg_name)
+        private val tvContent: TextView = itemView.kFindViewById(R.id.tv_facing_msg_content)
+        private val tvTime: TextView = itemView.kFindViewById(R.id.tv_facing_msg_time)
+
         override fun onBindData(d: HFCommMsgDetail) {
             ivIcon.loadImageUri(d.icon?.kParseUrl())
-            tvName.text = d.title
+            tvName.text = d.fromUserName
+            tvContent.text = d.title
+            tvTime.text = d.createTime?.kSimpleFormatToDate()?.kSplit()
+        }
+
+        override fun onItemClicked(d: HFCommMsgDetail?) {
+            super.onItemClicked(d)
+            if (d?.type == 1) {
+                val userId = d.fromUserId
+                val bundle = Bundle()
+                bundle.putInt(HFCommChatActivity.EXTRA_CONNECT_USER_ID, userId)
+                itemView.kStartActivity(HFCommChatActivity::class.java, bundle)
+            }
         }
 
     }
@@ -103,9 +112,7 @@ class HFMsgFragment : HFBaseFragment() {
                     holder
                 }
                 else -> {
-                    val from = LayoutInflater.from(parent.context)
-                    val itemView = from.inflate(R.layout.facing_list_item, parent, false)
-                    ViewHolder(itemView)
+                    ViewHolder(parent)
                 }
             }
         }

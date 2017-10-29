@@ -6,6 +6,7 @@ package com.topie.huaifang.http.bean.communication
 class HFCommMsgDetail {
     var createTime: String? = null
     var fromUserId: Int = 0
+    var fromUserName: String? = null
     var eventTime: String? = null//消息时间
     var icon: String? = null
     var isRead: Int = 0

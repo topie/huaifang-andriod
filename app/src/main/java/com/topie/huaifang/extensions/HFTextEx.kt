@@ -50,6 +50,7 @@ fun String?.kParseUrlOrFileUri(): Uri? {
 
 
 private val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+private val simpleDateFormat2 = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
 
 const val DAY = 1000 * 60 * 60 * 24
 const val HOUR = 1000 * 60 * 60
@@ -76,7 +77,7 @@ fun Date.kSplit(): String {
         defSecond < MINUTE -> "刚刚"
         defSecond < HOUR -> "${defSecond / MINUTE}分钟前"
         defSecond < DAY -> "${defSecond / HOUR}小时前"
-        else -> kToSimpleFormat()
+        else -> simpleDateFormat2.format(this)
     }
 }
 
