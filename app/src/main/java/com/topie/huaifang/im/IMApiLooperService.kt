@@ -8,6 +8,7 @@ import com.topie.huaifang.extensions.kParseUrl
 import com.topie.huaifang.extensions.kSimpleFormatToDate
 import com.topie.huaifang.extensions.log
 import com.topie.huaifang.http.HFRetrofit
+import com.topie.huaifang.http.bean.communication.HFMessage
 import com.topie.huaifang.http.bean.communication.HFMessageRequestBody
 import com.topie.huaifang.http.composeApi
 
@@ -39,23 +40,15 @@ class IMApiLooperService(val connectUserId: Int) : IMInterface {
                     val obtainMessage = handler.obtainMessage(WHAT_SUCCESS)
                     obtainMessage.obj = it.data?.data
                             ?.takeIf { it.isNotEmpty() }
-                            ?.map {
-                                val imMessage = IMMessage()
-                                imMessage.content = it.content
-                                imMessage.userId = it.fromUserId
-                                imMessage.sendTime = it.sendTime?.kSimpleFormatToDate()?.time?.let { it / 1000 } ?: 0.toLong()
-                                imMessage.headImage = it.headImage.kParseUrl()
-                                imMessage.userName = it.fromUserName
-                                imMessage
-                            }
+                            ?.map { convert2IMMessage(it) }
                             ?.filter { msg ->
                                 when {
-                                    list.isEmpty() -> true
-                                    else -> list.firstOrNull { it.sendTime == msg.sendTime } == null
+                                    list.isEmpty() -> true //如果发送集合是空的，不筛选任何数据
+                                    else -> list.firstOrNull { it.messageId == msg.messageId } == null //如果发送集合不是空，筛选（排除）刚刚发送的信息
                                 }
                             }
-                            ?.takeIf { it.isNotEmpty() }
-                            ?: return@subscribe
+                            ?.takeIf { it.isNotEmpty() } //如果集合是空的，做空值处理
+                            ?: return@subscribe //空值不发布消息通知
                     obtainMessage.sendToTarget()
                 } else {
 
@@ -66,6 +59,16 @@ class IMApiLooperService(val connectUserId: Int) : IMInterface {
                 sendEmptyMessageDelayed(100, 5000)
             })
         }
+    }
+
+    private fun convert2IMMessage(it: HFMessage, imMessage: IMMessage = IMMessage()): IMMessage {
+        imMessage.messageId = it.id
+        imMessage.content = it.content
+        imMessage.userId = it.fromUserId
+        imMessage.sendTime = it.sendTime?.kSimpleFormatToDate()?.time?.let { it / 1000 } ?: 0.toLong()
+        imMessage.headImage = it.headImage.kParseUrl()
+        imMessage.userName = it.fromUserName
+        return imMessage
     }
 
     private val handler = object : Handler(Looper.getMainLooper()) {
@@ -86,7 +89,8 @@ class IMApiLooperService(val connectUserId: Int) : IMInterface {
         hfMessageRequestBody.content = imMessage.content
         hfMessageRequestBody.toUserId = connectUserId
         HFRetrofit.hfService.postMessage(hfMessageRequestBody).composeApi().subscribe({
-            if (it.resultOk) {
+            if (it.resultOk && it.data != null) {
+                convert2IMMessage(it.data!!, imMessage)
                 sendMessageCallback.callback(imMessage, true)
             } else {
                 sendMessageCallback.callback(imMessage, false)

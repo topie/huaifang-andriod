@@ -6,6 +6,7 @@ import android.net.Uri
  * Created by arman on 2017/10/27.
  */
 class IMMessage {
+    var messageId = 0
     var content: String? = null
     var userId: Int = 0
     var userName: String? = null

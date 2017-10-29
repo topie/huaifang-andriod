@@ -5,10 +5,7 @@ import com.topie.huaifang.http.bean.account.HFAccountResponseBody
 import com.topie.huaifang.http.bean.account.HFAccountUserInfoRequestBody
 import com.topie.huaifang.http.bean.account.HFCheckPhoneResponseBody
 import com.topie.huaifang.http.bean.account.HFLoginResponseBody
-import com.topie.huaifang.http.bean.communication.HFCommFriendsResponseBody
-import com.topie.huaifang.http.bean.communication.HFCommMsgListResponseBody
-import com.topie.huaifang.http.bean.communication.HFMessageListResponseBody
-import com.topie.huaifang.http.bean.communication.HFMessageRequestBody
+import com.topie.huaifang.http.bean.communication.*
 import com.topie.huaifang.http.bean.function.*
 import com.topie.huaifang.http.bean.index.HFIndexNewsResponseBody
 import com.topie.huaifang.http.bean.index.HFIndexTopImgResponseBody
@@ -347,7 +344,7 @@ interface HFService {
      * 发送消息
      */
     @POST("/api/m/appUserMessage/send")
-    fun postMessage(@Body hfMessageRequestBody: HFMessageRequestBody):Observable<HFBaseResponseBody>
+    fun postMessage(@Body hfMessageRequestBody: HFMessageRequestBody):Observable<HFMessageResponseBody>
 
     /**
      * 消息列表
