@@ -135,6 +135,13 @@ object HFAccountManager {
                     onOkClicked = { activity.kStartActivity(HFFunIdentityEditActivity::class.java) }
                 }
                 .show(activity)
+                .also { dialog ->
+                    dialog.setOnDismissListener {
+                        if (identifyDialog?.first == dialog) {
+                            identifyDialog = null
+                        }
+                    }
+                }
                 .let { identifyDialog = it to WeakReference(activity) }
     }
 }
