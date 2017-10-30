@@ -15,6 +15,7 @@ import com.topie.huaifang.base.HFBaseFragment
 import com.topie.huaifang.base.HFBaseParentViewHolder
 import com.topie.huaifang.base.HFBaseRecyclerViewHolder
 import com.topie.huaifang.extensions.*
+import com.topie.huaifang.function.HFSettingActivity
 import com.topie.huaifang.function.advice.HFFunAdviceActivity
 import com.topie.huaifang.function.communication.HFCommFriendsActivity
 import com.topie.huaifang.function.identity.HFFunIdentityShowActivity
@@ -44,7 +45,7 @@ class HFMineFragment : HFBaseFragment() {
 //        list.add(HFListItem(R.mipmap.ic_facing_mine_label, context.getString(R.string.facing_mine_label), 4))
         list.add(HFListItem(R.mipmap.ic_facing_mine_suggestion, context.getString(R.string.facing_mine_suggestion), 5))
         list.add(HFListItem(R.mipmap.ic_facing_mine_setting, context.getString(R.string.facing_mine_setting), 6))
-        list.add(HFListItem(R.mipmap.ic_facing_mine_logout, context.getString(R.string.facing_mine_logout), 7))
+//        list.add(HFListItem(R.mipmap.ic_facing_mine_logout, context.getString(R.string.facing_mine_logout), 7))
         adapter = Adapter(list)
         recyclerView.adapter = adapter
         return inflate
@@ -113,6 +114,7 @@ class HFMineFragment : HFBaseFragment() {
                 0 -> itemView.context.kStartActivity(HFCommFriendsActivity::class.java)
                 1 -> itemView.context.kStartActivity(HFFunIdentityShowActivity::class.java)
                 5 -> itemView.context.kStartActivity(HFFunAdviceActivity::class.java)
+                6 -> itemView.context.kStartActivity(HFSettingActivity::class.java)
                 7 -> HFRetrofit.hfService.logout().subscribeApi {
                     if (!it.resultOk) {
                         it.convertMessage().kToastShort()

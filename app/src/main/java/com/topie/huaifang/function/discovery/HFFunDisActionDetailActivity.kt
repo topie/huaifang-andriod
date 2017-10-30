@@ -57,7 +57,6 @@ class HFFunDisActionDetailActivity : HFBaseTitleActivity() {
             }.kInto(pauseDisableList)
         }
         fl_fun_party_act_join.isEnabled = detail
-                ?.takeIf { HFFunPartyActResponseBody.ListData.STATUS_GOING == it.status }//活动进行中
                 ?.takeIf { !it.hasJoin }//还没有报名参加
                 .kIsNotNull()
     }
