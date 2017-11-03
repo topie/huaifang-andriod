@@ -127,6 +127,7 @@
             android:padding="10dp"
             android:text="@string/function_party_members_detail_msg"
             android:textColor="@android:color/white"
+            android:visibility="invisible"
             android:textSize="14sp" />
 
         <TextView

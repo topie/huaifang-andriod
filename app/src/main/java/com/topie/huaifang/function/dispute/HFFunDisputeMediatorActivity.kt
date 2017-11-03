@@ -52,6 +52,7 @@ class HFFunDisputeMediatorActivity : HFBaseTitleActivity() {
         if (mAdapter.itemCount == 0) {
             HFRetrofit.hfService.getFunDisputeMediatorList().subscribeResultOkApi {
                 it.data?.data?.kInsteadTo(mAdapter.mList)
+                mAdapter.notifyDataSetChanged()
             }.kInto(pauseDisableList)
         }
     }

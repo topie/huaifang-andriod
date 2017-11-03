@@ -1,5 +1,6 @@
 package com.topie.huaifang.http
 
+import com.topie.huaifang.http.bean.HFAppUpdateResponseBody
 import com.topie.huaifang.http.bean.HFBaseResponseBody
 import com.topie.huaifang.http.bean.account.HFAccountResponseBody
 import com.topie.huaifang.http.bean.account.HFAccountUserInfoRequestBody
@@ -350,11 +351,18 @@ interface HFService {
      * 发送消息
      */
     @POST("/api/m/appUserMessage/send")
-    fun postMessage(@Body hfMessageRequestBody: HFMessageRequestBody):Observable<HFMessageResponseBody>
+    fun postMessage(@Body hfMessageRequestBody: HFMessageRequestBody): Observable<HFMessageResponseBody>
 
     /**
      * 消息列表
      */
     @GET("/api/m/appUserMessage/list")
     fun getMessageList(@Query("fromUserId") fromUserId: Int, @Query("time") time: Long): Observable<HFMessageListResponseBody>
+
+
+    /**
+     * 消息列表
+     */
+    @GET("/api/m/appManager/current?system=android")
+    fun getAppUpdate(): Observable<HFAppUpdateResponseBody>
 }

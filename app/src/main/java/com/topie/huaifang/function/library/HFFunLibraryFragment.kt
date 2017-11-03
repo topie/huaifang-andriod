@@ -27,10 +27,10 @@ class HFFunLibraryFragment : HFBaseFragment() {
     //分类
     private lateinit var category: String
 
-    private val pt2FrameLayout: Pt2FrameLayout? = null
+    private var pt2FrameLayout: Pt2FrameLayout? = null
 
-    private val mAdapter = HFBaseRecyclerAdapter(ViewHolder.CREATOR)
     private val list: MutableList<HFFunLibraryBookResponseBody.ListData> = arrayListOf()
+    private val mAdapter = HFBaseRecyclerAdapter(ViewHolder.CREATOR,list)
     private var mPageNum = 0
 
     companion object {
@@ -42,17 +42,17 @@ class HFFunLibraryFragment : HFBaseFragment() {
     }
 
     override fun onCreateViewSupport(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        val pt2FrameLayout = inflater.inflate(R.layout.base_pt2_recycler_layout, container, false) as Pt2FrameLayout
-        pt2FrameLayout.setPt2Handler(HFDefaultPt2Handler({ ->
-            getListData(0)
+        pt2FrameLayout = inflater.inflate(R.layout.base_pt2_recycler_layout, container, false) as Pt2FrameLayout
+        pt2FrameLayout!!.setPt2Handler(HFDefaultPt2Handler({ ->
+            getListData(1)
         }, { ->
             getListData(mPageNum)
         }))
-        val recyclerView: RecyclerView = pt2FrameLayout.kFindViewById(R.id.rv_base_pt2)
+        val recyclerView: RecyclerView = pt2FrameLayout!!.kFindViewById(R.id.rv_base_pt2)
         recyclerView.layoutManager = LinearLayoutManager(inflater.context)
         recyclerView.adapter = mAdapter
         mAdapter.notifyDataSetChanged()
-        return pt2FrameLayout
+        return pt2FrameLayout!!
     }
 
     override fun onResume() {
@@ -71,7 +71,7 @@ class HFFunLibraryFragment : HFBaseFragment() {
                 it.isNotEmpty()
             }?.also {
                 when (pageNum) {
-                    0 -> {  //从第0页获取数据可认为是刷新页面
+                    0,1 -> {  //从第0页获取数据可认为是刷新页面
                         mPageNum = pageNum + 1
                         list.clear()
                         list.addAll(it)
@@ -104,7 +104,7 @@ class HFFunLibraryFragment : HFBaseFragment() {
             tvStatus.text = d.status
             tvName.text = d.bookName
             tvAuthor.text = d.author
-            tvDesc.text = d.bookName
+            tvDesc.text = d.content
         }
 
         companion object CREATOR : HFViewHolderFactory<ViewHolder> {

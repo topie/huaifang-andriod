@@ -115,13 +115,6 @@ class HFFunPartyMembersFragment : HFBaseFragment() {
             tvName.text = d.data.name
             tvFlag.text = d.data.flag
         }
-    }
-
-    private class TitleViewHolder(parent: ViewGroup) : HFBaseParentViewHolder<Group>(parent, R.layout.function_party_members_group_title, false) {
-        val tvNode = itemView.kFindViewById<TextView>(R.id.tv_fun_party_members_node)
-        override fun onBindData(d: Group) {
-            tvNode.text = d.note
-        }
 
         override fun onItemClicked(d: Group?) {
             super.onItemClicked(d)
@@ -129,6 +122,13 @@ class HFFunPartyMembersFragment : HFBaseFragment() {
             val bundle = Bundle()
             bundle.putSerializable(HFFunPartyMembersDetailActivity.EXTRA_DATA, d.data)
             itemView.kStartActivity(HFFunPartyMembersDetailActivity::class.java, bundle)
+        }
+    }
+
+    private class TitleViewHolder(parent: ViewGroup) : HFBaseParentViewHolder<Group>(parent, R.layout.function_party_members_group_title, false) {
+        val tvNode = itemView.kFindViewById<TextView>(R.id.tv_fun_party_members_node)
+        override fun onBindData(d: Group) {
+            tvNode.text = d.note
         }
     }
 

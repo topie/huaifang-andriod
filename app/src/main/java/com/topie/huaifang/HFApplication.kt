@@ -1,6 +1,7 @@
 package com.topie.huaifang
 
 import android.app.Application
+import com.davdain.tools.acp.Acp
 import com.topie.huaifang.account.HFAccountManager
 import com.topie.huaifang.extensions.kInitApplication
 
@@ -13,5 +14,6 @@ class HFApplication : Application() {
         kInitApplication()
         HFAccountManager.getToken()
         registerActivityLifecycleCallbacks(HFActivityManager.HFActivityLifecycleCallbacks)
+        Acp.init(applicationContext)
     }
 }

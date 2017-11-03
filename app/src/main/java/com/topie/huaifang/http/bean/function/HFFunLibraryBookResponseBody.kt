@@ -16,6 +16,7 @@ class HFFunLibraryBookResponseBody : HFBaseResponseBody() {
 
     class ListData {
         var id: Int = 0
+        var content: String? = null
         var bookName: String? = null
         var author: String? = null
         var image: String? = null   //封面地址

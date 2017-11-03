@@ -2,6 +2,7 @@
 
 package com.topie.huaifang
 
+import android.Manifest
 import android.app.Activity
 import android.app.Dialog
 import android.content.ContentUris
@@ -18,13 +19,11 @@ import android.support.v4.content.FileProvider
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.view.WindowManager
+import com.davdain.tools.acp.AcpListener
+import com.davdain.tools.acp.AcpOptions
 import com.topie.huaifang.extensions.kGetCachePictureDir
 import com.topie.huaifang.extensions.kStartActivity
 import com.topie.huaifang.extensions.kToastShort
-import com.yanzhenjie.permission.AndPermission
-import com.yanzhenjie.permission.Permission
-import com.yanzhenjie.permission.PermissionNo
-import com.yanzhenjie.permission.PermissionYes
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -46,40 +45,40 @@ class HFGetFileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         mId = intent.getIntExtra(EXTRA_ID, 0)
         mLimit = intent.getIntExtra(EXTRA_LIMIT, 0)
-        AndPermission.with(this)
-                .requestCode(100)
-                .permission(Permission.STORAGE)
-                .rationale { _, rationale ->
-                    AndPermission.rationaleDialog(this@HFGetFileActivity, rationale).show()
+        AcpOptions()
+                .apply {
+                    permissions = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                        arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    } else {
+                        arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    }
                 }
-                .callback(this)
-                .start()
-    }
+                .request(object : AcpListener {
+                    override fun onGranted() {
+                        val type = intent.getIntExtra(EXTRA_TYPE, 0)
+                        when (type) {
+                            TYPE_GET_FILE -> {
+                                dispatchGetFileIntent()
+                            }
+                            TYPE_TAKE_PIC -> {
+                                dispatchTakePictureIntent()
+                            }
+                            TYPE_GET_IMG -> {
+                                showSelect()
+                            }
+                            else -> {
+                                onCancel(mId)
+                                finish()
+                            }
+                        }
+                    }
 
-    @PermissionNo(100)
-    private fun onPermissionNo(deniedPermissions: List<String>) {
-        onCancel(mId)
-        finish()
-    }
+                    override fun onDenied(permissions: List<String>) {
+                        onCancel(mId)
+                        finish()
+                    }
 
-    @PermissionYes(100)
-    private fun onPermissionYes(grantedPermissions: List<String>) {
-        val type = intent.getIntExtra(EXTRA_TYPE, 0)
-        when (type) {
-            TYPE_GET_FILE -> {
-                dispatchGetFileIntent()
-            }
-            TYPE_TAKE_PIC -> {
-                dispatchTakePictureIntent()
-            }
-            TYPE_GET_IMG -> {
-                showSelect()
-            }
-            else -> {
-                onCancel(mId)
-                finish()
-            }
-        }
+                })
     }
 
     private fun showSelect() {
