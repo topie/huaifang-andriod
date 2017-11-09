@@ -94,9 +94,17 @@ private class HFServiceDerived(service: HFService) : HFService by service {
         }
     }
 
-    override fun downloadFile(path: String, directory: String, onProgress: (progress: Int) -> Unit, onFinish: (filePath: String) -> Unit, onFailure: (error: Throwable) -> Unit) {
+    override fun downloadFile(path: String, directory: String, onProgress: (progress: Int) -> Unit, onFinish: (filePath: String) -> Unit, onFailure: (error: Throwable) -> Unit):Disposable {
 
-        class Task : AsyncTask<String, Int, Any>() {
+        class Task : AsyncTask<String, Int, Any>(),Disposable {
+            override fun isDisposed(): Boolean {
+                return !isCancelled
+            }
+
+            override fun dispose() {
+                cancel(true)
+            }
+
             override fun doInBackground(vararg params: String?): Any {
                 val response = downloadFile(path).execute()
                 var inputStream: InputStream? = null
@@ -161,7 +169,7 @@ private class HFServiceDerived(service: HFService) : HFService by service {
                 }
             }
         }
-        Task().execute()
+        return Task().also { it.execute() }
     }
 }
 

@@ -59,4 +59,5 @@
     <string name="function_party_members_detail_friend">加为好友</string>
     <string name="default_mine">我</string>
     <string name="default_admin">管理员</string>
+    <string name="default_download">下载</string>
 </resources>

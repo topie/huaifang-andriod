@@ -16,6 +16,7 @@ import io.reactivex.disposables.Disposable
 abstract class HFBaseActivity : AppCompatActivity() {
 
     val pauseDisableList: MutableList<Disposable> = arrayListOf()
+    val destroyDisableList: MutableList<Disposable> = arrayListOf()
 
     var curFragment: Fragment? = null
         private set
@@ -27,16 +28,46 @@ abstract class HFBaseActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        if (destroyDisableList.isNotEmpty()) {
+            val kClone = destroyDisableList.kClone()
+            destroyDisableList.clear()
+            kClone.forEach {
+                if (!it.isDisposed) {
+                    it.dispose()
+                }
+            }
+            kClone.clear()
+        }
+    }
+
+    override fun finish() {
+        super.finish()
+        if (destroyDisableList.isNotEmpty()) {
+            val kClone = destroyDisableList.kClone()
+            destroyDisableList.clear()
+            kClone.forEach {
+                if (!it.isDisposed) {
+                    it.dispose()
+                }
+            }
+            kClone.clear()
+        }
+    }
+
     override fun onPause() {
         super.onPause()
-        val kClone = pauseDisableList.kClone()
-        pauseDisableList.clear()
-        kClone.forEach {
-            if (!it.isDisposed) {
-                it.dispose()
+        if (pauseDisableList.isNotEmpty()) {
+            val kClone = pauseDisableList.kClone()
+            pauseDisableList.clear()
+            kClone.forEach {
+                if (!it.isDisposed) {
+                    it.dispose()
+                }
             }
+            kClone.clear()
         }
-        kClone.clear()
     }
 
     /**

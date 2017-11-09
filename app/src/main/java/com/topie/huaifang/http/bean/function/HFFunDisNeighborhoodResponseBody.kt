@@ -22,8 +22,8 @@ class HFFunDisNeighborhoodResponseBody : HFBaseResponseBody() {
         var addUserId: Int = 0
         var headImage: String? = null
         var content: String? = null
-        var comments: List<CommData>? = null
-        var likes: List<LikeData>? = null
+        var comments: MutableList<CommData>? = null
+        var likes: MutableList<LikeData>? = null
     }
 
     class LikeData {

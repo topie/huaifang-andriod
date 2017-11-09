@@ -12,6 +12,7 @@ import com.topie.huaifang.http.bean.index.HFIndexNewsResponseBody
 import com.topie.huaifang.http.bean.index.HFIndexTopImgResponseBody
 import com.topie.huaifang.util.HFDimensUtils
 import io.reactivex.Observable
+import io.reactivex.disposables.Disposable
 import okhttp3.MultipartBody
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -226,7 +227,7 @@ interface HFService {
     /**
      * 下载文件
      */
-    fun downloadFile(path: String, directory: String, onProgress: ((progress: Int) -> Unit), onFinish: ((filePath: String) -> Unit), onFailure: ((error: Throwable) -> Unit))
+    fun downloadFile(path: String, directory: String, onProgress: ((progress: Int) -> Unit), onFinish: ((filePath: String) -> Unit), onFailure: ((error: Throwable) -> Unit)): Disposable
 
     @POST("/api/m/repairReport/post")
     fun postFunLiveRepairs(@Body requestBody: HFFunLiveRepairsApplyRequestBody): Observable<HFBaseResponseBody>
@@ -257,6 +258,15 @@ interface HFService {
 
     @GET("/api/m/appTimeLine/list")
     fun getFunDisNeighborhoodList(@Query("pageNum") pageNum: Int = 1, @Query("pageSize") pageSize: Int = 15): Observable<HFFunDisNeighborhoodResponseBody>
+
+    @GET("/api/m/appTimeLine/like")
+    fun postFunDisLike(@Query("id") id: Int): Observable<HFBaseResponseBody>
+
+    @GET("/api/m/appTimeLine/unlike")
+    fun postFunDisUnlike(@Query("id") id: Int): Observable<HFBaseResponseBody>
+
+    @POST("/api/m/appTimeLine/comment")
+    fun postFunDisComment(@Body requestBody: HFFunDisNeighCommRequestBody): Observable<HFBaseResponseBody>
 
     /**
      * 发布活动
