@@ -137,7 +137,7 @@ class HFFunDisNeighborhoodActivity : HFBaseTitleActivity() {
                 val content = et.text.toString().trim().takeIf { it.kIsNotEmpty() } ?: return@setOnClickListener
                 val data = mData!!
                 val requestBody = HFFunDisNeighCommRequestBody()
-                requestBody.id = mData!!.id
+                requestBody.lineId = mData!!.id
                 requestBody.content = content
                 HFRetrofit.hfService.postFunDisComment(requestBody).subscribeResultOkApi {
                     if (data.comments == null) {

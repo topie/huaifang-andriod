@@ -106,8 +106,9 @@ interface HFService {
     /**
      * 党建活动-党支部活动发布
      */
-    @POST("/api/m/party/activity/join")
-    fun postFunPartyActPublish(@Body requestBody: HFFunPartyActPublishRequestBody): Observable<HFBaseResponseBody>
+    @POST("/api/m/party/activity/post")
+    @FormUrlEncoded
+    fun postFunPartyActPublish(@FieldMap requestBody: Map<String, String>): Observable<HFBaseResponseBody>
 
     /**
      * 党建活动-党支部活动详情
@@ -279,7 +280,7 @@ interface HFService {
      * 活动列表
      */
     @GET("/api/m/aroundActivity/list")
-    fun getFunDisActionList(@Query("pageNum") pageNum: Int = 0, @Query("pageSize") pageSize: Int = 15): Observable<HFFunDisActionListResponseBody>
+    fun getFunDisActionList(@Query("type") type: Int,@Query("pageNum") pageNum: Int = 0, @Query("pageSize") pageSize: Int = 15): Observable<HFFunDisActionListResponseBody>
 
 
     /**

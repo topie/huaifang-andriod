@@ -12,4 +12,18 @@ class HFFunPartyActPublishRequestBody {
     var content: String? = null //内容
     var image: String? = null //图片
     var publishUser: String? = null //发布人
+
+    fun toMap(): Map<String, String> {
+        val hashMap = HashMap<String, String>()
+        hashMap.put("topic", topic ?: "")
+        hashMap.put("address", address ?: "")
+        hashMap.put("beginTime", beginTime ?: "")
+        hashMap.put("endTime", endTime ?: "")
+        hashMap.put("content", content ?: "")
+        hashMap.put("image", image ?: "")
+        hashMap.put("publishUser", publishUser ?: "")
+        return hashMap
+    }
+
+
 }

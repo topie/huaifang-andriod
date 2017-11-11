@@ -22,7 +22,7 @@ class HFFunDisActionActivity : HFBaseTitleActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.function_guide_activity)
-        setBaseTitle(R.string.facing_index_fun_guide)
+        setBaseTitle(R.string.facing_discovery_action)
         setBaseTitleRight("发布")
         tv_base_title_right.setOnClickListener {
             this@HFFunDisActionActivity.kStartActivity(HFFunDisActionPublishActivity::class.java)

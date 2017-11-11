@@ -75,7 +75,7 @@ class HFFunDisActionFragment : HFBaseFragment() {
     }
 
     private fun getFunPartyActList(pageSize: Int) {
-        HFRetrofit.hfService.getFunDisActionList(pageSize).subscribeResultOkApi({
+        HFRetrofit.hfService.getFunDisActionList(mType, pageSize).subscribeResultOkApi({
             it.data?.data?.takeIf { it.isNotEmpty() }?.let {
                 if (pageSize == 0 || pageSize == 1) {
                     adapter.list.clear()
@@ -108,14 +108,7 @@ class HFFunDisActionFragment : HFBaseFragment() {
             imageView.loadImageUri(d.image.kParseUrl())
             tvTitle.text = d.title
             tvTime.text = d.beginTime
-            tvStatus.text = d.status?.let {
-                when (it) {
-                    HFFunDisActionListResponseBody.ListData.STATUS_WAIT -> "未开始"
-                    HFFunDisActionListResponseBody.ListData.STATUS_GOING -> "进行中"
-                    HFFunDisActionListResponseBody.ListData.STATUS_FINISH -> "已结束"
-                    else -> "未开始"
-                }
-            }
+            tvStatus.text = d.status
             tvPublisher.text = d.publishUser?.let { "发布者：$it" }
             tvApply.text = d.total.toString()
         }

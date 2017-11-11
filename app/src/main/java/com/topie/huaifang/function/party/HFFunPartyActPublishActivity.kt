@@ -73,7 +73,7 @@ class HFFunPartyActPublishActivity : HFBaseTitleActivity() {
             try {
                 val requestBody = getRequestBody()
                 ll_fun_party_act_publish.isEnabled = false
-                HFRetrofit.hfService.postFunPartyActPublish(requestBody).subscribeResultOkApi({
+                HFRetrofit.hfService.postFunPartyActPublish(requestBody.toMap()).subscribeResultOkApi({
                     ll_fun_party_act_publish.isEnabled = true
                     kToastShort("发布成功")
                     finish()

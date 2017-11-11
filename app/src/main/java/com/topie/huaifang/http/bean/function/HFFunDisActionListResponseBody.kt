@@ -16,12 +16,6 @@ class HFFunDisActionListResponseBody : HFBaseResponseBody() {
     }
 
     class ListData : Serializable {
-        companion object {
-            const val STATUS_WAIT = "0"
-            const val STATUS_GOING = "1"
-            const val STATUS_FINISH = "2"
-        }
-
         var image: String? = null
         var type: String? = null
         var publishTime: String? = null

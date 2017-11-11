@@ -53,11 +53,7 @@ class HFFunLiveBazaarFragment : HFBaseFragment() {
 
     override fun onCreateViewSupport(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         inflate = inflater.inflate(R.layout.base_pt2_recycler_layout, container, false) as Pt2FrameLayout
-        inflate!!.setPt2Handler(HFDefaultPt2Handler({
-            HFDefaultPt2Handler.checkCanDoLoad(it)
-        }, {
-            false
-        }, { ->
+        inflate!!.setPt2Handler(HFDefaultPt2Handler({ ->
             getBazaarList(1)
         }, { ->
             getBazaarList(mAdapter.mPageSize)
@@ -76,7 +72,7 @@ class HFFunLiveBazaarFragment : HFBaseFragment() {
     }
 
     private fun getBazaarList(aPageSize: Int) {
-        HFRetrofit.hfService.getFunLiveBazaarList(mType, aPageSize, 200).subscribeResultOkApi({
+        HFRetrofit.hfService.getFunLiveBazaarList(mType, aPageSize).subscribeResultOkApi({
             it.data?.data?.also {
                 when (aPageSize) {
                     0, 1 -> mAdapter.setList(it)
