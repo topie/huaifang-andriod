@@ -12,6 +12,10 @@ interface IMInterface {
 
     fun unregisterMessageReceiver(messageReceiver: MessageReceiver)
 
+    fun resume()
+
+    fun pause()
+
     interface SendMessageCallback {
         fun callback(imMessage: IMMessage, result: Boolean)
     }

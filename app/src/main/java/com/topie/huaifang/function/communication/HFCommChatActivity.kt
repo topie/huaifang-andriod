@@ -68,6 +68,16 @@ class HFCommChatActivity : HFBaseTitleActivity(), IMInterface.MessageReceiver {
         imInterface!!.registerMessageReceiver(this@HFCommChatActivity)
     }
 
+    override fun onResume() {
+        super.onResume()
+        imInterface?.resume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        imInterface?.pause()
+    }
+
     override fun finish() {
         super.finish()
         disconnect()

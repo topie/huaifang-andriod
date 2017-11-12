@@ -16,11 +16,15 @@ import com.topie.huaifang.base.HFBaseRecyclerViewHolder
 import com.topie.huaifang.base.HFEmptyRecyclerViewHolder
 import com.topie.huaifang.extensions.*
 import com.topie.huaifang.function.communication.HFCommChatActivity
+import com.topie.huaifang.global.IMConstant
 import com.topie.huaifang.http.HFRetrofit
 import com.topie.huaifang.http.bean.communication.HFCommMsgDetail
 import com.topie.huaifang.http.subscribeResultOkApi
 import com.topie.huaifang.imageloader.HFImageView
 import com.topie.huaifang.util.HFDimensUtils
+import io.reactivex.Observable
+import io.reactivex.disposables.Disposable
+import java.util.concurrent.TimeUnit
 
 /**
  * Created by arman on 2017/9/16.
@@ -30,6 +34,7 @@ class HFMsgFragment : HFBaseFragment() {
 
     private lateinit var pt2FrameLayout: Pt2FrameLayout
     private var adapter: Adapter = Adapter()
+    private var mDisposable: Disposable? = null
 
     override fun onCreateViewSupport(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         pt2FrameLayout = inflater.inflate(R.layout.base_pt2_recycler_layout, container, false) as Pt2FrameLayout
@@ -46,14 +51,18 @@ class HFMsgFragment : HFBaseFragment() {
     }
 
     private fun getMsgList() {
-        HFRetrofit.hfService.getCommMsgList().subscribeResultOkApi({
+        mDisposable?.takeIf { !it.isDisposed }?.dispose()
+        Observable.interval(0, IMConstant.FACING_MSG_PERIOD, TimeUnit.MILLISECONDS).flatMap {
+            log("getMsgList[$it]")
+            HFRetrofit.hfService.getCommMsgList()
+        }.subscribeResultOkApi({
             it.data?.data?.let {
                 adapter.setListData(it)
                 adapter.notifyDataSetChanged()
             }
         }, {
             pt2FrameLayout.complete2()
-        }).kInto(pauseDisableList)
+        }).also { mDisposable = it }.kInto(pauseDisableList)
     }
 
     private class ViewHolder(parent: ViewGroup) : HFBaseParentViewHolder<HFCommMsgDetail>(parent, R.layout.facing_msg_list_item, true) {

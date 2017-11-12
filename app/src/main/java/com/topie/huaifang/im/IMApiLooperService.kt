@@ -1,16 +1,20 @@
 package com.topie.huaifang.im
 
 import android.os.Handler
-import android.os.HandlerThread
 import android.os.Looper
 import android.os.Message
 import com.topie.huaifang.extensions.kParseUrl
 import com.topie.huaifang.extensions.kSimpleFormatToDate
 import com.topie.huaifang.extensions.log
+import com.topie.huaifang.global.IMConstant
 import com.topie.huaifang.http.HFRetrofit
 import com.topie.huaifang.http.bean.communication.HFMessage
 import com.topie.huaifang.http.bean.communication.HFMessageRequestBody
 import com.topie.huaifang.http.composeApi
+import io.reactivex.Observable
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
+import java.util.concurrent.TimeUnit
 
 /**
  * Created by arman on 2017/10/27.
@@ -22,43 +26,12 @@ class IMApiLooperService(val connectUserId: Int) : IMInterface {
     private var mMessageReceiver: IMInterface.MessageReceiver? = null
 
     private val list: MutableList<IMMessage> = mutableListOf()
+    private var mDisposable: Disposable? = null
 
     companion object {
         const val WHAT_SUCCESS = 100
         const val WHAT_FAILURE = -100
 
-    }
-
-    private val backgroundThread = HandlerThread("IMApiLooperService").also { it.start() }
-
-    private val backgroundHandler = object : Handler(backgroundThread.looper) {
-        override fun handleMessage(msg: Message?) {
-            super.handleMessage(msg)
-            HFRetrofit.hfService.getMessageList(connectUserId, lastRequestTime).subscribe({
-                if (it.resultOk && it.data?.extra?.time != null) {
-                    lastRequestTime = it.data!!.extra!!.time
-                    val obtainMessage = handler.obtainMessage(WHAT_SUCCESS)
-                    obtainMessage.obj = it.data?.data
-                            ?.takeIf { it.isNotEmpty() }
-                            ?.map { convert2IMMessage(it) }
-                            ?.filter { msg ->
-                                when {
-                                    list.isEmpty() -> true //如果发送集合是空的，不筛选任何数据
-                                    else -> list.firstOrNull { it.messageId == msg.messageId } == null //如果发送集合不是空，筛选（排除）刚刚发送的信息
-                                }
-                            }
-                            ?.takeIf { it.isNotEmpty() } //如果集合是空的，做空值处理
-                            ?: return@subscribe //空值不发布消息通知
-                    obtainMessage.sendToTarget()
-                } else {
-
-                }
-            }, {
-                log("backgroundHandler", it)
-            }, {
-                sendEmptyMessageDelayed(100, 5000)
-            })
-        }
     }
 
     private fun convert2IMMessage(it: HFMessage, imMessage: IMMessage = IMMessage()): IMMessage {
@@ -101,15 +74,49 @@ class IMApiLooperService(val connectUserId: Int) : IMInterface {
     }
 
     override fun registerMessageReceiver(messageReceiver: IMInterface.MessageReceiver) {
-        backgroundHandler.removeCallbacksAndMessages(null)
-        backgroundHandler.sendEmptyMessage(100)
         mMessageReceiver = messageReceiver
     }
 
     override fun unregisterMessageReceiver(messageReceiver: IMInterface.MessageReceiver) {
-        backgroundHandler.removeCallbacksAndMessages(null)
-        handler.removeCallbacksAndMessages(null)
+        stopLooper()
         mMessageReceiver = null
+    }
+
+    override fun resume() {
+        getMessage()
+    }
+
+    override fun pause() {
+        mDisposable?.takeIf { !it.isDisposed }?.dispose()
+    }
+
+    private fun stopLooper() {
+        mDisposable?.takeIf { !it.isDisposed }?.dispose()
+    }
+
+    private fun getMessage() {
+        mDisposable?.takeIf { !it.isDisposed }?.dispose()
+        Observable.interval(0, IMConstant.COMMUNICATION_MSG_PERIOD, TimeUnit.MILLISECONDS).flatMap {
+            log("getMsgList[$it]")
+            HFRetrofit.hfService.getMessageList(connectUserId, lastRequestTime)
+        }.subscribeOn(Schedulers.io()).subscribe({
+            if (it.resultOk && it.data?.extra?.time != null) {
+                lastRequestTime = it.data!!.extra!!.time
+                val obtainMessage = handler.obtainMessage(WHAT_SUCCESS)
+                obtainMessage.obj = it.data?.data
+                        ?.takeIf { it.isNotEmpty() }
+                        ?.map { convert2IMMessage(it) }
+                        ?.filter { msg ->
+                            when {
+                                list.isEmpty() -> true //如果发送集合是空的，不筛选任何数据
+                                else -> list.firstOrNull { it.messageId == msg.messageId } == null //如果发送集合不是空，筛选（排除）刚刚发送的信息
+                            }
+                        }
+                        ?.takeIf { it.isNotEmpty() } //如果集合是空的，做空值处理
+                        ?: return@subscribe
+                obtainMessage.sendToTarget()
+            }
+        }, {}).also { mDisposable = it }
     }
 
 }
