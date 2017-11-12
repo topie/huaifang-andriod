@@ -76,7 +76,7 @@ class HFMsgFragment : HFBaseFragment() {
             ivIcon.loadImageUri(d.icon?.kParseUrl())
             tvName.text = d.fromUserName
             tvContent.text = d.title
-            tvTime.text = d.createTime?.kSimpleFormatToDate()?.kSplit()
+            tvTime.text = d.eventTime?.kSimpleFormatToDate()?.kSplit()
         }
 
         override fun onItemClicked(d: HFCommMsgDetail?) {
