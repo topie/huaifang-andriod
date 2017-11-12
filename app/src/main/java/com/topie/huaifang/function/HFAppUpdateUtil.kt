@@ -1,9 +1,12 @@
 package com.topie.huaifang.function
 
 import android.content.Context
+import com.topie.huaifang.HFActivityManager
 import com.topie.huaifang.extensions.kInto
+import com.topie.huaifang.extensions.kToastShort
 import com.topie.huaifang.http.HFRetrofit
 import com.topie.huaifang.http.composeApi
+import com.topie.huaifang.view.HFTipDialog
 import io.reactivex.disposables.Disposable
 
 /**
@@ -38,12 +41,25 @@ class HFAppUpdateUtil(var context: Context?) : Disposable {
             compareToCurVersionName(context!!, it.data!!.version!!).takeIf { it } ?: return@subscribe
             val downloadUrl = it.data!!.downloadUrl?.takeIf { it.isNotEmpty() } ?: return@subscribe
             val force = it.data!!.forceUpdate == 1
-            onUpdate(downloadUrl, force)
+            onUpdate(it.data!!.version!!, downloadUrl, force)
         }, {}).kInto(list)
     }
 
-    private fun onUpdate(downloadUrl: String, force: Boolean) {
-        
+    private fun onUpdate(newVersion: String, downloadUrl: String, force: Boolean) {
+        HFTipDialog.Builder().apply {
+            content = when (force) {
+                true -> "您需要升级新版本：$newVersion，否则APP将无法继续浏览"
+                false -> "发现新版本：$newVersion"
+            }
+            cancelable = !force
+            canceledOnTouchOutside = !force
+            onOkClicked = { updateApp(downloadUrl, force) }
+            onCancelClicked = { if (force) HFActivityManager.closeAllActivities() }
+        }
+    }
+
+    private fun updateApp(downloadUrl: String, force: Boolean) {
+        //弹出下载进度框，下载apk，下载完成直接安装
     }
 
     /**

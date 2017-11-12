@@ -372,7 +372,7 @@ interface HFService {
 
 
     /**
-     * 消息列表
+     * app版本管理
      */
     @GET("/api/m/appManager/current?system=android")
     fun getAppUpdate(): Observable<HFAppUpdateResponseBody>

@@ -17,6 +17,8 @@ class HFTipDialog private constructor(context: Context, private val builder: HFT
         super.onCreate(savedInstanceState)
         setContentView(R.layout.view_tip_dialog)
         setWindowScreenWidth()
+        setCancelable(builder.cancelable)
+        setCanceledOnTouchOutside(builder.canceledOnTouchOutside)
         tv_tip_dialog_content.text = builder.content
         tv_tip_dialog_cancel.setOnClickListener {
             builder.onCancelClicked?.invoke()
@@ -39,6 +41,8 @@ class HFTipDialog private constructor(context: Context, private val builder: HFT
         var content: String? = null
         var onOkClicked: (() -> Unit)? = null
         var onCancelClicked: (() -> Unit)? = null
+        var cancelable = true
+        var canceledOnTouchOutside = true
 
         fun create(context: Context): HFTipDialog {
             return HFTipDialog(context, this)
