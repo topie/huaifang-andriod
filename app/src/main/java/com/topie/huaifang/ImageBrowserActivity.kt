@@ -107,7 +107,7 @@ class ImageBrowserActivity : HFBaseTitleActivity() {
     }
 
     private fun initTitle() {
-        setBaseTitle("${viewPager?.currentItem}/${imageList.size}")
+        setBaseTitle("${viewPager?.currentItem?.plus(1)}/${imageList.size}")
         if (selectList.isEmpty()) {
             setBaseTitleRight("确定")
         } else {

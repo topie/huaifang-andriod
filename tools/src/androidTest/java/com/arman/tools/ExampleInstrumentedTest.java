@@ -1,4 +1,4 @@
-package com.davdain.tools;
+package com.arman.tools;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
