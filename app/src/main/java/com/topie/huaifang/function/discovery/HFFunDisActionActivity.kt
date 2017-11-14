@@ -34,9 +34,9 @@ class HFFunDisActionActivity : HFBaseTitleActivity() {
         //初始化数据
         val list = mutableListOf<Pair<Int, String>>()
         0.to("全部活动").kInto(list)
-        1.to("槐房社团").kInto(list)
+//        1.to("槐房社团").kInto(list)
         2.to("我的发布").kInto(list)
-        3.to("已参加活动").kInto(list)
+//        3.to("已参加活动").kInto(list)
         vpAdapter!!.list = list
         vpAdapter!!.notifyDataSetChanged()
     }
