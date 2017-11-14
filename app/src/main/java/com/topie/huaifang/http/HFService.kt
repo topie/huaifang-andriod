@@ -280,7 +280,7 @@ interface HFService {
      * 活动列表
      */
     @GET("/api/m/aroundActivity/list")
-    fun getFunDisActionList(@Query("type") type: Int,@Query("pageNum") pageNum: Int = 0, @Query("pageSize") pageSize: Int = 15): Observable<HFFunDisActionListResponseBody>
+    fun getFunDisActionList(@Query("type") type: Int, @Query("pageNum") pageNum: Int = 0, @Query("pageSize") pageSize: Int = 15): Observable<HFFunDisActionListResponseBody>
 
 
     /**
@@ -344,7 +344,8 @@ interface HFService {
     fun getAccountInfo(): Observable<HFAccountResponseBody>
 
     @POST("/api/m/appUser/updateInfo")
-    fun postAccountInfo(@Body hfAccountUserInfoRequestBody: HFAccountUserInfoRequestBody): Observable<HFBaseResponseBody>
+    @FormUrlEncoded
+    fun postAccountInfo(@FieldMap fields: Map<String, String>): Observable<HFBaseResponseBody>
 
     /**
      * 发表意见

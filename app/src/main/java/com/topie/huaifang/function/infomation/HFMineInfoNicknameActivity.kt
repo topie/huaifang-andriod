@@ -27,7 +27,7 @@ class HFMineInfoNicknameActivity : HFBaseTitleActivity() {
                 kToastShort("请输入昵称")
                 return@setOnClickListener
             }
-            HFRetrofit.hfService.postAccountInfo(HFAccountUserInfoRequestBody(null, nickname)).subscribeResultOkApi {
+            HFRetrofit.hfService.postAccountInfo(HFAccountUserInfoRequestBody(null, nickname).toMap()).subscribeResultOkApi {
                 HFAccountManager.accountModel.userInfo?.nickname = nickname
                 kToastShort("昵称修改成功")
                 finish()

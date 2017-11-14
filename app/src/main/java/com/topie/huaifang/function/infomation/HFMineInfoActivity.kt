@@ -34,7 +34,7 @@ class HFMineInfoActivity : HFBaseTitleActivity() {
                         throw IOException("图片上传失败")
                     }
                     val attachmentUrl = it.data?.attachmentUrl
-                    HFRetrofit.hfService.postAccountInfo(HFAccountUserInfoRequestBody(attachmentUrl, null))
+                    HFRetrofit.hfService.postAccountInfo(HFAccountUserInfoRequestBody(attachmentUrl, null).toMap())
                 }.subscribeResultOkApi {
                     kToastShort("头像上传成功")
                     HFAccountManager.refreshAccountData { initView() }
