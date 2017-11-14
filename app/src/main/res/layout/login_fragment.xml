@@ -130,5 +130,7 @@
             android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             android:visibility="visible" />
+
+        <include layout="@layout/login_copy_right_item" />
     </LinearLayout>
 </LinearLayout>

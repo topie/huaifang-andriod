@@ -48,4 +48,6 @@
         android:text="@string/login_register_button"
         android:textColor="@android:color/white"
         android:textSize="14sp" />
+
+    <include layout="@layout/login_copy_right_item" />
 </LinearLayout>
