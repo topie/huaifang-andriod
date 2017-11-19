@@ -70,7 +70,7 @@ interface HFService {
     /**
      * 村务公开 列表
      */
-    @GET("/api/m/juwuInfo/list")
+    @GET("/api/m/cunwuInfo/list")
     fun getFunVillageList(): Observable<HFLiveListResponseBody>
 
     /**
