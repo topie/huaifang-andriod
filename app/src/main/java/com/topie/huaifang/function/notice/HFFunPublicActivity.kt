@@ -21,7 +21,8 @@ class HFFunPublicActivity : HFBaseTitleActivity() {
         val titleList: ArrayList<String> = arrayListOf()
         titleList.add("社区公告")
         titleList.add("物业公告")
-        val vpAdapter = VPAdapter(titleList,supportFragmentManager)
+        titleList.add("村务公告")
+        val vpAdapter = VPAdapter(titleList, supportFragmentManager)
         vp_fun_guide.adapter = vpAdapter
         tl_fun_guide.setupWithViewPager(vp_fun_guide)
         tl_fun_guide.tabMode = TabLayout.MODE_FIXED

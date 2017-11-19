@@ -1,4 +1,4 @@
-package com.topie.huaifang.function.live
+package com.topie.huaifang.function.village
 
 import android.os.Bundle
 import android.support.design.widget.TabLayout
@@ -19,18 +19,18 @@ import kotlinx.android.synthetic.main.function_guide_activity.*
 
 /**
  * Created by arman on 2017/9/21.
- * 居务公开
+ * 村务公开
  */
-class HFFunLiveActivity : HFBaseTitleActivity() {
+class HFFunVillageActivity : HFBaseTitleActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.function_guide_activity)
-        setBaseTitle(R.string.facing_index_fun_live)
+        setBaseTitle(R.string.facing_index_fun_village)
     }
 
     override fun onResume() {
         super.onResume()
-        HFRetrofit.hfService.getFunLiveList().subscribeApi {
+        HFRetrofit.hfService.getFunVillageList().subscribeApi {
             val vpAdapter = VPAdapter()
             vpAdapter.list = it.data?.data
             vp_fun_guide.adapter = vpAdapter

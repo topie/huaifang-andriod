@@ -15,6 +15,7 @@ import com.topie.huaifang.function.live.HFFunLiveBazaarActivity
 import com.topie.huaifang.function.live.HFFunLiveRepairsListActivity
 import com.topie.huaifang.function.notice.HFFunPublicActivity
 import com.topie.huaifang.function.party.HFFunPartyActivity
+import com.topie.huaifang.function.village.HFFunVillageActivity
 import com.topie.huaifang.function.yellowpage.HFFunYellowPageActivity
 import kotlinx.android.synthetic.main.function_all_activity.*
 
@@ -48,6 +49,9 @@ class HFFunAllActivity : HFBaseTitleActivity() {
         })
         initFun(ll_fun_all_common_4, R.mipmap.ic_facing_index_fun_yellow_book, R.string.facing_index_fun_yellow_book, {
             this@HFFunAllActivity.kStartActivity(HFFunYellowPageActivity::class.java)
+        })
+        initFun(ll_fun_all_common_5, R.mipmap.ic_facing_index_fun_live, R.string.facing_index_fun_village, {
+            this@HFFunAllActivity.kStartActivity(HFFunVillageActivity::class.java)
         })
         //社区党建
         initFun(ll_fun_all_party_0, R.mipmap.ic_fun_all_party_pub, "党务公开", {

@@ -81,6 +81,15 @@
                 android:layout_height="match_parent"
                 android:background="@color/colorGray" />
 
+            <include
+                android:id="@+id/ll_fun_all_common_5"
+                layout="@layout/facing_index_fun_item" />
+
+            <View
+                android:layout_width="0.5dp"
+                android:layout_height="match_parent"
+                android:background="@color/colorGray" />
+
         </com.topie.huaifang.view.HFAspectLinearLayout>
 
         <View

@@ -68,6 +68,12 @@ interface HFService {
     fun getFunLiveList(): Observable<HFLiveListResponseBody>
 
     /**
+     * 村务公开 列表
+     */
+    @GET("/api/m/juwuInfo/list")
+    fun getFunVillageList(): Observable<HFLiveListResponseBody>
+
+    /**
      * 居务公开 详情
      */
     @GET("/api/m/juwuInfo/list")

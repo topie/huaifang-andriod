@@ -75,6 +75,7 @@
         <activity android:name=".function.advice.HFFunAdviceActivity" />
         <activity android:name=".function.advice.HFFunAdvicePublishActivity" />
         <activity android:name=".function.HFSettingActivity" />
+        <activity android:name=".function.village.HFFunVillageActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
